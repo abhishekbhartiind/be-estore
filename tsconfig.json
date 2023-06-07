@@ -27,9 +27,6 @@
       "@feature/*": [
         "./src/features/*"
       ],
-      "@module/*": [
-        "./src/modules/*"
-      ],
       "@shared/*": [
         "./src/shared/*"
       ]
