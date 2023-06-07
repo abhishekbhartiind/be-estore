@@ -7,7 +7,7 @@ import { join } from 'path'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { UserModule } from '@feature/user/user.module'
-import { MailModule } from './shared/features/mail/mail.module'
+import { MailModule } from '@shared/features/mail/mail.module'
 
 @Module({
   imports: [
