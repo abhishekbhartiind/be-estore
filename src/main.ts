@@ -1,9 +1,20 @@
 import { NestFactory } from '@nestjs/core'
-import { AppModule } from './modules/app.module'
+import { AppModule } from '@/src/app.module'
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
-  await app.listen(3000)
+  const port = parseInt(process.env.EXPRESS_PORT as string, 10) || 3000
+
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter(),
+  )
+  app.enableCors()
+
+  await app.listen(port)
 }
 
 bootstrap()
