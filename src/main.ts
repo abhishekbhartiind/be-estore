@@ -6,6 +6,7 @@ import {
 } from '@nestjs/platform-fastify'
 
 async function bootstrap() {
+  const host = String(process.env.EXPRESS_HOST)
   const port = parseInt(process.env.EXPRESS_PORT as string, 10) || 3000
 
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -15,6 +16,10 @@ async function bootstrap() {
   app.enableCors()
 
   await app.listen(port)
+
+  console.info(
+    `Running a GraphQL API server at: http://${host}:${port}/graphql`,
+  )
 }
 
 bootstrap()
