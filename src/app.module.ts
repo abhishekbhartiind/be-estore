@@ -6,7 +6,6 @@ import { ProductModule } from '@feature/product/product.module'
 import { join } from 'path'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
-import { UserModule } from './features/user/user.module';
 
 @Module({
   imports: [
