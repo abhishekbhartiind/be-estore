@@ -4,7 +4,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
+import { ObjectType } from '@nestjs/graphql'
 
+@ObjectType()
 export class BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id?: string

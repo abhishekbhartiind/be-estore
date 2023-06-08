@@ -55,13 +55,17 @@ input LoginUserInput {
 }
 
 type Mutation {
+  activateUser(token: String!): User!
   changeEmail(data: ChangeEmailInput!): UpdateResult!
   changePassword(data: ChangePasswordInput!): UpdateResult!
   removeCustomer: DeleteResult!
+  removeUser(id: String!): DeleteResult!
   restoreCustomer: UpdateResult!
+  restoreUser(id: String!): UpdateResult!
   signIn(data: LoginUserInput!): LoginResponse
   signUp(data: CreateUserInput!): RegisterResponse!
   updateCustomer(data: UpdateUserInput!): User!
+  updateUser(data: UpdateUserInput!, id: String!): User!
 }
 
 type Query {
@@ -69,6 +73,8 @@ type Query {
   query: String!
   requestEmailChange(email: String!): EmailResponse!
   requestPasswordChange(email: String!): EmailResponse!
+  user(id: String!): User!
+  users: [User!]!
   verifyToken(token: String!, tokenOption: String!): TokenVerificationResponse!
 }
 
@@ -97,16 +103,20 @@ input UpdateUserInput {
   activated: DateTime
   activationToken: String
   avatar: String
+  created: DateTime
+  deleted: DateTime
   email: String
   emailToken: String
   emailTokenCreated: DateTime
   firstName: String
+  id: String
   lastName: String
   passwordToken: String
   passwordTokenCreated: DateTime
   phone: String
   role: Role
   title: String
+  updated: DateTime
   username: String
 }
 
@@ -114,16 +124,20 @@ type User {
   activated: DateTime
   activationToken: String
   avatar: String
+  created: DateTime
+  deleted: DateTime
   email: String!
   emailToken: String
   emailTokenCreated: DateTime
   firstName: String!
+  id: String
   lastName: String!
   passwordToken: String
   passwordTokenCreated: DateTime
   phone: String
   role: Role
   title: String
+  updated: DateTime
   username: String
 }
 
