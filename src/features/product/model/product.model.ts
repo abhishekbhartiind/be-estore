@@ -1,6 +1,9 @@
-import { Column, Entity } from 'typeorm'
+import { Column, Entity, OneToMany } from 'typeorm'
 import { BaseEntity } from '@shared/models/base.model'
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql'
+import { FetchResponse } from '@feature/product/dto/fetch-response.entity'
+import { ProductRating } from '@feature/product/model/rating.model'
+import { ProductImage } from '@feature/product/model/image.model'
 
 @ObjectType()
 @InputType('ProductInput')
@@ -21,6 +24,8 @@ export class Product extends BaseEntity {
   @Column({ type: 'float' })
   price: number
 
+  ratingAverage?: number
+
   @Column({ type: 'varchar', length: 14 })
   sku: string
 
@@ -34,4 +39,17 @@ export class Product extends BaseEntity {
   @Column({ default: 24 })
   @Field(() => Int)
   warranty?: number
+
+  @OneToMany(() => ProductImage, (image) => image.product, {
+    eager: true,
+    cascade: true,
+  })
+  image?: ProductImage[]
+
+  @OneToMany(() => ProductRating, (rating) => rating.product)
+  rating?: ProductRating[]
 }
+
+@ObjectType()
+@InputType('ProductsFetchResponseInput')
+export class ProductsFetchResponse extends FetchResponse(Product) {}
