@@ -1,7 +1,16 @@
 import { BaseEntity } from '@shared/models/base.model'
 import { Column, Entity } from 'typeorm'
-import { HideField, InputType, ObjectType } from '@nestjs/graphql'
+import {
+  HideField,
+  InputType,
+  ObjectType,
+  registerEnumType,
+} from '@nestjs/graphql'
 import { Role } from '@feature/user/enum/role.enum'
+
+registerEnumType(Role, {
+  name: 'Role',
+})
 
 @ObjectType()
 @InputType('UserInput')
@@ -33,6 +42,7 @@ export class User extends BaseEntity {
     type: 'enum',
     enum: Role,
     default: Role.CUSTOMER,
+    nullable: true,
   })
   role?: Role
 

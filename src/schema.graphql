@@ -2,6 +2,144 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input ChangeEmailInput {
+  email: String!
+  token: String!
+}
+
+input ChangePasswordInput {
+  password: String!
+  token: String!
+}
+
+input CreateUserInput {
+  activated: DateTime
+  activationToken: String
+  avatar: String
+  email: String!
+  emailToken: String
+  emailTokenCreated: DateTime
+  firstName: String!
+  lastName: String!
+  passwordToken: String
+  passwordTokenCreated: DateTime
+  phone: String
+  role: Role
+  title: String
+  username: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type DeleteResult {
+  affected: Int!
+  raw: [String!]!
+}
+
+type EmailResponse {
+  rejected: [String!]!
+  success: Boolean!
+}
+
+type LoginResponse {
+  accessToken: String!
+  user: User!
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  changeEmail(data: ChangeEmailInput!): UpdateResult!
+  changePassword(data: ChangePasswordInput!): UpdateResult!
+  removeCustomer: DeleteResult!
+  restoreCustomer: UpdateResult!
+  signIn(data: LoginUserInput!): LoginResponse
+  signUp(data: CreateUserInput!): RegisterResponse!
+  updateCustomer(data: UpdateUserInput!): User!
+}
+
 type Query {
+  fetchCustomer: User!
   query: String!
+  requestEmailChange(email: String!): EmailResponse!
+  requestPasswordChange(email: String!): EmailResponse!
+  verifyToken(token: String!, tokenOption: String!): TokenVerificationResponse!
+}
+
+type RegisterResponse {
+  message: String!
+  success: Boolean!
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
+  PRODUCT_MANAGEMENT
+}
+
+type TokenVerificationResponse {
+  valid: Boolean!
+}
+
+type UpdateResult {
+  affected: Int!
+  generatedMaps: [String!]!
+  raw: [String!]!
+}
+
+input UpdateUserInput {
+  activated: DateTime
+  activationToken: String
+  avatar: String
+  email: String
+  emailToken: String
+  emailTokenCreated: DateTime
+  firstName: String
+  lastName: String
+  passwordToken: String
+  passwordTokenCreated: DateTime
+  phone: String
+  role: Role
+  title: String
+  username: String
+}
+
+type User {
+  activated: DateTime
+  activationToken: String
+  avatar: String
+  email: String!
+  emailToken: String
+  emailTokenCreated: DateTime
+  firstName: String!
+  lastName: String!
+  passwordToken: String
+  passwordTokenCreated: DateTime
+  phone: String
+  role: Role
+  title: String
+  username: String
+}
+
+input UserInput {
+  activated: DateTime
+  activationToken: String
+  avatar: String
+  email: String!
+  emailToken: String
+  emailTokenCreated: DateTime
+  firstName: String!
+  lastName: String!
+  passwordToken: String
+  passwordTokenCreated: DateTime
+  phone: String
+  role: Role
+  title: String
+  username: String
 }
