@@ -97,16 +97,20 @@ input UpdateUserInput {
   activated: DateTime
   activationToken: String
   avatar: String
+  created: DateTime
+  deleted: DateTime
   email: String
   emailToken: String
   emailTokenCreated: DateTime
   firstName: String
+  id: String
   lastName: String
   passwordToken: String
   passwordTokenCreated: DateTime
   phone: String
   role: Role
   title: String
+  updated: DateTime
   username: String
 }
 
@@ -114,16 +118,20 @@ type User {
   activated: DateTime
   activationToken: String
   avatar: String
+  created: DateTime
+  deleted: DateTime
   email: String!
   emailToken: String
   emailTokenCreated: DateTime
   firstName: String!
+  id: String
   lastName: String!
   passwordToken: String
   passwordTokenCreated: DateTime
   phone: String
   role: Role
   title: String
+  updated: DateTime
   username: String
 }
 
