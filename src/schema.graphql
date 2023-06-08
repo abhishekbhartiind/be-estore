@@ -12,6 +12,12 @@ input ChangePasswordInput {
   token: String!
 }
 
+input CreateRatingInput {
+  productId: String!
+  star: Int!
+  text: String!
+}
+
 input CreateUserInput {
   activated: DateTime
   activationToken: String
@@ -24,6 +30,7 @@ input CreateUserInput {
   passwordToken: String
   passwordTokenCreated: DateTime
   phone: String
+  rating: [ProductRatingInput!]
   role: Role
   title: String
   username: String
@@ -44,6 +51,26 @@ type EmailResponse {
   success: Boolean!
 }
 
+type FilterArgs {
+  brand: [String]
+  category: [String]
+  priceMax: Float
+  priceMin: Float
+  ram: [Int]
+  search: String
+  storage: [Int]
+}
+
+input FilterArgsInput {
+  brand: [String]
+  category: [String]
+  priceMax: Float
+  priceMin: Float
+  ram: [Int]
+  search: String
+  storage: [Int]
+}
+
 type LoginResponse {
   accessToken: String!
   user: User!
@@ -58,6 +85,7 @@ type Mutation {
   activateUser(token: String!): User!
   changeEmail(data: ChangeEmailInput!): UpdateResult!
   changePassword(data: ChangePasswordInput!): UpdateResult!
+  createRating(data: CreateRatingInput!): ProductRating!
   removeCustomer: DeleteResult!
   removeUser(id: String!): DeleteResult!
   restoreCustomer: UpdateResult!
@@ -68,9 +96,98 @@ type Mutation {
   updateUser(data: UpdateUserInput!, id: String!): User!
 }
 
+input PaginationArgsInput {
+  limit: Int!
+  page: Int!
+}
+
+type Product {
+  created: DateTime
+  deleted: DateTime
+  description: String
+  discount: Float
+  id: String
+  image: [ProductImage!]
+  name: String!
+  osUpgradable: Float
+  price: Float!
+  rating: [ProductRating!]
+  ratingAverage: Float
+  sku: String!
+  stock: Int!
+  thumbnail: String
+  updated: DateTime
+  warranty: Int
+}
+
+type ProductImage {
+  created: DateTime
+  deleted: DateTime
+  id: String
+  product: Product
+  updated: DateTime
+  url: String!
+}
+
+input ProductImageInput {
+  product: ProductInput
+  url: String!
+}
+
+input ProductInput {
+  description: String
+  discount: Float
+  image: [ProductImageInput!]
+  name: String!
+  osUpgradable: Float
+  price: Float!
+  rating: [ProductRatingInput!]
+  ratingAverage: Float
+  sku: String!
+  stock: Int!
+  thumbnail: String
+  warranty: Int
+}
+
+type ProductRating {
+  created: DateTime
+  deleted: DateTime
+  id: String
+  product: Product!
+  star: Int!
+  text: String!
+  updated: DateTime
+  user: User!
+}
+
+input ProductRatingInput {
+  product: ProductInput!
+  star: Int!
+  text: String!
+  user: UserInput!
+}
+
+type ProductsFetchResponse {
+  count: Int!
+  data: [Product!]!
+  filter: FilterArgs
+  limit: Int!
+  page: Int!
+}
+
+input ProductsFetchResponseInput {
+  count: Int!
+  data: [ProductInput!]!
+  filter: FilterArgsInput
+  limit: Int!
+  page: Int!
+}
+
 type Query {
   fetchCustomer: User!
-  query: String!
+  product(id: String!): Product!
+  products(filterArgs: FilterArgsInput, paginationArgs: PaginationArgsInput, sortArgs: SortArgsInput): ProductsFetchResponse!
+  ratings: [ProductRating!]!
   requestEmailChange(email: String!): EmailResponse!
   requestPasswordChange(email: String!): EmailResponse!
   user(id: String!): User!
@@ -87,6 +204,11 @@ enum Role {
   ADMIN
   CUSTOMER
   PRODUCT_MANAGEMENT
+}
+
+input SortArgsInput {
+  sortBy: String!
+  sortDir: String!
 }
 
 type TokenVerificationResponse {
@@ -114,6 +236,7 @@ input UpdateUserInput {
   passwordToken: String
   passwordTokenCreated: DateTime
   phone: String
+  rating: [ProductRatingInput!]
   role: Role
   title: String
   updated: DateTime
@@ -135,6 +258,7 @@ type User {
   passwordToken: String
   passwordTokenCreated: DateTime
   phone: String
+  rating: [ProductRating!]
   role: Role
   title: String
   updated: DateTime
@@ -153,6 +277,7 @@ input UserInput {
   passwordToken: String
   passwordTokenCreated: DateTime
   phone: String
+  rating: [ProductRatingInput!]
   role: Role
   title: String
   username: String
