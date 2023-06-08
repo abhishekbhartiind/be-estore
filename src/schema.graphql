@@ -102,6 +102,7 @@ input PaginationArgsInput {
 }
 
 type Product {
+  brand: ProductBrand!
   category: ProductCategory!
   created: DateTime
   deleted: DateTime
@@ -119,6 +120,20 @@ type Product {
   thumbnail: String
   updated: DateTime
   warranty: Int
+}
+
+type ProductBrand {
+  created: DateTime
+  deleted: DateTime
+  id: String
+  name: String!
+  product: Product
+  updated: DateTime
+}
+
+input ProductBrandInput {
+  name: String!
+  product: ProductInput
 }
 
 type ProductCategory {
@@ -150,6 +165,7 @@ input ProductImageInput {
 }
 
 input ProductInput {
+  brand: ProductBrandInput!
   category: ProductCategoryInput!
   description: String
   discount: Float

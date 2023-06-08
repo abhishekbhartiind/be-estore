@@ -5,6 +5,7 @@ import { FetchResponse } from '@feature/product/dto/fetch-response.entity'
 import { ProductRating } from '@feature/product/model/rating.model'
 import { ProductImage } from '@feature/product/model/image.model'
 import { ProductCategory } from '@feature/product/model/category.model'
+import { ProductBrand } from '@feature/product/model/brand.model'
 
 @ObjectType()
 @InputType('ProductInput')
@@ -41,7 +42,15 @@ export class Product extends BaseEntity {
   @Field(() => Int)
   warranty?: number
 
+  @ManyToOne(() => ProductBrand, (brand) => brand.product, {
+    eager: true,
+    cascade: true,
+  })
+  @JoinColumn()
+  brand: ProductBrand
+
   @ManyToOne(() => ProductCategory, (category) => category.product, {
+    eager: true,
     cascade: true,
   })
   @JoinColumn()

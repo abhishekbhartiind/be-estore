@@ -6,11 +6,13 @@ import { ProductResolver } from './product.resolver'
 import { ProductImage } from '@feature/product/model/image.model'
 import { ProductRating } from '@feature/product/model/rating.model'
 import { ProductCategory } from '@feature/product/model/category.model'
+import { ProductBrand } from '@feature/product/model/brand.model'
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       Product,
+      ProductBrand,
       ProductCategory,
       ProductImage,
       ProductRating,

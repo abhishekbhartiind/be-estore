@@ -4,8 +4,8 @@ export const productMock = [
     name: 'Galaxy S23+',
     description:
       'The Samsung Galaxy S23+ is the bigger sibling of the regular Galaxy S23 with it’s 6.6-inch Dynamic AMOLED display with 120Hz refresh rate. Specs also include Qualcomm Snapdragon 8 Gen 2 processor, 4700mAh battery and Triple camera setup on the back.',
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: 'c99cda6a-335b-46c0-a36a-0726575fe9a4' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: 'c99cda6a-335b-46c0-a36a-0726575fe9a4' },
     thumbnail: '/images/samsung/galaxy_s23+/thumbnail/thumb.jpg',
     //specification: { id: 'd3dfcddc-05db-491c-853e-3160c0f26d4a' },
     sku: 'SM-S916BZKGEUE',
@@ -29,8 +29,8 @@ export const productMock = [
     name: 'Galaxy S23+',
     description:
       'The Samsung Galaxy S23+ is the bigger sibling of the regular Galaxy S23 with it’s 6.6-inch Dynamic AMOLED display with 120Hz refresh rate. Specs also include Qualcomm Snapdragon 8 Gen 2 processor, 4700mAh battery and Triple camera setup on the back.',
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: 'c99cda6a-335b-46c0-a36a-0726575fe9a4' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: 'c99cda6a-335b-46c0-a36a-0726575fe9a4' },
     thumbnail: '/images/samsung/galaxy_s23+/thumbnail/thumb.jpg',
     sku: 'SM-S916BZKGEUE',
     price: 1049,
@@ -53,8 +53,8 @@ export const productMock = [
     name: 'Galaxy S23+',
     description:
       'The Samsung Galaxy S23+ is the bigger sibling of the regular Galaxy S23 with it’s 6.6-inch Dynamic AMOLED display with 120Hz refresh rate. Specs also include Qualcomm Snapdragon 8 Gen 2 processor, 4700mAh battery and Triple camera setup on the back.',
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: 'c99cda6a-335b-46c0-a36a-0726575fe9a4' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: 'c99cda6a-335b-46c0-a36a-0726575fe9a4' },
     thumbnail: '/images/samsung/galaxy_s23+/thumbnail/thumb.jpg',
     //specification: { id: 'd3dfcddc-05db-491c-853e-3160c0f26d4a' },
     sku: 'SM-S916BZKGEUE',
@@ -78,8 +78,8 @@ export const productMock = [
     name: 'Reno 9 Pro Plus',
     description:
       'The Reno 9 Pro Plus is a premium smartphone from the Chinese tech company, Oppo. It features a large 6.7-inch AMOLED display with a resolution of 2400 x 1080 pixels and a refresh rate of 120Hz, providing a smooth and immersive viewing experience. The device is powered by a Qualcomm Snapdragon 870 processor and comes with up to 12GB of RAM and up to 256GB of internal storage. The Reno 9 Pro Plus also features a quad-camera setup on the back, with a 50-megapixel main camera, a 16-megapixel ultra-wide camera, a 13-megapixel telephoto camera, and a 2-megapixel monochrome camera. It has a 16-megapixel front-facing camera for selfies and video calls. Other features of the Oppo Reno 9 Pro Plus include 5G connectivity, Wi-Fi 6, Bluetooth 5.2, and a 4,500mAh battery with fast charging support. The device also boasts an elegant and sleek design, with a glass back and metal frame, making it a stylish and powerful smartphone for those seeking a premium mobile experience.',
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: '88948aad-5dc1-4fd7-938e-70b805fd15cb' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: '88948aad-5dc1-4fd7-938e-70b805fd15cb' },
     thumbnail: '/images/oppo/reno_pro_plus_9/thumbnail/thumb.png',
     //specification: { id: 'fa74569c-ca9c-47c1-b3ed-eb7ee4277e18' },
     sku: 'SM-S916BZKGEUE',
@@ -99,8 +99,8 @@ export const productMock = [
     name: 'Reno 9 Pro Plus',
     description:
       'The Reno 9 Pro Plus is a premium smartphone from the Chinese tech company, Oppo. It features a large 6.7-inch AMOLED display with a resolution of 2400 x 1080 pixels and a refresh rate of 120Hz, providing a smooth and immersive viewing experience. The device is powered by a Qualcomm Snapdragon 870 processor and comes with up to 12GB of RAM and up to 256GB of internal storage. The Reno 9 Pro Plus also features a quad-camera setup on the back, with a 50-megapixel main camera, a 16-megapixel ultra-wide camera, a 13-megapixel telephoto camera, and a 2-megapixel monochrome camera. It has a 16-megapixel front-facing camera for selfies and video calls. Other features of the Oppo Reno 9 Pro Plus include 5G connectivity, Wi-Fi 6, Bluetooth 5.2, and a 4,500mAh battery with fast charging support. The device also boasts an elegant and sleek design, with a glass back and metal frame, making it a stylish and powerful smartphone for those seeking a premium mobile experience.',
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: '88948aad-5dc1-4fd7-938e-70b805fd15cb' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: '88948aad-5dc1-4fd7-938e-70b805fd15cb' },
     thumbnail: '/images/oppo/reno_pro_plus_9/thumbnail/thumb.png',
     //specification: { id: 'fa74569c-ca9c-47c1-b3ed-eb7ee4277e18' },
     sku: 'SM-S916BZKGEUE',
@@ -120,8 +120,8 @@ export const productMock = [
     name: 'Reno 9 Pro Plus',
     description:
       'The Reno 9 Pro Plus is a premium smartphone from the Chinese tech company, Oppo. It features a large 6.7-inch AMOLED display with a resolution of 2400 x 1080 pixels and a refresh rate of 120Hz, providing a smooth and immersive viewing experience. The device is powered by a Qualcomm Snapdragon 870 processor and comes with up to 12GB of RAM and up to 256GB of internal storage. The Reno 9 Pro Plus also features a quad-camera setup on the back, with a 50-megapixel main camera, a 16-megapixel ultra-wide camera, a 13-megapixel telephoto camera, and a 2-megapixel monochrome camera. It has a 16-megapixel front-facing camera for selfies and video calls. Other features of the Oppo Reno 9 Pro Plus include 5G connectivity, Wi-Fi 6, Bluetooth 5.2, and a 4,500mAh battery with fast charging support. The device also boasts an elegant and sleek design, with a glass back and metal frame, making it a stylish and powerful smartphone for those seeking a premium mobile experience.',
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: '88948aad-5dc1-4fd7-938e-70b805fd15cb' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: '88948aad-5dc1-4fd7-938e-70b805fd15cb' },
     thumbnail: '/images/oppo/reno_pro_plus_9/thumbnail/thumb.png',
     //specification: { id: 'fa74569c-ca9c-47c1-b3ed-eb7ee4277e18' },
     sku: 'SM-S916BZKGEUE',
@@ -141,8 +141,8 @@ export const productMock = [
     name: '11',
     description:
       "The OnePlus 11 is powered by the latest flagship Qualcomm processor, the 4nm Snapdragon 8 Gen 2 SoC, which is paired LPDDR5x RAM. It is likely to be available with up to 512GB of UFS4.0 storage. The global variant's camera setup is led by the Sony IMX890 primary sensor with optical image stabilisation (OIS) support.",
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: 'af4b4d80-fd6b-43e1-93e0-341f11994244' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: 'af4b4d80-fd6b-43e1-93e0-341f11994244' },
     thumbnail: '/images/oneplus/11/thumbnail/thumb.jpg',
     //specification: { id: '59e14dfe-0dee-4d88-a8d0-0c261f5f8f69' },
     sku: 'CPH2449',
@@ -156,8 +156,8 @@ export const productMock = [
     name: '11',
     description:
       "The OnePlus 11 is powered by the latest flagship Qualcomm processor, the 4nm Snapdragon 8 Gen 2 SoC, which is paired LPDDR5x RAM. It is likely to be available with up to 512GB of UFS4.0 storage. The global variant's camera setup is led by the Sony IMX890 primary sensor with optical image stabilisation (OIS) support.",
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: 'af4b4d80-fd6b-43e1-93e0-341f11994244' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: 'af4b4d80-fd6b-43e1-93e0-341f11994244' },
     thumbnail: '/images/oneplus/11/thumbnail/thumb.jpg',
     //specification: { id: '59e14dfe-0dee-4d88-a8d0-0c261f5f8f69' },
     sku: 'CPH2449',
@@ -171,8 +171,8 @@ export const productMock = [
     name: '11',
     description:
       "The OnePlus 11 is powered by the latest flagship Qualcomm processor, the 4nm Snapdragon 8 Gen 2 SoC, which is paired LPDDR5x RAM. It is likely to be available with up to 512GB of UFS4.0 storage. The global variant's camera setup is led by the Sony IMX890 primary sensor with optical image stabilisation (OIS) support.",
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: 'af4b4d80-fd6b-43e1-93e0-341f11994244' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: 'af4b4d80-fd6b-43e1-93e0-341f11994244' },
     thumbnail: '/images/oneplus/11/thumbnail/thumb.jpg',
     //specification: { id: '59e14dfe-0dee-4d88-a8d0-0c261f5f8f69' },
     sku: 'CPH2449',
@@ -192,8 +192,8 @@ export const productMock = [
       'In terms of photography, the Xiaomi 13 Pro features a triple-camera setup on the back, consisting of a 50-megapixel primary camera, a 13-megapixel ultra-wide camera, and a 5-megapixel macro camera. The phone also has a 20-megapixel front-facing camera for selfies and video calls.\n' +
       '\n' +
       "Other notable features of the Xiaomi 13 Pro include 5G connectivity, a large 5000mAh battery with fast charging and wireless charging support, and an in-display fingerprint sensor for secure and convenient authentication. The phone runs on MIUI 12.5, Xiaomi's custom Android-based operating system, which offers a range of useful features and optimizations to enhance the user experience. Overall, the Xiaomi 13 Pro is a top-of-the-line smartphone that offers cutting-edge technology and impressive performance in a sleek and stylish package.",
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: '926f0fd1-47f2-4a27-b7d0-c6fff6b3ea9b' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: '926f0fd1-47f2-4a27-b7d0-c6fff6b3ea9b' },
     thumbnail: '/images/xiaomi/13_pro/thumbnail/thumb.jpg',
     //specification: { id: 'd3af6361-212d-4ec1-bee4-2b207f8988d2' },
     sku: '2210132G',
@@ -219,8 +219,8 @@ export const productMock = [
       'In terms of photography, the Xiaomi 13 Pro features a triple-camera setup on the back, consisting of a 50-megapixel primary camera, a 13-megapixel ultra-wide camera, and a 5-megapixel macro camera. The phone also has a 20-megapixel front-facing camera for selfies and video calls.\n' +
       '\n' +
       "Other notable features of the Xiaomi 13 Pro include 5G connectivity, a large 5000mAh battery with fast charging and wireless charging support, and an in-display fingerprint sensor for secure and convenient authentication. The phone runs on MIUI 12.5, Xiaomi's custom Android-based operating system, which offers a range of useful features and optimizations to enhance the user experience. Overall, the Xiaomi 13 Pro is a top-of-the-line smartphone that offers cutting-edge technology and impressive performance in a sleek and stylish package.",
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: '926f0fd1-47f2-4a27-b7d0-c6fff6b3ea9b' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: '926f0fd1-47f2-4a27-b7d0-c6fff6b3ea9b' },
     thumbnail: '/images/xiaomi/13_pro/thumbnail/thumb.jpg',
     //specification: { id: 'd3af6361-212d-4ec1-bee4-2b207f8988d2' },
     sku: '2210132G',
@@ -246,8 +246,8 @@ export const productMock = [
       'In terms of photography, the Xiaomi 13 Pro features a triple-camera setup on the back, consisting of a 50-megapixel primary camera, a 13-megapixel ultra-wide camera, and a 5-megapixel macro camera. The phone also has a 20-megapixel front-facing camera for selfies and video calls.\n' +
       '\n' +
       "Other notable features of the Xiaomi 13 Pro include 5G connectivity, a large 5000mAh battery with fast charging and wireless charging support, and an in-display fingerprint sensor for secure and convenient authentication. The phone runs on MIUI 12.5, Xiaomi's custom Android-based operating system, which offers a range of useful features and optimizations to enhance the user experience. Overall, the Xiaomi 13 Pro is a top-of-the-line smartphone that offers cutting-edge technology and impressive performance in a sleek and stylish package.",
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: '926f0fd1-47f2-4a27-b7d0-c6fff6b3ea9b' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: '926f0fd1-47f2-4a27-b7d0-c6fff6b3ea9b' },
     thumbnail: '/images/xiaomi/13_pro/thumbnail/thumb.jpg',
     //specification: { id: 'd3af6361-212d-4ec1-bee4-2b207f8988d2' },
     sku: '2210132G',
@@ -267,8 +267,8 @@ export const productMock = [
     name: 'iPhone 14 Pro Max',
     description:
       'The iPhone 14 Pro and Pro Max feature a Super Retina XDR OLED display with a typical maximum brightness of 1,000 nits. However, it can go all the way up to 1,600 nits while watching HDR videos, and 2,000 nits outdoors. The display has a refresh rate of 120 Hz and utilizes LTPO technology.',
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: '2e140bdd-6c04-4469-a0e3-757797c77bbf' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: '2e140bdd-6c04-4469-a0e3-757797c77bbf' },
     thumbnail: '/images/apple/14_pro_max/thumbnail/thumb.jpg',
     //specification: { id: '101597a1-7493-454e-93a5-bed700949e07' },
     osUpgradable: 16.3,
@@ -288,8 +288,8 @@ export const productMock = [
     name: 'iPhone 14 Pro Max',
     description:
       'The iPhone 14 Pro and Pro Max feature a Super Retina XDR OLED display with a typical maximum brightness of 1,000 nits. However, it can go all the way up to 1,600 nits while watching HDR videos, and 2,000 nits outdoors. The display has a refresh rate of 120 Hz and utilizes LTPO technology.',
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: '2e140bdd-6c04-4469-a0e3-757797c77bbf' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: '2e140bdd-6c04-4469-a0e3-757797c77bbf' },
     thumbnail: '/images/apple/14_pro_max/thumbnail/thumb.jpg',
     //specification: { id: '101597a1-7493-454e-93a5-bed700949e07' },
     osUpgradable: 16.3,
@@ -309,8 +309,8 @@ export const productMock = [
     name: 'iPhone 14 Pro Max',
     description:
       'The iPhone 14 Pro and Pro Max feature a Super Retina XDR OLED display with a typical maximum brightness of 1,000 nits. However, it can go all the way up to 1,600 nits while watching HDR videos, and 2,000 nits outdoors. The display has a refresh rate of 120 Hz and utilizes LTPO technology.',
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: '2e140bdd-6c04-4469-a0e3-757797c77bbf' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: '2e140bdd-6c04-4469-a0e3-757797c77bbf' },
     thumbnail: '/images/apple/14_pro_max/thumbnail/thumb.jpg',
     //specification: { id: '101597a1-7493-454e-93a5-bed700949e07' },
     osUpgradable: 16.3,
@@ -330,8 +330,8 @@ export const productMock = [
     name: 'Galaxy S23 Ultra',
     description:
       "The Samsung Galaxy 23 Ultra offers a top-of-the-line experience from one of the world's leading tech companies. With a 6.8-inch AMOLED screen, it boasts an impressive count of resolution, color, and brightness for an unparalleled visual experience. It's powered by the Snapdragon 888 chipset, with 8GB of RAM and 256GB of storage. With its quad-camera system, you'll get sharp images and videos no matter what you're shooting. While the powerful 5,000 mAh battery ensures you'll have longer uninterrupted usage. Samsung Galaxy 23 Ultra is the total performance package that lets you do more in less time.",
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: 'c99cda6a-335b-46c0-a36a-0726575fe9a4' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: 'c99cda6a-335b-46c0-a36a-0726575fe9a4' },
     thumbnail: '/images/samsung/galaxy_s23_ultra/thumbnail/thumb.jpg',
     //specification: { id: 'c2fee875-fd76-4b65-a121-9b54981ed1fb' },
     sku: 'SM-S918',
@@ -351,8 +351,8 @@ export const productMock = [
     name: 'Galaxy S23 Ultra',
     description:
       "The Samsung Galaxy 23 Ultra offers a top-of-the-line experience from one of the world's leading tech companies. With a 6.8-inch AMOLED screen, it boasts an impressive count of resolution, color, and brightness for an unparalleled visual experience. It's powered by the Snapdragon 888 chipset, with 8GB of RAM and 256GB of storage. With its quad-camera system, you'll get sharp images and videos no matter what you're shooting. While the powerful 5,000 mAh battery ensures you'll have longer uninterrupted usage. Samsung Galaxy 23 Ultra is the total performance package that lets you do more in less time.",
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: 'c99cda6a-335b-46c0-a36a-0726575fe9a4' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: 'c99cda6a-335b-46c0-a36a-0726575fe9a4' },
     thumbnail: '/images/samsung/galaxy_s23_ultra/thumbnail/thumb.jpg',
     //specification: { id: 'c2fee875-fd76-4b65-a121-9b54981ed1fb' },
     sku: 'SM-S918',
@@ -372,8 +372,8 @@ export const productMock = [
     name: 'Galaxy S23 Ultra',
     description:
       "The Samsung Galaxy 23 Ultra offers a top-of-the-line experience from one of the world's leading tech companies. With a 6.8-inch AMOLED screen, it boasts an impressive count of resolution, color, and brightness for an unparalleled visual experience. It's powered by the Snapdragon 888 chipset, with 8GB of RAM and 256GB of storage. With its quad-camera system, you'll get sharp images and videos no matter what you're shooting. While the powerful 5,000 mAh battery ensures you'll have longer uninterrupted usage. Samsung Galaxy 23 Ultra is the total performance package that lets you do more in less time.",
-    //category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
-    //brand: { id: 'c99cda6a-335b-46c0-a36a-0726575fe9a4' },
+    category: { id: '922d7258-c4a7-40ee-9463-b4d505565f42' },
+    brand: { id: 'c99cda6a-335b-46c0-a36a-0726575fe9a4' },
     thumbnail: '/images/samsung/galaxy_s23_ultra/thumbnail/thumb.jpg',
     //specification: { id: 'c2fee875-fd76-4b65-a121-9b54981ed1fb' },
     sku: 'SM-S918',
