@@ -1,7 +1,12 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  OnModuleInit,
+} from '@nestjs/common'
 import { User } from '@feature/user/user.model'
-import { InjectRepository } from '@nestjs/typeorm'
-import { DeleteResult, Repository, UpdateResult } from 'typeorm'
+import { InjectDataSource, InjectRepository } from '@nestjs/typeorm'
+import { DataSource, DeleteResult, Repository, UpdateResult } from 'typeorm'
 import { CreateUserInput } from '@feature/user/dto/create-user.input'
 import { genSalt, hash } from 'bcrypt'
 import { UpdateUserInput } from '@feature/user/dto/update-user.input'
@@ -9,13 +14,20 @@ import {
   RECORD_NOT_FOUND,
   TOKEN_INVALID,
 } from '@shared/constant/error.constant'
+import { userMock } from '@feature/user/user.mock'
 
 @Injectable()
-export class UserService {
+export class UserService implements OnModuleInit {
   constructor(
     @InjectRepository(User)
     private readonly userRepo: Repository<User>,
+    @InjectDataSource()
+    private dataSource: DataSource,
   ) {}
+
+  async onModuleInit(): Promise<void> {
+    await this.mockUsers()
+  }
 
   /**
    * Fetches all records
@@ -25,7 +37,6 @@ export class UserService {
     try {
       return await this.userRepo.find({
         ...(where && { where }),
-        relations: ['creditCard', 'order', 'order.user'],
       })
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
@@ -175,6 +186,26 @@ export class UserService {
       user.activationToken = null
 
       return await this.update(user.id as string, user)
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Inserts data into User table from `user.mock.ts`
+   * Won't insert if data is found in table
+   */
+  async mockUsers(): Promise<any> {
+    try {
+      const users = await this.userRepo.find()
+      if (users.length === 0) {
+        return await this.dataSource
+          .createQueryBuilder()
+          .insert()
+          .into(User)
+          .values(userMock)
+          .execute()
+      }
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
     }
