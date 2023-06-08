@@ -20,42 +20,44 @@ import { UseGuards } from '@nestjs/common'
 import { CreateRatingInput } from '@feature/product/dto/create-rating.input'
 import { CurrentUser } from '@shared/decorator/current-user.decorator'
 import { User } from '@feature/user/user.model'
+import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
+import { UpdateProductInput } from '@feature/product/dto/update-product.input'
+import { CreateProductInput } from '@feature/product/dto/create-product.input'
 
 @Resolver(() => Product)
-export class ProductResolver {
+export class ProductAdminResolver {
   constructor(private readonly productService: ProductService) {}
 
-  @Query(() => ProductsFetchResponse)
-  async products(
-    @Args('paginationArgs', { nullable: true }) paginationArgs?: PaginationArgs,
-    @Args('sortArgs', { nullable: true }) sortArgs?: SortArgs,
-    @Args('filterArgs', { nullable: true }) filterArgs?: FilterArgs,
-  ): Promise<ProductsFetchResponse> {
-    return await this.productService.fetch(
-      paginationArgs ? paginationArgs : { page: 1, limit: 10 },
-      sortArgs
-        ? sortArgs
-        : { sortBy: SORT_OPTION.PRICE, sortDir: SORT_DIR.DESC },
-      filterArgs,
-    )
-  }
-  @Query(() => Product)
-  async product(@Args('id') id: string): Promise<Product> {
-    return await this.productService.fetchOne(id)
-  }
-
-  @Query(() => [ProductRating])
-  async ratings(): Promise<ProductRating[]> {
-    return await this.productService.fetchRatings()
-  }
-
-  @Mutation(() => ProductRating)
+  @Mutation(() => Product)
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @HasRoles(Role.CUSTOMER)
-  async createRating(
-    @Args('data') rating: CreateRatingInput,
-    @CurrentUser() user: User,
-  ): Promise<ProductRating> {
-    return this.productService.saveRating(rating, user.id as string)
+  @HasRoles(Role.ADMIN)
+  async createProduct(
+    @Args('data') product: CreateProductInput,
+  ): Promise<Product> {
+    return this.productService.save(product)
+  }
+
+  @Mutation(() => UpdateResult)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @HasRoles(Role.ADMIN)
+  async updateProduct(
+    @Args('id') id: string,
+    @Args('data') product: UpdateProductInput,
+  ): Promise<UpdateResult> {
+    return this.productService.update(id, product)
+  }
+
+  @Mutation(() => DeleteResult)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @HasRoles(Role.ADMIN)
+  async removeProduct(@Args('id') id: string): Promise<DeleteResult> {
+    return await this.productService.delete(id)
+  }
+
+  @Mutation(() => UpdateResult)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @HasRoles(Role.ADMIN)
+  async restoreProduct(@Args('id') id: string): Promise<UpdateResult> {
+    return await this.productService.restore(id)
   }
 }
