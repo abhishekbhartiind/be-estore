@@ -8,6 +8,7 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { UserModule } from '@feature/user/user.module'
 import { MailModule } from '@shared/features/mail/mail.module'
+import { AuthModule } from '@shared/features/auth/auth.module'
 
 @Module({
   imports: [
@@ -22,9 +23,10 @@ import { MailModule } from '@shared/features/mail/mail.module'
     TypeOrmModule.forRootAsync({
       useClass: DatabaseConfig,
     }),
+    AuthModule,
+    MailModule,
     ProductModule,
     UserModule,
-    MailModule,
   ],
 })
 export class AppModule {}
