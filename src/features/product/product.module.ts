@@ -5,9 +5,17 @@ import { Product } from '@feature/product/model/product.model'
 import { ProductResolver } from './product.resolver'
 import { ProductImage } from '@feature/product/model/image.model'
 import { ProductRating } from '@feature/product/model/rating.model'
+import { ProductCategory } from '@feature/product/model/category.model'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Product, ProductImage, ProductRating])],
+  imports: [
+    TypeOrmModule.forFeature([
+      Product,
+      ProductCategory,
+      ProductImage,
+      ProductRating,
+    ]),
+  ],
   providers: [ProductService, ProductResolver],
 })
 export class ProductModule {}

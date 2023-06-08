@@ -1,9 +1,10 @@
-import { Column, Entity, OneToMany } from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm'
 import { BaseEntity } from '@shared/models/base.model'
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql'
 import { FetchResponse } from '@feature/product/dto/fetch-response.entity'
 import { ProductRating } from '@feature/product/model/rating.model'
 import { ProductImage } from '@feature/product/model/image.model'
+import { ProductCategory } from '@feature/product/model/category.model'
 
 @ObjectType()
 @InputType('ProductInput')
@@ -39,6 +40,12 @@ export class Product extends BaseEntity {
   @Column({ default: 24 })
   @Field(() => Int)
   warranty?: number
+
+  @ManyToOne(() => ProductCategory, (category) => category.product, {
+    cascade: true,
+  })
+  @JoinColumn()
+  category: ProductCategory
 
   @OneToMany(() => ProductImage, (image) => image.product, {
     eager: true,

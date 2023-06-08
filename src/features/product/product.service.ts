@@ -35,12 +35,16 @@ import {
   RATING_RELATIONS,
 } from '@feature/product/constant/entity-relation.constant'
 import { CreateRatingInput } from '@feature/product/dto/create-rating.input'
+import { ProductCategory } from '@feature/product/model/category.model'
+import { categoryMock } from '@feature/product/mock/category.mock'
 
 @Injectable()
 export class ProductService implements OnModuleInit {
   constructor(
     @InjectRepository(Product)
     private readonly productRepo: Repository<Product>,
+    @InjectRepository(ProductCategory)
+    private readonly categoryRepo: Repository<ProductCategory>,
     @InjectRepository(ProductImage)
     private readonly imageRepo: Repository<ProductImage>,
     @InjectRepository(ProductRating)
@@ -50,6 +54,7 @@ export class ProductService implements OnModuleInit {
   ) {}
 
   async onModuleInit(): Promise<void> {
+    await this.insertCategories()
     await this.insertProducts()
     await this.insertRatings()
   }
@@ -307,6 +312,26 @@ export class ProductService implements OnModuleInit {
         where: { id: rating.id },
         relations: RATING_RELATIONS,
       })) as ProductRating
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Inserts data into `category` table from `category.mock.ts`
+   * Won't insert if data is found in table
+   */
+  async insertCategories(): Promise<any> {
+    try {
+      const categories = await this.categoryRepo.find()
+      if (categories.length === 0) {
+        return await this.dataSource
+          .createQueryBuilder()
+          .insert()
+          .into(ProductCategory)
+          .values(categoryMock)
+          .execute()
+      }
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
     }
