@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm'
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 
 @Injectable()
 export class DatabaseConfig implements TypeOrmOptionsFactory {
@@ -13,6 +14,7 @@ export class DatabaseConfig implements TypeOrmOptionsFactory {
       port: parseInt(process.env.DB_PORT as string, 10) || 54320,
       entities: ['dist/**/*.model.js'],
       synchronize: true,
+      namingStrategy: new SnakeNamingStrategy(),
     }
   }
 }
