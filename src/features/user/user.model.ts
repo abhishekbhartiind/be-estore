@@ -1,5 +1,5 @@
 import { BaseEntity } from '@shared/models/base.model'
-import { Column, Entity, OneToMany } from 'typeorm'
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm'
 import {
   HideField,
   InputType,
@@ -8,6 +8,7 @@ import {
 } from '@nestjs/graphql'
 import { Role } from '@feature/user/enum/role.enum'
 import { ProductRating } from '@feature/product/model/rating.model'
+import { Order } from '@feature/order/order.model'
 
 registerEnumType(Role, {
   name: 'Role',
@@ -67,6 +68,9 @@ export class User extends BaseEntity {
 
   @Column({ type: 'timestamptz', nullable: true })
   emailTokenCreated?: Date | null
+
+  @OneToMany(() => Order, (order) => order.user)
+  order?: Order[]
 
   @OneToMany(() => ProductRating, (rating) => rating.user)
   rating?: ProductRating[]

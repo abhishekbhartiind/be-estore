@@ -1,6 +1,7 @@
-import { Column, Entity } from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
 import { InputType, ObjectType } from '@nestjs/graphql'
 import { BaseEntity } from '@shared/models/base.model'
+import { User } from '@feature/user/user.model'
 
 @ObjectType()
 @InputType('OrderInput')
@@ -14,4 +15,8 @@ export class Order extends BaseEntity {
 
   @Column({ type: 'timestamptz', nullable: true })
   cancelled?: Date | null
+
+  @ManyToOne(() => User, (user) => user.order, { nullable: true })
+  @JoinColumn()
+  user?: User | null
 }
