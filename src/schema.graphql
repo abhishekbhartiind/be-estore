@@ -102,6 +102,8 @@ input PaginationArgsInput {
 }
 
 type Product {
+  brand: ProductBrand!
+  category: ProductCategory!
   created: DateTime
   deleted: DateTime
   description: String
@@ -114,10 +116,39 @@ type Product {
   rating: [ProductRating!]
   ratingAverage: Float
   sku: String!
+  specification: ProductSpecification!
   stock: Int!
   thumbnail: String
   updated: DateTime
   warranty: Int
+}
+
+type ProductBrand {
+  created: DateTime
+  deleted: DateTime
+  id: String
+  name: String!
+  product: Product
+  updated: DateTime
+}
+
+input ProductBrandInput {
+  name: String!
+  product: ProductInput
+}
+
+type ProductCategory {
+  created: DateTime
+  deleted: DateTime
+  id: String
+  name: String!
+  product: Product
+  updated: DateTime
+}
+
+input ProductCategoryInput {
+  name: String!
+  product: ProductInput
 }
 
 type ProductImage {
@@ -135,6 +166,8 @@ input ProductImageInput {
 }
 
 input ProductInput {
+  brand: ProductBrandInput!
+  category: ProductCategoryInput!
   description: String
   discount: Float
   image: [ProductImageInput!]
@@ -144,6 +177,7 @@ input ProductInput {
   rating: [ProductRatingInput!]
   ratingAverage: Float
   sku: String!
+  specification: ProductSpecificationInput!
   stock: Int!
   thumbnail: String
   warranty: Int
@@ -165,6 +199,20 @@ input ProductRatingInput {
   star: Int!
   text: String!
   user: UserInput!
+}
+
+type ProductSpecification {
+  created: DateTime
+  deleted: DateTime
+  id: String
+  product: Product
+  updated: DateTime
+  weight: Float!
+}
+
+input ProductSpecificationInput {
+  product: ProductInput
+  weight: Float!
 }
 
 type ProductsFetchResponse {

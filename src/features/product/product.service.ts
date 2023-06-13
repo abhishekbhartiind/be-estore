@@ -35,21 +35,36 @@ import {
   RATING_RELATIONS,
 } from '@feature/product/constant/entity-relation.constant'
 import { CreateRatingInput } from '@feature/product/dto/create-rating.input'
+import { ProductCategory } from '@feature/product/model/category.model'
+import { categoryMock } from '@feature/product/mock/category.mock'
+import { ProductBrand } from '@feature/product/model/brand.model'
+import { brandMock } from '@feature/product/mock/brand.mock'
+import { ProductSpecification } from '@feature/product/model/specification.model'
+import { specificationMock } from '@feature/product/mock/specification.mock'
 
 @Injectable()
 export class ProductService implements OnModuleInit {
   constructor(
     @InjectRepository(Product)
     private readonly productRepo: Repository<Product>,
+    @InjectRepository(ProductBrand)
+    private readonly brandRepo: Repository<ProductBrand>,
+    @InjectRepository(ProductCategory)
+    private readonly categoryRepo: Repository<ProductCategory>,
     @InjectRepository(ProductImage)
     private readonly imageRepo: Repository<ProductImage>,
     @InjectRepository(ProductRating)
     private readonly ratingRepo: Repository<ProductRating>,
+    @InjectRepository(ProductSpecification)
+    private readonly specRepo: Repository<ProductSpecification>,
     @InjectDataSource()
     private dataSource: DataSource,
   ) {}
 
   async onModuleInit(): Promise<void> {
+    await this.insertBrands()
+    await this.insertCategories()
+    await this.insertSpecification()
     await this.insertProducts()
     await this.insertRatings()
   }
@@ -72,9 +87,12 @@ export class ProductService implements OnModuleInit {
 
       // base query
       const query = await this.productRepo.createQueryBuilder('product')
-
       // relationships
+      query.innerJoinAndSelect('product.brand', 'brand')
+      query.innerJoinAndSelect('product.category', 'category')
+      query.leftJoinAndSelect('product.image', 'image')
       query.leftJoinAndSelect('product.rating', 'rating')
+      query.leftJoinAndSelect('product.specification', 'specification')
 
       // search
       if (filter?.search)
@@ -313,6 +331,46 @@ export class ProductService implements OnModuleInit {
   }
 
   /**
+   * Inserts data into `brand` table from `brand.mock.ts`
+   * Only inserts data upon empty table
+   */
+  async insertBrands(): Promise<any> {
+    try {
+      const brands = await this.brandRepo.find()
+      if (brands.length === 0) {
+        return await this.dataSource
+          .createQueryBuilder()
+          .insert()
+          .into(ProductBrand)
+          .values(brandMock)
+          .execute()
+      }
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Inserts data into `category` table from `category.mock.ts`
+   * Only inserts data upon empty table
+   */
+  async insertCategories(): Promise<any> {
+    try {
+      const categories = await this.categoryRepo.find()
+      if (categories.length === 0) {
+        return await this.dataSource
+          .createQueryBuilder()
+          .insert()
+          .into(ProductCategory)
+          .values(categoryMock)
+          .execute()
+      }
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
    * Inserts data into `product` table from `product.mock.ts`
    * Only inserts data upon empty table
    */
@@ -357,6 +415,26 @@ export class ProductService implements OnModuleInit {
           .insert()
           .into(ProductRating)
           .values(ratingMock)
+          .execute()
+      }
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Inserts data into `product_specification` table from `mock/specification.mock.ts`
+   * Only inserts data upon empty table
+   */
+  async insertSpecification(): Promise<any> {
+    try {
+      const spec = await this.specRepo.find()
+      if (spec.length === 0) {
+        return await this.dataSource
+          .createQueryBuilder()
+          .insert()
+          .into(ProductSpecification)
+          .values(specificationMock)
           .execute()
       }
     } catch (error) {
