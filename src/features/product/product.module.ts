@@ -10,6 +10,7 @@ import { ProductBrand } from '@feature/product/model/brand.model'
 import { ProductSpecification } from '@feature/product/model/specification.model'
 import { SpecificationDisplay } from '@feature/product/model/specification/display.model'
 import { SpecificationConnectivity } from '@feature/product/model/specification/connectivity.model'
+import { SpecificationCPU } from '@feature/product/model/specification/cpu.model'
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { SpecificationConnectivity } from '@feature/product/model/specification/
       ProductRating,
       ProductSpecification,
       SpecificationConnectivity,
+      SpecificationCPU,
       SpecificationDisplay,
     ]),
   ],

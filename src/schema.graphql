@@ -240,6 +240,7 @@ input ProductRatingInput {
 
 type ProductSpecification {
   connectivity: SpecificationConnectivity!
+  cpu: SpecificationCPU!
   created: DateTime
   deleted: DateTime
   display: SpecificationDisplay!
@@ -251,6 +252,7 @@ type ProductSpecification {
 
 input ProductSpecificationInput {
   connectivity: SpecificationConnectivityInput!
+  cpu: SpecificationCPUInput!
   display: SpecificationDisplayInput!
   product: ProductInput
   weight: Float!
@@ -298,6 +300,24 @@ enum Role {
 input SortArgsInput {
   sortBy: String!
   sortDir: String!
+}
+
+type SpecificationCPU {
+  cores: Int
+  created: DateTime
+  deleted: DateTime
+  frequency: Float
+  id: String
+  name: String!
+  productSpecification: ProductSpecification
+  updated: DateTime
+}
+
+input SpecificationCPUInput {
+  cores: Int
+  frequency: Float
+  name: String!
+  productSpecification: ProductSpecificationInput
 }
 
 type SpecificationConnectivity {
