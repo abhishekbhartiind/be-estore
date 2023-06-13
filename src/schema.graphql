@@ -241,6 +241,7 @@ input ProductRatingInput {
 type ProductSpecification {
   created: DateTime
   deleted: DateTime
+  display: SpecificationDisplay!
   id: String
   product: Product
   updated: DateTime
@@ -248,6 +249,7 @@ type ProductSpecification {
 }
 
 input ProductSpecificationInput {
+  display: SpecificationDisplayInput!
   product: ProductInput
   weight: Float!
 }
@@ -294,6 +296,28 @@ enum Role {
 input SortArgsInput {
   sortBy: String!
   sortDir: String!
+}
+
+type SpecificationDisplay {
+  aspectRatio: Float
+  created: DateTime
+  deleted: DateTime
+  id: String
+  pixelDensity: Int
+  productSpecification: ProductSpecification
+  refreshRate: Int
+  screenToBody: Float
+  size: Float!
+  updated: DateTime
+}
+
+input SpecificationDisplayInput {
+  aspectRatio: Float
+  pixelDensity: Int
+  productSpecification: ProductSpecificationInput
+  refreshRate: Int
+  screenToBody: Float
+  size: Float!
 }
 
 type TokenVerificationResponse {
