@@ -7,6 +7,7 @@ import { ProductImage } from '@feature/product/model/image.model'
 import { ProductCategory } from '@feature/product/model/category.model'
 import { ProductBrand } from '@feature/product/model/brand.model'
 import { ProductSpecification } from '@feature/product/model/specification.model'
+import { OrderHasProduct } from '@feature/order/model/order-has-product.model'
 
 @ObjectType()
 @InputType('ProductInput')
@@ -63,6 +64,12 @@ export class Product extends BaseEntity {
     onDelete: 'CASCADE',
   })
   image?: ProductImage[]
+
+  @OneToMany(
+    () => OrderHasProduct,
+    (orderHasProduct) => orderHasProduct.product,
+  )
+  order?: OrderHasProduct[]
 
   @OneToMany(() => ProductRating, (rating) => rating.product)
   rating?: ProductRating[]

@@ -9,6 +9,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { UserModule } from '@feature/user/user.module'
 import { MailModule } from '@shared/features/mail/mail.module'
 import { AuthModule } from '@shared/features/auth/auth.module'
+import { OrderModule } from '@feature/order/order.module'
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { AuthModule } from '@shared/features/auth/auth.module'
     }),
     AuthModule,
     MailModule,
+    OrderModule,
     ProductModule,
     UserModule,
   ],
