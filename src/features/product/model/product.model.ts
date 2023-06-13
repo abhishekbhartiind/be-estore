@@ -6,6 +6,7 @@ import { ProductRating } from '@feature/product/model/rating.model'
 import { ProductImage } from '@feature/product/model/image.model'
 import { ProductCategory } from '@feature/product/model/category.model'
 import { ProductBrand } from '@feature/product/model/brand.model'
+import { ProductSpecification } from '@feature/product/model/specification.model'
 
 @ObjectType()
 @InputType('ProductInput')
@@ -59,11 +60,20 @@ export class Product extends BaseEntity {
   @OneToMany(() => ProductImage, (image) => image.product, {
     eager: true,
     cascade: true,
+    onDelete: 'CASCADE',
   })
   image?: ProductImage[]
 
   @OneToMany(() => ProductRating, (rating) => rating.product)
   rating?: ProductRating[]
+
+  @ManyToOne(
+    () => ProductSpecification,
+    (specification) => specification.product,
+    { cascade: true },
+  )
+  @JoinColumn()
+  specification: ProductSpecification
 }
 
 @ObjectType()

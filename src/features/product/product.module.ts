@@ -7,6 +7,7 @@ import { ProductImage } from '@feature/product/model/image.model'
 import { ProductRating } from '@feature/product/model/rating.model'
 import { ProductCategory } from '@feature/product/model/category.model'
 import { ProductBrand } from '@feature/product/model/brand.model'
+import { ProductSpecification } from '@feature/product/model/specification.model'
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ProductBrand } from '@feature/product/model/brand.model'
       ProductCategory,
       ProductImage,
       ProductRating,
+      ProductSpecification,
     ]),
   ],
   providers: [ProductService, ProductResolver],

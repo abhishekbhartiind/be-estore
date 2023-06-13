@@ -116,6 +116,7 @@ type Product {
   rating: [ProductRating!]
   ratingAverage: Float
   sku: String!
+  specification: ProductSpecification!
   stock: Int!
   thumbnail: String
   updated: DateTime
@@ -176,6 +177,7 @@ input ProductInput {
   rating: [ProductRatingInput!]
   ratingAverage: Float
   sku: String!
+  specification: ProductSpecificationInput!
   stock: Int!
   thumbnail: String
   warranty: Int
@@ -197,6 +199,20 @@ input ProductRatingInput {
   star: Int!
   text: String!
   user: UserInput!
+}
+
+type ProductSpecification {
+  created: DateTime
+  deleted: DateTime
+  id: String
+  product: Product
+  updated: DateTime
+  weight: Float!
+}
+
+input ProductSpecificationInput {
+  product: ProductInput
+  weight: Float!
 }
 
 type ProductsFetchResponse {
