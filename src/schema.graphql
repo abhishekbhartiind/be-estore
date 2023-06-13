@@ -239,6 +239,7 @@ input ProductRatingInput {
 }
 
 type ProductSpecification {
+  connectivity: SpecificationConnectivity!
   created: DateTime
   deleted: DateTime
   display: SpecificationDisplay!
@@ -249,6 +250,7 @@ type ProductSpecification {
 }
 
 input ProductSpecificationInput {
+  connectivity: SpecificationConnectivityInput!
   display: SpecificationDisplayInput!
   product: ProductInput
   weight: Float!
@@ -296,6 +298,28 @@ enum Role {
 input SortArgsInput {
   sortBy: String!
   sortDir: String!
+}
+
+type SpecificationConnectivity {
+  audio: String
+  bluetoothVersion: Float
+  connectivity: String
+  created: DateTime
+  deleted: DateTime
+  id: String
+  mobileStandard: String
+  productSpecification: ProductSpecification
+  updated: DateTime
+  wifiStandard: String
+}
+
+input SpecificationConnectivityInput {
+  audio: String
+  bluetoothVersion: Float
+  connectivity: String
+  mobileStandard: String
+  productSpecification: ProductSpecificationInput
+  wifiStandard: String
 }
 
 type SpecificationDisplay {

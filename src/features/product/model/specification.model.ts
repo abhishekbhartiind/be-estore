@@ -3,6 +3,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm'
 import { Product } from '@feature/product/product.model'
 import { BaseEntity } from '@shared/models/base.model'
 import { SpecificationDisplay } from '@feature/product/model/specification/display.model'
+import { SpecificationConnectivity } from '@feature/product/model/specification/connectivity.model'
 
 @ObjectType()
 @InputType('ProductSpecificationInput')
@@ -10,6 +11,13 @@ import { SpecificationDisplay } from '@feature/product/model/specification/displ
 export class ProductSpecification extends BaseEntity {
   @Column()
   weight: number
+
+  @ManyToOne(
+    () => SpecificationConnectivity,
+    (conn) => conn.productSpecification,
+  )
+  @JoinColumn()
+  connectivity: SpecificationConnectivity
 
   @ManyToOne(
     () => SpecificationDisplay,

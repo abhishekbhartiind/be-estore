@@ -9,6 +9,7 @@ import { ProductCategory } from '@feature/product/model/category.model'
 import { ProductBrand } from '@feature/product/model/brand.model'
 import { ProductSpecification } from '@feature/product/model/specification.model'
 import { SpecificationDisplay } from '@feature/product/model/specification/display.model'
+import { SpecificationConnectivity } from '@feature/product/model/specification/connectivity.model'
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { SpecificationDisplay } from '@feature/product/model/specification/displ
       ProductImage,
       ProductRating,
       ProductSpecification,
+      SpecificationConnectivity,
       SpecificationDisplay,
     ]),
   ],
