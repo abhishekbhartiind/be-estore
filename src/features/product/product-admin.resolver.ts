@@ -1,5 +1,5 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
-import { Product } from '@feature/product/model/product.model'
+import { Product } from '@feature/product/product.model'
 import { ProductService } from '@feature/product/product.service'
 import { RoleGuard } from '@shared/features/auth/guard/role.guard'
 import { JwtAuthGuard } from '@shared/features/auth/guard/jwt-auth.guard'

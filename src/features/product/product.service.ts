@@ -4,7 +4,7 @@ import {
   Injectable,
   OnModuleInit,
 } from '@nestjs/common'
-import { Product } from '@feature/product/model/product.model'
+import { Product } from '@feature/product/product.model'
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
 import { PaginationArgs } from '@feature/product/dto/pagination.args'
