@@ -1,5 +1,5 @@
 import { BaseEntity } from '@shared/models/base.model'
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm'
+import { Column, Entity, OneToMany } from 'typeorm'
 import {
   HideField,
   InputType,
@@ -16,7 +16,7 @@ registerEnumType(Role, {
 
 @ObjectType()
 @InputType('UserInput')
-@Entity('users')
+@Entity()
 export class User extends BaseEntity {
   @Column({ type: 'varchar', length: 255 })
   avatar?: string

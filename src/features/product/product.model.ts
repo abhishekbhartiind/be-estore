@@ -11,7 +11,7 @@ import { OrderHasProduct } from '@feature/order/model/order-has-product.model'
 
 @ObjectType()
 @InputType('ProductInput')
-@Entity('products')
+@Entity()
 export class Product extends BaseEntity {
   @Column({ nullable: true, length: 1600 })
   description?: string

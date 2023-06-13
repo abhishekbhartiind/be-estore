@@ -1,8 +1,5 @@
 import { PaginationArgs } from '@feature/product/dto/pagination.args'
-import {
-  Product,
-  ProductsFetchResponse,
-} from '@feature/product/model/product.model'
+import { Product, ProductsFetchResponse } from '@feature/product/product.model'
 import { ProductRating } from '@feature/product/model/rating.model'
 import { FilterArgs } from '@feature/product/dto/filter.args'
 

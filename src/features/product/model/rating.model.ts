@@ -1,12 +1,12 @@
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql'
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
-import { Product } from '@feature/product/model/product.model'
+import { Product } from '@feature/product/product.model'
 import { User } from '@feature/user/user.model'
 import { BaseEntity } from '@shared/models/base.model'
 
 @ObjectType()
 @InputType('ProductRatingInput')
-@Entity('product_ratings')
+@Entity()
 export class ProductRating extends BaseEntity {
   @Field(() => Int)
   @Column({ type: 'smallint' })

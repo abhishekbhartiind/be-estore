@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm'
 import { Order } from '@feature/order/order.model'
-import { Product } from '@feature/product/model/product.model'
+import { Product } from '@feature/product/product.model'
 
 @ObjectType()
 @InputType('OrderHasProductInput')
