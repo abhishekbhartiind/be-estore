@@ -5,6 +5,7 @@ import { BaseEntity } from '@shared/models/base.model'
 import { SpecificationDisplay } from '@feature/product/model/specification/display.model'
 import { SpecificationConnectivity } from '@feature/product/model/specification/connectivity.model'
 import { SpecificationCPU } from '@feature/product/model/specification/cpu.model'
+import { SpecificationDataStorage } from '@feature/product/model/specification/data-storage.model'
 
 @ObjectType()
 @InputType('ProductSpecificationInput')
@@ -23,6 +24,13 @@ export class ProductSpecification extends BaseEntity {
   @ManyToOne(() => SpecificationCPU, (cpu) => cpu.productSpecification)
   @JoinColumn()
   cpu: SpecificationCPU
+
+  @ManyToOne(
+    () => SpecificationDataStorage,
+    (data) => data.productSpecification,
+  )
+  @JoinColumn()
+  dataStorage: SpecificationDataStorage
 
   @ManyToOne(
     () => SpecificationDisplay,

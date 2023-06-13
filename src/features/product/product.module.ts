@@ -11,6 +11,7 @@ import { ProductSpecification } from '@feature/product/model/specification.model
 import { SpecificationDisplay } from '@feature/product/model/specification/display.model'
 import { SpecificationConnectivity } from '@feature/product/model/specification/connectivity.model'
 import { SpecificationCPU } from '@feature/product/model/specification/cpu.model'
+import { SpecificationDataStorage } from '@feature/product/model/specification/data-storage.model'
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { SpecificationCPU } from '@feature/product/model/specification/cpu.model
       ProductSpecification,
       SpecificationConnectivity,
       SpecificationCPU,
+      SpecificationDataStorage,
       SpecificationDisplay,
     ]),
   ],
