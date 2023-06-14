@@ -1,18 +1,45 @@
-import { InputType, ObjectType } from '@nestjs/graphql'
+import { Field, InputType, Int, ObjectType } from '@nestjs/graphql'
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm'
 import { Product } from '@feature/product/product.model'
 import { BaseEntity } from '@shared/models/base.model'
 import { SpecificationDisplay } from '@feature/product/model/specification/display.model'
 import { SpecificationConnectivity } from '@feature/product/model/specification/connectivity.model'
 import { SpecificationCPU } from '@feature/product/model/specification/cpu.model'
-import { SpecificationDataStorage } from '@feature/product/model/specification/data-storage.model'
+import { SpecificationBattery } from '@feature/product/model/specification/battery.model'
 
 @ObjectType()
 @InputType('ProductSpecificationInput')
 @Entity()
 export class ProductSpecification extends BaseEntity {
+  @Field(() => Int)
   @Column()
-  weight: number
+  dataRam: number
+
+  @Field(() => [Int])
+  @Column('int', { array: true })
+  dataStorage: number[]
+
+  @Column({ type: 'float' })
+  dimensionLength: number
+
+  @Column({ type: 'float' })
+  dimensionWidth: number
+
+  @Column({ type: 'float' })
+  dimensionDepth: number
+
+  @Column({ type: 'varchar', length: 2, default: 'mm' })
+  dimensionUnit?: string
+
+  @Column()
+  dimensionWeight: number
+
+  @ManyToOne(
+    () => SpecificationBattery,
+    (battery) => battery.productSpecification,
+  )
+  @JoinColumn()
+  battery: SpecificationBattery
 
   @ManyToOne(
     () => SpecificationConnectivity,
@@ -24,13 +51,6 @@ export class ProductSpecification extends BaseEntity {
   @ManyToOne(() => SpecificationCPU, (cpu) => cpu.productSpecification)
   @JoinColumn()
   cpu: SpecificationCPU
-
-  @ManyToOne(
-    () => SpecificationDataStorage,
-    (data) => data.productSpecification,
-  )
-  @JoinColumn()
-  dataStorage: SpecificationDataStorage
 
   @ManyToOne(
     () => SpecificationDisplay,

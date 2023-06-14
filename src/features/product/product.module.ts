@@ -11,7 +11,7 @@ import { ProductSpecification } from '@feature/product/model/specification.model
 import { SpecificationDisplay } from '@feature/product/model/specification/display.model'
 import { SpecificationConnectivity } from '@feature/product/model/specification/connectivity.model'
 import { SpecificationCPU } from '@feature/product/model/specification/cpu.model'
-import { SpecificationDataStorage } from '@feature/product/model/specification/data-storage.model'
+import { SpecificationBattery } from '@feature/product/model/specification/battery.model'
 
 @Module({
   imports: [
@@ -22,9 +22,9 @@ import { SpecificationDataStorage } from '@feature/product/model/specification/d
       ProductImage,
       ProductRating,
       ProductSpecification,
+      SpecificationBattery,
       SpecificationConnectivity,
       SpecificationCPU,
-      SpecificationDataStorage,
       SpecificationDisplay,
     ]),
   ],

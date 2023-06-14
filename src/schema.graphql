@@ -239,23 +239,27 @@ input ProductRatingInput {
 }
 
 type ProductSpecification {
+  battery: SpecificationBattery!
   connectivity: SpecificationConnectivity!
   cpu: SpecificationCPU!
   created: DateTime
+  dataStorage: SpecificationDataStorage!
   deleted: DateTime
+  dimension: SpecificationDimension!
   display: SpecificationDisplay!
   id: String
   product: Product
   updated: DateTime
-  weight: Float!
 }
 
 input ProductSpecificationInput {
+  battery: SpecificationBatteryInput!
   connectivity: SpecificationConnectivityInput!
   cpu: SpecificationCPUInput!
+  dataStorage: SpecificationDataStorageInput!
+  dimension: SpecificationDimensionInput!
   display: SpecificationDisplayInput!
   product: ProductInput
-  weight: Float!
 }
 
 type ProductsFetchResponse {
@@ -302,6 +306,28 @@ input SortArgsInput {
   sortDir: String!
 }
 
+type SpecificationBattery {
+  capacity: Int!
+  chargingSpeed: Int
+  created: DateTime
+  deleted: DateTime
+  id: String
+  productSpecification: ProductSpecification
+  reverseCharging: Int
+  type: String!
+  updated: DateTime
+  wirelessCharging: Int
+}
+
+input SpecificationBatteryInput {
+  capacity: Int!
+  chargingSpeed: Int
+  productSpecification: ProductSpecificationInput
+  reverseCharging: Int
+  type: String!
+  wirelessCharging: Int
+}
+
 type SpecificationCPU {
   cores: Int
   created: DateTime
@@ -340,6 +366,44 @@ input SpecificationConnectivityInput {
   mobileStandard: String
   productSpecification: ProductSpecificationInput
   wifiStandard: String
+}
+
+type SpecificationDataStorage {
+  created: DateTime
+  deleted: DateTime
+  id: String
+  productSpecification: ProductSpecification
+  ram: Int!
+  storage: Int!
+  updated: DateTime
+}
+
+input SpecificationDataStorageInput {
+  productSpecification: ProductSpecificationInput
+  ram: Int!
+  storage: Int!
+}
+
+type SpecificationDimension {
+  created: DateTime
+  deleted: DateTime
+  depth: Float!
+  id: String
+  length: Float!
+  productSpecification: ProductSpecification
+  unit: String
+  updated: DateTime
+  weight: Float!
+  width: Float!
+}
+
+input SpecificationDimensionInput {
+  depth: Float!
+  length: Float!
+  productSpecification: ProductSpecificationInput
+  unit: String
+  weight: Float!
+  width: Float!
 }
 
 type SpecificationDisplay {
