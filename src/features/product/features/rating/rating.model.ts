@@ -5,7 +5,7 @@ import { User } from '@feature/user/user.model'
 import { BaseEntity } from '@shared/models/base.model'
 
 @ObjectType()
-@InputType('ProductRatingInput')
+@InputType('RatingInput')
 @Entity()
 export class ProductRating extends BaseEntity {
   @Field(() => Int)

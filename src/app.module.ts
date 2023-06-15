@@ -13,9 +13,13 @@ import { OrderModule } from '@feature/order/order.module'
 import { BrandModule } from '@feature/product/features/brand/brand.module'
 import { CategoryModule } from '@feature/product/features/category/category.module'
 import { SpecificationModule } from '@feature/product/features/specification/specification.module'
+import { RatingModule } from '@feature/product/features/rating/rating.module'
 
 @Module({
   imports: [
+    AuthModule,
+    BrandModule,
+    CategoryModule,
     ConfigModule.forRoot(),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -24,16 +28,14 @@ import { SpecificationModule } from '@feature/product/features/specification/spe
       playground: true,
       introspection: true,
     }),
+    MailModule,
+    OrderModule,
+    ProductModule,
+    RatingModule,
+    SpecificationModule,
     TypeOrmModule.forRootAsync({
       useClass: DatabaseConfig,
     }),
-    AuthModule,
-    MailModule,
-    BrandModule,
-    CategoryModule,
-    SpecificationModule,
-    OrderModule,
-    ProductModule,
     UserModule,
   ],
 })

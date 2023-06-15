@@ -9,4 +9,3 @@ export const PRODUCT_RELATIONS = [
   'specification.cpu',
   'specification.display',
 ]
-export const RATING_RELATIONS = ['product', 'user']
