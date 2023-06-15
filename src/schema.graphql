@@ -111,16 +111,24 @@ input LoginUserInput {
 }
 
 type Mutation {
-  activateUser(token: String!): User!
+  activateCustomer(token: String!): User!
   changeEmail(data: ChangeEmailInput!): UpdateResult!
   changePassword(data: ChangePasswordInput!): UpdateResult!
+  createBrand(name: String!): Brand!
+  createCategory(name: String!): Category!
   createRating(data: CreateRatingInput!): ProductRating!
+  removeBrand(id: String!): DeleteResult!
+  removeCategory(id: String!): DeleteResult!
   removeCustomer: DeleteResult!
   removeUser(id: String!): DeleteResult!
+  restoreBrand(id: String!): UpdateResult!
+  restoreCategory(id: String!): UpdateResult!
   restoreCustomer: UpdateResult!
   restoreUser(id: String!): UpdateResult!
   signIn(data: LoginUserInput!): LoginResponse
   signUp(data: CreateUserInput!): RegisterResponse!
+  updateBrand(id: String!, name: String!): UpdateResult!
+  updateCategory(id: String!, name: String!): UpdateResult!
   updateCustomer(data: UpdateUserInput!): User!
   updateUser(data: UpdateUserInput!, id: String!): User!
 }
