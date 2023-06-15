@@ -3,6 +3,8 @@ import { InjectDataSource, InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
 import { brandMock } from '@feature/product/features/brand/brand.mock'
 import { Brand } from '@feature/product/features/brand/brand.model'
+import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
+import { RECORD_NOT_FOUND } from '@shared/constant/error.constant'
 
 @Injectable()
 export class BrandService {
@@ -14,10 +16,90 @@ export class BrandService {
   ) {}
 
   /**
+   * Fetches all brand records
+   */
+  async fetch(): Promise<any> {
+    try {
+      return this.brandRepo.find()
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Saves a record
+   * @param name Brand name
+   */
+  async save(name: string): Promise<Brand> {
+    try {
+      const brand = await this.brandRepo.save({
+        name,
+      })
+
+      return (await this.brandRepo.findOne({
+        where: { id: brand.id },
+      })) as Brand
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Updates record by identifier
+   * @param id  Record identifier to be updated
+   * @param name Brand name
+   */
+  async update(id: string, name: string): Promise<UpdateResult> {
+    try {
+      const foundBrand = await this.brandRepo.findOne({
+        where: { id },
+      })
+      if (!foundBrand)
+        throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND)
+
+      return await this.brandRepo.update({ id }, { name })
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Deletes a record by identifier
+   * @param id Record identifier
+   */
+  async delete(id: string): Promise<DeleteResult> {
+    try {
+      const brand = await this.brandRepo.findOne({ where: { id } })
+      if (!brand)
+        throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND)
+
+      return await this.brandRepo.softDelete(id)
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Restores a record by identifier
+   * @param id Record identifier to be restored
+   */
+  async restore(id: string): Promise<UpdateResult> {
+    try {
+      const brand = await this.brandRepo.restore(id)
+      if (!brand)
+        throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND)
+
+      return brand
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
    * Inserts data into `brand` table from `brand.mock.ts`
    * Only inserts data upon empty table
    */
-  async insertBrands(): Promise<any> {
+  async mockBrands(): Promise<any> {
     try {
       const brands = await this.brandRepo.find()
       if (brands.length === 0) {
