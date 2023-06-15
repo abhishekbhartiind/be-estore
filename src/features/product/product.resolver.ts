@@ -20,18 +20,10 @@ import { UseGuards } from '@nestjs/common'
 import { CreateRatingInput } from '@feature/product/dto/create-rating.input'
 import { CurrentUser } from '@shared/decorator/current-user.decorator'
 import { User } from '@feature/user/user.model'
-import { Brand } from '@feature/product/features/brand/brand.model'
-import { Category } from '@feature/product/features/category/category.model'
-import { BrandService } from '@feature/product/features/brand/brand.service'
-import { CategoryService } from '@feature/product/features/category/category.service'
 
 @Resolver(() => Product)
 export class ProductResolver {
-  constructor(
-    private readonly productService: ProductService,
-    private readonly brandService: BrandService,
-    private readonly categoryService: CategoryService,
-  ) {}
+  constructor(private readonly productService: ProductService) {}
 
   @Query(() => ProductsFetchResponse)
   async products(
