@@ -18,12 +18,14 @@ export class UserAdminResolver {
   async users(): Promise<User[]> {
     return await this.userService.fetch()
   }
+
   @Query(() => User)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
   async user(@Args('id', { type: () => String }) id: string): Promise<User> {
     return (await this.userService.fetchOne(id)) as User
   }
+
   @Mutation(() => User)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
@@ -33,6 +35,7 @@ export class UserAdminResolver {
   ): Promise<User> {
     return await this.userService.update(id, user)
   }
+
   @Mutation(() => DeleteResult)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
@@ -41,6 +44,7 @@ export class UserAdminResolver {
   ): Promise<DeleteResult> {
     return await this.userService.delete(id)
   }
+
   @Mutation(() => UpdateResult)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)

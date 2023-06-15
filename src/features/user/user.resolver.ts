@@ -13,12 +13,14 @@ import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
 @Resolver(() => User)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
+
   @Query(() => User)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.CUSTOMER)
   async fetchCustomer(@CurrentUser() user: User) {
     return await this.userService.fetchOne(user.id as string)
   }
+
   @Mutation(() => User)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.CUSTOMER)
@@ -28,20 +30,23 @@ export class UserResolver {
   ): Promise<User> {
     return await this.userService.update(user.id as string, newUserData)
   }
+
   @Mutation(() => DeleteResult)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.CUSTOMER)
   async removeCustomer(@CurrentUser() user: User): Promise<DeleteResult> {
     return await this.userService.delete(user.id as string)
   }
+
   @Mutation(() => UpdateResult)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.CUSTOMER)
   async restoreCustomer(@CurrentUser() user: User): Promise<UpdateResult> {
     return await this.userService.restore(user.id as string)
   }
+
   @Mutation(() => User)
-  async activateUser(@Args('token') token: string): Promise<User> {
+  async activateCustomer(@Args('token') token: string): Promise<User> {
     return await this.userService.activateAccount(token)
   }
 }
