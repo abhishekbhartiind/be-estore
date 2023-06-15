@@ -5,17 +5,17 @@ import { RoleGuard } from '@shared/features/auth/guard/role.guard'
 import { HasRoles } from '@shared/decorator/role.decorator'
 import { Role } from '@feature/user/enum/role.enum'
 import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
-import { Category } from '@feature/product/features/category/category.model'
+import { ProductCategory } from '@feature/product/features/category/category.model'
 import { CategoryService } from '@feature/product/features/category/category.service'
 
-@Resolver(() => Category)
+@Resolver(() => ProductCategory)
 export class CategoryAdminResolver {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @Mutation(() => Category)
+  @Mutation(() => ProductCategory)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
-  async createCategory(@Args('name') name: string): Promise<Category> {
+  async createCategory(@Args('name') name: string): Promise<ProductCategory> {
     return this.categoryService.save(name)
   }
 
@@ -32,7 +32,7 @@ export class CategoryAdminResolver {
   @Mutation(() => DeleteResult)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
-  async removeCategory(@Args('id') id: string): Promise<DeleteResult> {
+  async deleteCategory(@Args('id') id: string): Promise<DeleteResult> {
     return await this.categoryService.delete(id)
   }
 

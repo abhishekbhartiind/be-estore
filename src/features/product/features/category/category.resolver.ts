@@ -1,12 +1,12 @@
 import { Query, Resolver } from '@nestjs/graphql'
-import { Category } from '@feature/product/features/category/category.model'
+import { ProductCategory } from '@feature/product/features/category/category.model'
 import { CategoryService } from '@feature/product/features/category/category.service'
 
-@Resolver(() => Category)
+@Resolver(() => ProductCategory)
 export class CategoryResolver {
   constructor(private readonly categoryService: CategoryService) {}
-  @Query(() => [Category])
-  async categories(): Promise<Category[]> {
+  @Query(() => [ProductCategory])
+  async categories(): Promise<ProductCategory[]> {
     return await this.categoryService.fetch()
   }
 }

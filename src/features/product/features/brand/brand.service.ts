@@ -2,15 +2,15 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
 import { brandMock } from '@feature/product/features/brand/brand.mock'
-import { Brand } from '@feature/product/features/brand/brand.model'
+import { ProductBrand } from '@feature/product/features/brand/brand.model'
 import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
 import { RECORD_NOT_FOUND } from '@shared/constant/error.constant'
 
 @Injectable()
 export class BrandService {
   constructor(
-    @InjectRepository(Brand)
-    private readonly brandRepo: Repository<Brand>,
+    @InjectRepository(ProductBrand)
+    private readonly brandRepo: Repository<ProductBrand>,
     @InjectDataSource()
     private dataSource: DataSource,
   ) {}
@@ -30,7 +30,7 @@ export class BrandService {
    * Saves a record
    * @param name Brand name
    */
-  async save(name: string): Promise<Brand> {
+  async save(name: string): Promise<ProductBrand> {
     try {
       const brand = await this.brandRepo.save({
         name,
@@ -38,7 +38,7 @@ export class BrandService {
 
       return (await this.brandRepo.findOne({
         where: { id: brand.id },
-      })) as Brand
+      })) as ProductBrand
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
     }
@@ -106,7 +106,7 @@ export class BrandService {
         return await this.dataSource
           .createQueryBuilder()
           .insert()
-          .into(Brand)
+          .into(ProductBrand)
           .values(brandMock)
           .execute()
       }

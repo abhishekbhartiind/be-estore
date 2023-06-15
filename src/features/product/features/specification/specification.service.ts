@@ -1,4 +1,4 @@
-import { Specification } from '@feature/product/features/specification/model/specification.model'
+import { ProductSpecification } from '@feature/product/features/specification/model/specification.model'
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
@@ -15,8 +15,8 @@ import { batteryMock } from '@feature/product/features/specification/mock/batter
 @Injectable()
 export class SpecificationService {
   constructor(
-    @InjectRepository(Specification)
-    private readonly specificationRepo: Repository<Specification>,
+    @InjectRepository(ProductSpecification)
+    private readonly specificationRepo: Repository<ProductSpecification>,
     @InjectRepository(SpecificationBattery)
     private readonly specBatteryRepo: Repository<SpecificationBattery>,
     @InjectRepository(SpecificationConnectivity)
@@ -40,7 +40,7 @@ export class SpecificationService {
         return await this.dataSource
           .createQueryBuilder()
           .insert()
-          .into(Specification)
+          .into(ProductSpecification)
           .values(specificationMock)
           .execute()
       }

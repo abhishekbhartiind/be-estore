@@ -10,7 +10,7 @@ import { SpecificationDisplay } from '@feature/product/features/specification/mo
 @ObjectType()
 @InputType('SpecificationInput')
 @Entity()
-export class Specification extends BaseEntity {
+export class ProductSpecification extends BaseEntity {
   @Field(() => Int)
   @Column()
   dataRam: number

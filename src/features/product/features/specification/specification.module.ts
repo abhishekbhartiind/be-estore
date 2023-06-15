@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { Specification } from '@feature/product/features/specification/model/specification.model'
+import { ProductSpecification } from '@feature/product/features/specification/model/specification.model'
 import { SpecificationBattery } from '@feature/product/features/specification/model/battery.model'
 import { SpecificationConnectivity } from '@feature/product/features/specification/model/connectivity.model'
 import { SpecificationCPU } from '@feature/product/features/specification/model/cpu.model'
@@ -10,7 +10,7 @@ import { SpecificationService } from '@feature/product/features/specification/sp
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      Specification,
+      ProductSpecification,
       SpecificationBattery,
       SpecificationConnectivity,
       SpecificationCPU,

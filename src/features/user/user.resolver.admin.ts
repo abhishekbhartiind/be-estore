@@ -39,7 +39,7 @@ export class UserAdminResolver {
   @Mutation(() => DeleteResult)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
-  async removeUser(
+  async deleteUser(
     @Args('id', { type: () => String }) id: string,
   ): Promise<DeleteResult> {
     return await this.userService.delete(id)
