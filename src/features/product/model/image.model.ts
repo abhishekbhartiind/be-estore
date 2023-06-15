@@ -1,7 +1,7 @@
 import { InputType, ObjectType } from '@nestjs/graphql'
 import { AfterLoad, Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
 import { BaseEntity } from '@shared/models/base.model'
-import { Product } from '@feature/product/product.model'
+import { Product } from '@feature/product/model/product.model'
 
 @ObjectType()
 @InputType('ProductImageInput')

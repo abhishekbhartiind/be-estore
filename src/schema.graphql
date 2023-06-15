@@ -2,6 +2,34 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Brand {
+  created: DateTime
+  deleted: DateTime
+  id: String
+  name: String!
+  product: Product
+  updated: DateTime
+}
+
+input BrandInput {
+  name: String!
+  product: ProductInput
+}
+
+type Category {
+  created: DateTime
+  deleted: DateTime
+  id: String
+  name: String!
+  product: Product
+  updated: DateTime
+}
+
+input CategoryInput {
+  name: String!
+  product: ProductInput
+}
+
 input ChangeEmailInput {
   email: String!
   token: String!
@@ -137,8 +165,8 @@ input PaginationArgsInput {
 }
 
 type Product {
-  brand: ProductBrand!
-  category: ProductCategory!
+  brand: Brand!
+  category: Category!
   created: DateTime
   deleted: DateTime
   description: String
@@ -152,39 +180,11 @@ type Product {
   rating: [ProductRating!]
   ratingAverage: Float
   sku: String!
-  specification: ProductSpecification!
+  specification: Specification!
   stock: Int!
   thumbnail: String
   updated: DateTime
   warranty: Int
-}
-
-type ProductBrand {
-  created: DateTime
-  deleted: DateTime
-  id: String
-  name: String!
-  product: Product
-  updated: DateTime
-}
-
-input ProductBrandInput {
-  name: String!
-  product: ProductInput
-}
-
-type ProductCategory {
-  created: DateTime
-  deleted: DateTime
-  id: String
-  name: String!
-  product: Product
-  updated: DateTime
-}
-
-input ProductCategoryInput {
-  name: String!
-  product: ProductInput
 }
 
 type ProductImage {
@@ -202,8 +202,8 @@ input ProductImageInput {
 }
 
 input ProductInput {
-  brand: ProductBrandInput!
-  category: ProductCategoryInput!
+  brand: BrandInput!
+  category: CategoryInput!
   description: String
   discount: Float
   image: [ProductImageInput!]
@@ -214,7 +214,7 @@ input ProductInput {
   rating: [ProductRatingInput!]
   ratingAverage: Float
   sku: String!
-  specification: ProductSpecificationInput!
+  specification: SpecificationInput!
   stock: Int!
   thumbnail: String
   warranty: Int
@@ -236,40 +236,6 @@ input ProductRatingInput {
   star: Int!
   text: String!
   user: UserInput!
-}
-
-type ProductSpecification {
-  battery: SpecificationBattery!
-  connectivity: SpecificationConnectivity!
-  cpu: SpecificationCPU!
-  created: DateTime
-  dataRam: Int!
-  dataStorage: [Int!]!
-  deleted: DateTime
-  dimensionDepth: Float!
-  dimensionLength: Float!
-  dimensionUnit: String
-  dimensionWeight: Float!
-  dimensionWidth: Float!
-  display: SpecificationDisplay!
-  id: String
-  product: Product
-  updated: DateTime
-}
-
-input ProductSpecificationInput {
-  battery: SpecificationBatteryInput!
-  connectivity: SpecificationConnectivityInput!
-  cpu: SpecificationCPUInput!
-  dataRam: Int!
-  dataStorage: [Int!]!
-  dimensionDepth: Float!
-  dimensionLength: Float!
-  dimensionUnit: String
-  dimensionWeight: Float!
-  dimensionWidth: Float!
-  display: SpecificationDisplayInput!
-  product: ProductInput
 }
 
 type ProductsFetchResponse {
@@ -316,13 +282,32 @@ input SortArgsInput {
   sortDir: String!
 }
 
+type Specification {
+  battery: SpecificationBattery!
+  connectivity: SpecificationConnectivity!
+  cpu: SpecificationCPU!
+  created: DateTime
+  dataRam: Int!
+  dataStorage: [Int!]!
+  deleted: DateTime
+  dimensionDepth: Float!
+  dimensionLength: Float!
+  dimensionUnit: String
+  dimensionWeight: Float!
+  dimensionWidth: Float!
+  display: SpecificationDisplay!
+  id: String
+  product: Product
+  updated: DateTime
+}
+
 type SpecificationBattery {
   capacity: Int!
   chargingSpeed: Int
   created: DateTime
   deleted: DateTime
   id: String
-  productSpecification: ProductSpecification
+  productSpecification: Specification
   reverseCharging: Float
   type: String!
   updated: DateTime
@@ -332,7 +317,7 @@ type SpecificationBattery {
 input SpecificationBatteryInput {
   capacity: Int!
   chargingSpeed: Int
-  productSpecification: ProductSpecificationInput
+  productSpecification: SpecificationInput
   reverseCharging: Float
   type: String!
   wirelessCharging: Int
@@ -345,7 +330,7 @@ type SpecificationCPU {
   frequency: [Float!]
   id: String
   name: String!
-  productSpecification: ProductSpecification
+  productSpecification: Specification
   updated: DateTime
 }
 
@@ -353,7 +338,7 @@ input SpecificationCPUInput {
   cores: [Int!]
   frequency: [Float!]
   name: String!
-  productSpecification: ProductSpecificationInput
+  productSpecification: SpecificationInput
 }
 
 type SpecificationConnectivity {
@@ -364,7 +349,7 @@ type SpecificationConnectivity {
   deleted: DateTime
   id: String
   mobileStandard: String
-  productSpecification: ProductSpecification
+  productSpecification: Specification
   updated: DateTime
   wifiStandard: String
 }
@@ -374,7 +359,7 @@ input SpecificationConnectivityInput {
   bluetoothVersion: Float
   connectivity: [String!]
   mobileStandard: String
-  productSpecification: ProductSpecificationInput
+  productSpecification: SpecificationInput
   wifiStandard: String
 }
 
@@ -384,7 +369,7 @@ type SpecificationDisplay {
   deleted: DateTime
   id: String
   pixelDensity: Int
-  productSpecification: ProductSpecification
+  productSpecification: Specification
   refreshRate: Int
   resolution: String
   screenToBody: Float
@@ -395,11 +380,26 @@ type SpecificationDisplay {
 input SpecificationDisplayInput {
   aspectRatio: String
   pixelDensity: Int
-  productSpecification: ProductSpecificationInput
+  productSpecification: SpecificationInput
   refreshRate: Int
   resolution: String
   screenToBody: Float
   size: Float!
+}
+
+input SpecificationInput {
+  battery: SpecificationBatteryInput!
+  connectivity: SpecificationConnectivityInput!
+  cpu: SpecificationCPUInput!
+  dataRam: Int!
+  dataStorage: [Int!]!
+  dimensionDepth: Float!
+  dimensionLength: Float!
+  dimensionUnit: String
+  dimensionWeight: Float!
+  dimensionWidth: Float!
+  display: SpecificationDisplayInput!
+  product: ProductInput
 }
 
 type TokenVerificationResponse {

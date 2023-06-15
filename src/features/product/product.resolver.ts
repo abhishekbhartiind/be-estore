@@ -1,5 +1,8 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { Product, ProductsFetchResponse } from '@feature/product/product.model'
+import {
+  Product,
+  ProductsFetchResponse,
+} from '@feature/product/model/product.model'
 import { PaginationArgs } from '@feature/product/dto/pagination.args'
 import { SortArgs } from '@feature/product/dto/sort.args'
 import { FilterArgs } from '@feature/product/dto/filter.args'

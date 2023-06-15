@@ -1,16 +1,16 @@
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql'
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm'
-import { Product } from '@feature/product/product.model'
+import { Product } from '@feature/product/model/product.model'
 import { BaseEntity } from '@shared/models/base.model'
-import { SpecificationDisplay } from '@feature/product/model/specification/display.model'
-import { SpecificationConnectivity } from '@feature/product/model/specification/connectivity.model'
-import { SpecificationCPU } from '@feature/product/model/specification/cpu.model'
-import { SpecificationBattery } from '@feature/product/model/specification/battery.model'
+import { SpecificationBattery } from '@feature/product/features/specification/model/battery.model'
+import { SpecificationConnectivity } from '@feature/product/features/specification/model/connectivity.model'
+import { SpecificationCPU } from '@feature/product/features/specification/model/cpu.model'
+import { SpecificationDisplay } from '@feature/product/features/specification/model/display.model'
 
 @ObjectType()
-@InputType('ProductSpecificationInput')
+@InputType('SpecificationInput')
 @Entity()
-export class ProductSpecification extends BaseEntity {
+export class Specification extends BaseEntity {
   @Field(() => Int)
   @Column()
   dataRam: number

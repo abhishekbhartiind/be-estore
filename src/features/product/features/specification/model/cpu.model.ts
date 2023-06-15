@@ -1,7 +1,7 @@
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql'
 import { Column, Entity, OneToMany } from 'typeorm'
 import { BaseEntity } from '@shared/models/base.model'
-import { ProductSpecification } from '@feature/product/model/specification.model'
+import { Specification } from '@feature/product/features/specification/model/specification.model'
 
 @ObjectType()
 @InputType('SpecificationCPUInput')
@@ -17,6 +17,6 @@ export class SpecificationCPU extends BaseEntity {
   @Column()
   name: string
 
-  @OneToMany(() => ProductSpecification, (specification) => specification.cpu)
-  productSpecification?: ProductSpecification
+  @OneToMany(() => Specification, (specification) => specification.cpu)
+  productSpecification?: Specification
 }
