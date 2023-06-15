@@ -4,7 +4,7 @@ import {
   Injectable,
   OnModuleInit,
 } from '@nestjs/common'
-import { Product } from '@feature/product/product.model'
+import { Product } from '@feature/product/model/product.model'
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
 import { PaginationArgs } from '@feature/product/dto/pagination.args'
@@ -35,52 +35,34 @@ import {
   RATING_RELATIONS,
 } from '@feature/product/constant/entity-relation.constant'
 import { CreateRatingInput } from '@feature/product/dto/create-rating.input'
-import { ProductSpecification } from '@feature/product/model/specification.model'
-import { specificationMock } from '@feature/product/mock/specification.mock'
-import { SpecificationBattery } from '@feature/product/model/specification/battery.model'
-import { SpecificationConnectivity } from '@feature/product/model/specification/connectivity.model'
-import { SpecificationCPU } from '@feature/product/model/specification/cpu.model'
-import { SpecificationDisplay } from '@feature/product/model/specification/display.model'
-import { batteryMock } from '@feature/product/mock/specification/battery.mock'
-import { connectivityMock } from '@feature/product/mock/specification/connectivity.mock'
-import { cpuMock } from '@feature/product/mock/specification/cpu.mock'
-import { displayMock } from '@feature/product/mock/specification/display.mock'
 import { BrandService } from '@feature/product/features/brand/brand.service'
 import { CategoryService } from '@feature/product/features/category/category.service'
+import { SpecificationService } from '@feature/product/features/specification/specification.service'
 
 @Injectable()
 export class ProductService implements OnModuleInit {
   constructor(
+    private brandService: BrandService,
+    private categoryService: CategoryService,
+    private specificationService: SpecificationService,
     @InjectRepository(Product)
     private readonly productRepo: Repository<Product>,
     @InjectRepository(ProductImage)
     private readonly imageRepo: Repository<ProductImage>,
     @InjectRepository(ProductRating)
     private readonly ratingRepo: Repository<ProductRating>,
-    @InjectRepository(ProductSpecification)
-    private readonly specRepo: Repository<ProductSpecification>,
-    @InjectRepository(SpecificationBattery)
-    private readonly specBatteryRepo: Repository<SpecificationBattery>,
-    @InjectRepository(SpecificationConnectivity)
-    private readonly specConnRepo: Repository<SpecificationConnectivity>,
-    @InjectRepository(SpecificationCPU)
-    private readonly specCpuRepo: Repository<SpecificationCPU>,
-    @InjectRepository(SpecificationDisplay)
-    private readonly specDisplayRepo: Repository<SpecificationDisplay>,
     @InjectDataSource()
     private dataSource: DataSource,
-    private brandService: BrandService,
-    private categoryService: CategoryService,
   ) {}
 
   async onModuleInit(): Promise<void> {
     await this.brandService.insertBrands()
     await this.categoryService.insertCategories()
-    await this.insertSpecificationBatteries()
-    await this.insertSpecificationConnectivity()
-    await this.insertSpecificationCpu()
-    await this.insertSpecificationDisplay()
-    await this.insertSpecification()
+    await this.specificationService.insertSpecificationBatteries()
+    await this.specificationService.insertSpecificationConnectivity()
+    await this.specificationService.insertSpecificationCpu()
+    await this.specificationService.insertSpecificationDisplay()
+    await this.specificationService.insertSpecification()
     await this.insertProducts()
     await this.insertRatings()
   }
@@ -433,106 +415,6 @@ export class ProductService implements OnModuleInit {
           .insert()
           .into(ProductRating)
           .values(ratingMock)
-          .execute()
-      }
-    } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
-  }
-
-  /**
-   * Inserts data into `product_specification` table from `mock/specification.mock.ts`
-   * Only inserts data upon empty table
-   */
-  async insertSpecification(): Promise<any> {
-    try {
-      const spec = await this.specRepo.find()
-      if (spec.length === 0) {
-        return await this.dataSource
-          .createQueryBuilder()
-          .insert()
-          .into(ProductSpecification)
-          .values(specificationMock)
-          .execute()
-      }
-    } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
-  }
-
-  /**
-   * Inserts data into `specification_battery` table from `mock/specification/battery.mock.ts`
-   * Only inserts data upon empty table
-   */
-  async insertSpecificationBatteries(): Promise<any> {
-    try {
-      const specBattery = await this.specBatteryRepo.find()
-      if (specBattery.length === 0) {
-        return await this.dataSource
-          .createQueryBuilder()
-          .insert()
-          .into(SpecificationBattery)
-          .values(batteryMock)
-          .execute()
-      }
-    } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
-  }
-
-  /**
-   * Inserts data into `specification_connectivity` table from `mock/specification/connectivity.mock.ts`
-   * Only inserts data upon empty table
-   */
-  async insertSpecificationConnectivity(): Promise<any> {
-    try {
-      const specConnectivity = await this.specConnRepo.find()
-      if (specConnectivity.length === 0) {
-        return await this.dataSource
-          .createQueryBuilder()
-          .insert()
-          .into(SpecificationConnectivity)
-          .values(connectivityMock)
-          .execute()
-      }
-    } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
-  }
-
-  /**
-   * Inserts data into `specification_cpu` table from `mock/specification/cpu.mock.ts`
-   * Only inserts data upon empty table
-   */
-  async insertSpecificationCpu(): Promise<any> {
-    try {
-      const specCpu = await this.specCpuRepo.find()
-      if (specCpu.length === 0) {
-        return await this.dataSource
-          .createQueryBuilder()
-          .insert()
-          .into(SpecificationCPU)
-          .values(cpuMock)
-          .execute()
-      }
-    } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
-  }
-
-  /**
-   * Inserts data into `specification_display` table from `mock/specification/display.mock.ts`
-   * Only inserts data upon empty table
-   */
-  async insertSpecificationDisplay(): Promise<any> {
-    try {
-      const specDisplay = await this.specDisplayRepo.find()
-      if (specDisplay.length === 0) {
-        return await this.dataSource
-          .createQueryBuilder()
-          .insert()
-          .into(SpecificationDisplay)
-          .values(displayMock)
           .execute()
       }
     } catch (error) {
