@@ -243,9 +243,14 @@ type ProductSpecification {
   connectivity: SpecificationConnectivity!
   cpu: SpecificationCPU!
   created: DateTime
-  dataStorage: SpecificationDataStorage!
+  dataRam: Int!
+  dataStorage: [Int!]!
   deleted: DateTime
-  dimension: SpecificationDimension!
+  dimensionDepth: Float!
+  dimensionLength: Float!
+  dimensionUnit: String
+  dimensionWeight: Float!
+  dimensionWidth: Float!
   display: SpecificationDisplay!
   id: String
   product: Product
@@ -256,8 +261,13 @@ input ProductSpecificationInput {
   battery: SpecificationBatteryInput!
   connectivity: SpecificationConnectivityInput!
   cpu: SpecificationCPUInput!
-  dataStorage: SpecificationDataStorageInput!
-  dimension: SpecificationDimensionInput!
+  dataRam: Int!
+  dataStorage: [Int!]!
+  dimensionDepth: Float!
+  dimensionLength: Float!
+  dimensionUnit: String
+  dimensionWeight: Float!
+  dimensionWidth: Float!
   display: SpecificationDisplayInput!
   product: ProductInput
 }
@@ -313,7 +323,7 @@ type SpecificationBattery {
   deleted: DateTime
   id: String
   productSpecification: ProductSpecification
-  reverseCharging: Int
+  reverseCharging: Float
   type: String!
   updated: DateTime
   wirelessCharging: Int
@@ -323,16 +333,16 @@ input SpecificationBatteryInput {
   capacity: Int!
   chargingSpeed: Int
   productSpecification: ProductSpecificationInput
-  reverseCharging: Int
+  reverseCharging: Float
   type: String!
   wirelessCharging: Int
 }
 
 type SpecificationCPU {
-  cores: Int
+  cores: [Int!]
   created: DateTime
   deleted: DateTime
-  frequency: Float
+  frequency: [Float!]
   id: String
   name: String!
   productSpecification: ProductSpecification
@@ -340,8 +350,8 @@ type SpecificationCPU {
 }
 
 input SpecificationCPUInput {
-  cores: Int
-  frequency: Float
+  cores: [Int!]
+  frequency: [Float!]
   name: String!
   productSpecification: ProductSpecificationInput
 }
@@ -349,7 +359,7 @@ input SpecificationCPUInput {
 type SpecificationConnectivity {
   audio: String
   bluetoothVersion: Float
-  connectivity: String
+  connectivity: [String!]
   created: DateTime
   deleted: DateTime
   id: String
@@ -362,68 +372,32 @@ type SpecificationConnectivity {
 input SpecificationConnectivityInput {
   audio: String
   bluetoothVersion: Float
-  connectivity: String
+  connectivity: [String!]
   mobileStandard: String
   productSpecification: ProductSpecificationInput
   wifiStandard: String
 }
 
-type SpecificationDataStorage {
-  created: DateTime
-  deleted: DateTime
-  id: String
-  productSpecification: ProductSpecification
-  ram: Int!
-  storage: Int!
-  updated: DateTime
-}
-
-input SpecificationDataStorageInput {
-  productSpecification: ProductSpecificationInput
-  ram: Int!
-  storage: Int!
-}
-
-type SpecificationDimension {
-  created: DateTime
-  deleted: DateTime
-  depth: Float!
-  id: String
-  length: Float!
-  productSpecification: ProductSpecification
-  unit: String
-  updated: DateTime
-  weight: Float!
-  width: Float!
-}
-
-input SpecificationDimensionInput {
-  depth: Float!
-  length: Float!
-  productSpecification: ProductSpecificationInput
-  unit: String
-  weight: Float!
-  width: Float!
-}
-
 type SpecificationDisplay {
-  aspectRatio: Float
+  aspectRatio: String
   created: DateTime
   deleted: DateTime
   id: String
   pixelDensity: Int
   productSpecification: ProductSpecification
   refreshRate: Int
+  resolution: String
   screenToBody: Float
   size: Float!
   updated: DateTime
 }
 
 input SpecificationDisplayInput {
-  aspectRatio: Float
+  aspectRatio: String
   pixelDensity: Int
   productSpecification: ProductSpecificationInput
   refreshRate: Int
+  resolution: String
   screenToBody: Float
   size: Float!
 }
