@@ -2,17 +2,25 @@ import { Field, InputType, Int } from '@nestjs/graphql'
 
 @InputType()
 export class CreateProductInput {
-  name: string
-  description?: string
-  thumbnail?: string
-  price: number
-  discount?: number
-  specificationId: string
+  batteryId: string
   brandId: string
   categoryId: string
-  imageArray: string[]
-  @Field(() => Int)
-  stock: number
+  connectivityId: string
+  cpuId: string
+  description?: string
+  discount?: number
+  displayId: string
+  imageArray?: string[]
+  name: string
+  price: number
   @Field(() => Int)
   ram?: number
+  @Field(() => Int)
+  stock: number
+  thumbnail?: string
 }
+
+/*
+*
+  @Field(() => Int)
+  * */
