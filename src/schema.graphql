@@ -2,27 +2,9 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Brand {
-  created: DateTime
-  deleted: DateTime
-  id: String
-  name: String!
-  product: Product
-  updated: DateTime
-}
-
 input BrandInput {
   name: String!
   product: ProductInput
-}
-
-type Category {
-  created: DateTime
-  deleted: DateTime
-  id: String
-  name: String!
-  product: Product
-  updated: DateTime
 }
 
 input CategoryInput {
@@ -38,6 +20,23 @@ input ChangeEmailInput {
 input ChangePasswordInput {
   password: String!
   token: String!
+}
+
+input CreateProductInput {
+  batteryId: String!
+  brandId: String!
+  categoryId: String!
+  connectivityId: String!
+  cpuId: String!
+  description: String
+  discount: Float
+  displayId: String!
+  imageArray: [String!]
+  name: String!
+  price: Float!
+  ram: Int
+  stock: Int!
+  thumbnail: String
 }
 
 input CreateRatingInput {
@@ -59,7 +58,7 @@ input CreateUserInput {
   passwordToken: String
   passwordTokenCreated: DateTime
   phone: String
-  rating: [ProductRatingInput!]
+  rating: [RatingInput!]
   role: Role
   title: String
   username: String
@@ -114,22 +113,26 @@ type Mutation {
   activateCustomer(token: String!): User!
   changeEmail(data: ChangeEmailInput!): UpdateResult!
   changePassword(data: ChangePasswordInput!): UpdateResult!
-  createBrand(name: String!): Brand!
-  createCategory(name: String!): Category!
+  createBrand(name: String!): ProductBrand!
+  createCategory(name: String!): ProductCategory!
+  createProduct(data: CreateProductInput!): Product!
   createRating(data: CreateRatingInput!): ProductRating!
-  removeBrand(id: String!): DeleteResult!
-  removeCategory(id: String!): DeleteResult!
-  removeCustomer: DeleteResult!
-  removeUser(id: String!): DeleteResult!
+  deleteBrand(id: String!): DeleteResult!
+  deleteCategory(id: String!): DeleteResult!
+  deleteCustomer: DeleteResult!
+  deleteProduct(id: String!): DeleteResult!
+  deleteUser(id: String!): DeleteResult!
   restoreBrand(id: String!): UpdateResult!
   restoreCategory(id: String!): UpdateResult!
   restoreCustomer: UpdateResult!
+  restoreProduct(id: String!): UpdateResult!
   restoreUser(id: String!): UpdateResult!
   signIn(data: LoginUserInput!): LoginResponse
   signUp(data: CreateUserInput!): RegisterResponse!
   updateBrand(id: String!, name: String!): UpdateResult!
   updateCategory(id: String!, name: String!): UpdateResult!
   updateCustomer(data: UpdateUserInput!): User!
+  updateProduct(data: UpdateProductInput!, id: String!): UpdateResult!
   updateUser(data: UpdateUserInput!, id: String!): User!
 }
 
@@ -173,8 +176,8 @@ input PaginationArgsInput {
 }
 
 type Product {
-  brand: Brand!
-  category: Category!
+  brand: ProductBrand!
+  category: ProductCategory!
   created: DateTime
   deleted: DateTime
   description: String
@@ -188,11 +191,29 @@ type Product {
   rating: [ProductRating!]
   ratingAverage: Float
   sku: String!
-  specification: Specification!
+  specification: ProductSpecification!
   stock: Int!
   thumbnail: String
   updated: DateTime
   warranty: Int
+}
+
+type ProductBrand {
+  created: DateTime
+  deleted: DateTime
+  id: String
+  name: String!
+  product: Product
+  updated: DateTime
+}
+
+type ProductCategory {
+  created: DateTime
+  deleted: DateTime
+  id: String
+  name: String!
+  product: Product
+  updated: DateTime
 }
 
 type ProductImage {
@@ -219,7 +240,7 @@ input ProductInput {
   order: [OrderHasProductInput!]
   osUpgradable: Float
   price: Float!
-  rating: [ProductRatingInput!]
+  rating: [RatingInput!]
   ratingAverage: Float
   sku: String!
   specification: SpecificationInput!
@@ -239,11 +260,23 @@ type ProductRating {
   user: User!
 }
 
-input ProductRatingInput {
-  product: ProductInput!
-  star: Int!
-  text: String!
-  user: UserInput!
+type ProductSpecification {
+  battery: SpecificationBattery!
+  connectivity: SpecificationConnectivity!
+  cpu: SpecificationCPU!
+  created: DateTime
+  dataRam: Int!
+  dataStorage: [Int!]!
+  deleted: DateTime
+  dimensionDepth: Float!
+  dimensionLength: Float!
+  dimensionUnit: String
+  dimensionWeight: Float!
+  dimensionWidth: Float!
+  display: SpecificationDisplay!
+  id: String
+  product: Product
+  updated: DateTime
 }
 
 type ProductsFetchResponse {
@@ -263,17 +296,24 @@ input ProductsFetchResponseInput {
 }
 
 type Query {
-  brands: [Brand!]!
-  categories: [Category!]!
+  brands: [ProductBrand!]!
+  categories: [ProductCategory!]!
   fetchCustomer: User!
   product(id: String!): Product!
   products(filterArgs: FilterArgsInput, paginationArgs: PaginationArgsInput, sortArgs: SortArgsInput): ProductsFetchResponse!
-  ratings: [ProductRating!]!
+  ratings(productId: String!): [ProductRating!]!
   requestEmailChange(email: String!): EmailResponse!
   requestPasswordChange(email: String!): EmailResponse!
   user(id: String!): User!
   users: [User!]!
   verifyToken(token: String!, tokenOption: String!): TokenVerificationResponse!
+}
+
+input RatingInput {
+  product: ProductInput!
+  star: Int!
+  text: String!
+  user: UserInput!
 }
 
 type RegisterResponse {
@@ -292,32 +332,13 @@ input SortArgsInput {
   sortDir: String!
 }
 
-type Specification {
-  battery: SpecificationBattery!
-  connectivity: SpecificationConnectivity!
-  cpu: SpecificationCPU!
-  created: DateTime
-  dataRam: Int!
-  dataStorage: [Int!]!
-  deleted: DateTime
-  dimensionDepth: Float!
-  dimensionLength: Float!
-  dimensionUnit: String
-  dimensionWeight: Float!
-  dimensionWidth: Float!
-  display: SpecificationDisplay!
-  id: String
-  product: Product
-  updated: DateTime
-}
-
 type SpecificationBattery {
   capacity: Int!
   chargingSpeed: Int
   created: DateTime
   deleted: DateTime
   id: String
-  productSpecification: Specification
+  productSpecification: ProductSpecification
   reverseCharging: Float
   type: String!
   updated: DateTime
@@ -340,7 +361,7 @@ type SpecificationCPU {
   frequency: [Float!]
   id: String
   name: String!
-  productSpecification: Specification
+  productSpecification: ProductSpecification
   updated: DateTime
 }
 
@@ -359,7 +380,7 @@ type SpecificationConnectivity {
   deleted: DateTime
   id: String
   mobileStandard: String
-  productSpecification: Specification
+  productSpecification: ProductSpecification
   updated: DateTime
   wifiStandard: String
 }
@@ -379,7 +400,7 @@ type SpecificationDisplay {
   deleted: DateTime
   id: String
   pixelDensity: Int
-  productSpecification: Specification
+  productSpecification: ProductSpecification
   refreshRate: Int
   resolution: String
   screenToBody: Float
@@ -416,6 +437,23 @@ type TokenVerificationResponse {
   valid: Boolean!
 }
 
+input UpdateProductInput {
+  batteryId: String
+  brandId: String
+  categoryId: String
+  connectivityId: String
+  cpuId: String
+  description: String
+  discount: Float
+  displayId: String
+  imageArray: [String!]
+  name: String
+  price: Float
+  ram: Int
+  stock: Int
+  thumbnail: String
+}
+
 type UpdateResult {
   affected: Int!
   generatedMaps: [String!]!
@@ -438,7 +476,7 @@ input UpdateUserInput {
   passwordToken: String
   passwordTokenCreated: DateTime
   phone: String
-  rating: [ProductRatingInput!]
+  rating: [RatingInput!]
   role: Role
   title: String
   updated: DateTime
@@ -481,7 +519,7 @@ input UserInput {
   passwordToken: String
   passwordTokenCreated: DateTime
   phone: String
-  rating: [ProductRatingInput!]
+  rating: [RatingInput!]
   role: Role
   title: String
   username: String
