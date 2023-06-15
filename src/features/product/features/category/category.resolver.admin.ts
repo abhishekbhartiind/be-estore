@@ -9,7 +9,7 @@ import { Category } from '@feature/product/features/category/category.model'
 import { CategoryService } from '@feature/product/features/category/category.service'
 
 @Resolver(() => Category)
-export class CategoryResolverAdmin {
+export class CategoryAdminResolver {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Mutation(() => Category)
