@@ -1,15 +1,12 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { Brand } from '@feature/product/features/brand/brand.model'
 import { BrandService } from '@feature/product/features/brand/brand.service'
-import { Product } from '@feature/product/model/product.model'
 import { UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from '@shared/features/auth/guard/jwt-auth.guard'
 import { RoleGuard } from '@shared/features/auth/guard/role.guard'
 import { HasRoles } from '@shared/decorator/role.decorator'
 import { Role } from '@feature/user/enum/role.enum'
-import { CreateProductInput } from '@feature/product/dto/create-product.input'
 import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
-import { UpdateProductInput } from '@feature/product/dto/update-product.input'
 
 @Resolver(() => Brand)
 export class BrandAdminResolver {
