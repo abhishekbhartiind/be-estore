@@ -1,4 +1,4 @@
-import { Field, InputType, Int, ObjectType } from '@nestjs/graphql'
+import { InputType, ObjectType } from '@nestjs/graphql'
 import { Column, Entity, OneToMany } from 'typeorm'
 import { BaseEntity } from '@shared/models/base.model'
 import { ProductSpecification } from '@feature/product/model/specification.model'
@@ -10,8 +10,8 @@ export class SpecificationConnectivity extends BaseEntity {
   @Column()
   mobileStandard?: string
 
-  @Column()
-  connectivity?: string
+  @Column('text', { array: true })
+  connectivity?: string[]
 
   @Column()
   wifiStandard?: string

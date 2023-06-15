@@ -7,12 +7,12 @@ import { ProductSpecification } from '@feature/product/model/specification.model
 @InputType('SpecificationCPUInput')
 @Entity()
 export class SpecificationCPU extends BaseEntity {
-  @Field(() => Int)
+  @Field(() => [Int])
   @Column()
   cores?: number
 
-  @Column({ type: 'float' })
-  frequency?: number
+  @Column('float', { array: true })
+  frequency?: number[]
 
   @Column()
   name: string

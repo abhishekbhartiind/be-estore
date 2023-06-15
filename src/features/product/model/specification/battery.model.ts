@@ -15,8 +15,7 @@ export class SpecificationBattery extends BaseEntity {
   @Column()
   chargingSpeed?: number
 
-  @Field(() => Int)
-  @Column()
+  @Column({ type: 'float' })
   reverseCharging?: number
 
   @Column({ type: 'varchar', length: 12 })

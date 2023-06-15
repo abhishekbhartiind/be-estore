@@ -7,8 +7,8 @@ import { ProductSpecification } from '@feature/product/model/specification.model
 @InputType('SpecificationDisplayInput')
 @Entity()
 export class SpecificationDisplay extends BaseEntity {
-  @Column({ type: 'float' })
-  aspectRatio?: number
+  @Column()
+  aspectRatio?: string
 
   @Field(() => Int)
   @Column()
@@ -17,6 +17,9 @@ export class SpecificationDisplay extends BaseEntity {
   @Field(() => Int)
   @Column()
   refreshRate?: number
+
+  @Column()
+  resolution?: string
 
   @Column({ type: 'numeric', precision: 3, scale: 1 })
   screenToBody?: number
