@@ -34,7 +34,7 @@ export class UserResolver {
   @Mutation(() => DeleteResult)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.CUSTOMER)
-  async removeCustomer(@CurrentUser() user: User): Promise<DeleteResult> {
+  async deleteCustomer(@CurrentUser() user: User): Promise<DeleteResult> {
     return await this.userService.delete(user.id as string)
   }
 

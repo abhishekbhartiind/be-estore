@@ -36,7 +36,7 @@ export class ProductAdminResolver {
   @Mutation(() => DeleteResult)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
-  async removeProduct(@Args('id') id: string): Promise<DeleteResult> {
+  async deleteProduct(@Args('id') id: string): Promise<DeleteResult> {
     return await this.productService.delete(id)
   }
 

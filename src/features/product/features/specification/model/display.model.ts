@@ -1,7 +1,7 @@
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql'
 import { Column, Entity, OneToMany } from 'typeorm'
 import { BaseEntity } from '@shared/models/base.model'
-import { Specification } from '@feature/product/features/specification/model/specification.model'
+import { ProductSpecification } from '@feature/product/features/specification/model/specification.model'
 
 @ObjectType()
 @InputType('SpecificationDisplayInput')
@@ -27,6 +27,9 @@ export class SpecificationDisplay extends BaseEntity {
   @Column({ type: 'numeric', precision: 3, scale: 1 })
   size: number
 
-  @OneToMany(() => Specification, (specification) => specification.display)
-  productSpecification?: Specification
+  @OneToMany(
+    () => ProductSpecification,
+    (specification) => specification.display,
+  )
+  productSpecification?: ProductSpecification
 }

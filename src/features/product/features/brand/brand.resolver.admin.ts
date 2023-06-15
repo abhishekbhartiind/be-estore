@@ -1,5 +1,5 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
-import { Brand } from '@feature/product/features/brand/brand.model'
+import { ProductBrand } from '@feature/product/features/brand/brand.model'
 import { BrandService } from '@feature/product/features/brand/brand.service'
 import { UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from '@shared/features/auth/guard/jwt-auth.guard'
@@ -8,14 +8,14 @@ import { HasRoles } from '@shared/decorator/role.decorator'
 import { Role } from '@feature/user/enum/role.enum'
 import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
 
-@Resolver(() => Brand)
+@Resolver(() => ProductBrand)
 export class BrandAdminResolver {
   constructor(private readonly brandService: BrandService) {}
 
-  @Mutation(() => Brand)
+  @Mutation(() => ProductBrand)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
-  async createBrand(@Args('name') name: string): Promise<Brand> {
+  async createBrand(@Args('name') name: string): Promise<ProductBrand> {
     return this.brandService.save(name)
   }
 
@@ -32,7 +32,7 @@ export class BrandAdminResolver {
   @Mutation(() => DeleteResult)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
-  async removeBrand(@Args('id') id: string): Promise<DeleteResult> {
+  async deleteBrand(@Args('id') id: string): Promise<DeleteResult> {
     return await this.brandService.delete(id)
   }
 
