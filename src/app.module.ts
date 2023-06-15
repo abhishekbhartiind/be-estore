@@ -28,6 +28,7 @@ import { SpecificationModule } from '@feature/product/features/specification/spe
       useClass: DatabaseConfig,
     }),
     AuthModule,
+    MailModule,
     BrandModule,
     CategoryModule,
     SpecificationModule,
