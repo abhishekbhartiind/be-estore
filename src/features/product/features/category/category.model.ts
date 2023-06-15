@@ -4,9 +4,9 @@ import { Product } from '@feature/product/product.model'
 import { BaseEntity } from '@shared/models/base.model'
 
 @ObjectType()
-@InputType('ProductCategoryInput')
+@InputType('CategoryInput')
 @Entity()
-export class ProductCategory extends BaseEntity {
+export class Category extends BaseEntity {
   @Column()
   name: string
 

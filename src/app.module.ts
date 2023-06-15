@@ -11,6 +11,7 @@ import { MailModule } from '@shared/features/mail/mail.module'
 import { AuthModule } from '@shared/features/auth/auth.module'
 import { OrderModule } from '@feature/order/order.module'
 import { BrandModule } from '@feature/product/features/brand/brand.module'
+import { CategoryModule } from '@feature/product/features/category/category.module'
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { BrandModule } from '@feature/product/features/brand/brand.module'
     }),
     AuthModule,
     BrandModule,
+    CategoryModule,
     MailModule,
     OrderModule,
     ProductModule,

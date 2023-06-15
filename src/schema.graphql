@@ -2,6 +2,34 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Brand {
+  created: DateTime
+  deleted: DateTime
+  id: String
+  name: String!
+  product: Product
+  updated: DateTime
+}
+
+input BrandInput {
+  name: String!
+  product: ProductInput
+}
+
+type Category {
+  created: DateTime
+  deleted: DateTime
+  id: String
+  name: String!
+  product: Product
+  updated: DateTime
+}
+
+input CategoryInput {
+  name: String!
+  product: ProductInput
+}
+
 input ChangeEmailInput {
   email: String!
   token: String!
@@ -137,8 +165,8 @@ input PaginationArgsInput {
 }
 
 type Product {
-  brand: ProductBrand!
-  category: ProductCategory!
+  brand: Brand!
+  category: Category!
   created: DateTime
   deleted: DateTime
   description: String
@@ -159,34 +187,6 @@ type Product {
   warranty: Int
 }
 
-type ProductBrand {
-  created: DateTime
-  deleted: DateTime
-  id: String
-  name: String!
-  product: Product
-  updated: DateTime
-}
-
-input ProductBrandInput {
-  name: String!
-  product: ProductInput
-}
-
-type ProductCategory {
-  created: DateTime
-  deleted: DateTime
-  id: String
-  name: String!
-  product: Product
-  updated: DateTime
-}
-
-input ProductCategoryInput {
-  name: String!
-  product: ProductInput
-}
-
 type ProductImage {
   created: DateTime
   deleted: DateTime
@@ -202,8 +202,8 @@ input ProductImageInput {
 }
 
 input ProductInput {
-  brand: ProductBrandInput!
-  category: ProductCategoryInput!
+  brand: BrandInput!
+  category: CategoryInput!
   description: String
   discount: Float
   image: [ProductImageInput!]

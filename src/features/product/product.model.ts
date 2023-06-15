@@ -4,10 +4,10 @@ import { Field, InputType, Int, ObjectType } from '@nestjs/graphql'
 import { FetchResponse } from '@feature/product/dto/fetch-response.entity'
 import { ProductRating } from '@feature/product/model/rating.model'
 import { ProductImage } from '@feature/product/model/image.model'
-import { ProductCategory } from '@feature/product/model/category.model'
 import { ProductSpecification } from '@feature/product/model/specification.model'
 import { OrderHasProduct } from '@feature/order/model/order-has-product.model'
 import { Brand } from '@feature/product/features/brand/brand.model'
+import { Category } from '@feature/product/features/category/category.model'
 
 @ObjectType()
 @InputType('ProductInput')
@@ -53,14 +53,14 @@ export class Product extends BaseEntity {
   })
   brand: Brand
 
-  @ManyToOne(() => ProductCategory, (category) => category.product, {
+  @ManyToOne(() => Category, (category) => category.product, {
     eager: true,
     cascade: true,
   })
   @JoinColumn({
     foreignKeyConstraintName: 'FK_product_category',
   })
-  category: ProductCategory
+  category: Category
 
   @OneToMany(() => ProductImage, (image) => image.product, {
     eager: true,
