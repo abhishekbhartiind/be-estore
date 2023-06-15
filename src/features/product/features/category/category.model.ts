@@ -6,7 +6,7 @@ import { BaseEntity } from '@shared/models/base.model'
 @ObjectType()
 @InputType('CategoryInput')
 @Entity()
-export class Category extends BaseEntity {
+export class ProductCategory extends BaseEntity {
   @Column()
   name: string
 

@@ -6,7 +6,7 @@ import { BaseEntity } from '@shared/models/base.model'
 @ObjectType()
 @InputType('BrandInput')
 @Entity()
-export class Brand extends BaseEntity {
+export class ProductBrand extends BaseEntity {
   @Column()
   name: string
 

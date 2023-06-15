@@ -7,8 +7,8 @@ import {
   registerEnumType,
 } from '@nestjs/graphql'
 import { Role } from '@feature/user/enum/role.enum'
-import { Order } from '@feature/order/order.model'
 import { ProductRating } from '@feature/product/features/rating/rating.model'
+import { Order } from '@feature/order/order.model'
 
 registerEnumType(Role, {
   name: 'Role',

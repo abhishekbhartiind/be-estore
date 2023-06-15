@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
-import { Category } from '@feature/product/features/category/category.model'
+import { ProductCategory } from '@feature/product/features/category/category.model'
 import { categoryMock } from '@feature/product/features/category/category.mock'
 import { RECORD_NOT_FOUND } from '@shared/constant/error.constant'
 import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
@@ -9,8 +9,8 @@ import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
 @Injectable()
 export class CategoryService {
   constructor(
-    @InjectRepository(Category)
-    private readonly categoryRepo: Repository<Category>,
+    @InjectRepository(ProductCategory)
+    private readonly categoryRepo: Repository<ProductCategory>,
     @InjectDataSource()
     private dataSource: DataSource,
   ) {}
@@ -30,7 +30,7 @@ export class CategoryService {
    * Saves a record
    * @param name Category name
    */
-  async save(name: string): Promise<Category> {
+  async save(name: string): Promise<ProductCategory> {
     try {
       const category = await this.categoryRepo.save({
         name,
@@ -38,7 +38,7 @@ export class CategoryService {
 
       return (await this.categoryRepo.findOne({
         where: { id: category.id },
-      })) as Category
+      })) as ProductCategory
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
     }
@@ -106,7 +106,7 @@ export class CategoryService {
         return await this.dataSource
           .createQueryBuilder()
           .insert()
-          .into(Category)
+          .into(ProductCategory)
           .values(categoryMock)
           .execute()
       }
