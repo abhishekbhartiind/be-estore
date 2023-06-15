@@ -3,6 +3,8 @@ import { InjectDataSource, InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
 import { Category } from '@feature/product/features/category/category.model'
 import { categoryMock } from '@feature/product/features/category/category.mock'
+import { RECORD_NOT_FOUND } from '@shared/constant/error.constant'
+import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
 
 @Injectable()
 export class CategoryService {
@@ -19,6 +21,75 @@ export class CategoryService {
   async fetch(): Promise<any> {
     try {
       return this.categoryRepo.find()
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Saves a record
+   * @param name Category name
+   */
+  async save(name: string): Promise<Category> {
+    try {
+      const category = await this.categoryRepo.save({
+        name,
+      })
+
+      return (await this.categoryRepo.findOne({
+        where: { id: category.id },
+      })) as Category
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Updates record by identifier
+   * @param id  Record identifier to be updated
+   * @param name Category name
+   */
+  async update(id: string, name: string): Promise<UpdateResult> {
+    try {
+      const foundCategory = await this.categoryRepo.findOne({
+        where: { id },
+      })
+      if (!foundCategory)
+        throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND)
+
+      return await this.categoryRepo.update({ id }, { name })
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Deletes a record by identifier
+   * @param id Record identifier
+   */
+  async delete(id: string): Promise<DeleteResult> {
+    try {
+      const category = await this.categoryRepo.findOne({ where: { id } })
+      if (!category)
+        throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND)
+
+      return await this.categoryRepo.softDelete(id)
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Restores a record by identifier
+   * @param id Record identifier to be restored
+   */
+  async restore(id: string): Promise<UpdateResult> {
+    try {
+      const category = await this.categoryRepo.restore(id)
+      if (!category)
+        throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND)
+
+      return category
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
     }
