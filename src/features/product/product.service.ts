@@ -37,8 +37,6 @@ import {
 import { CreateRatingInput } from '@feature/product/dto/create-rating.input'
 import { ProductCategory } from '@feature/product/model/category.model'
 import { categoryMock } from '@feature/product/mock/category.mock'
-import { ProductBrand } from '@feature/product/model/brand.model'
-import { brandMock } from '@feature/product/mock/brand.mock'
 import { ProductSpecification } from '@feature/product/model/specification.model'
 import { specificationMock } from '@feature/product/mock/specification.mock'
 import { SpecificationBattery } from '@feature/product/model/specification/battery.model'
@@ -49,14 +47,13 @@ import { batteryMock } from '@feature/product/mock/specification/battery.mock'
 import { connectivityMock } from '@feature/product/mock/specification/connectivity.mock'
 import { cpuMock } from '@feature/product/mock/specification/cpu.mock'
 import { displayMock } from '@feature/product/mock/specification/display.mock'
+import { BrandService } from '@feature/product/features/brand/brand.service'
 
 @Injectable()
 export class ProductService implements OnModuleInit {
   constructor(
     @InjectRepository(Product)
     private readonly productRepo: Repository<Product>,
-    @InjectRepository(ProductBrand)
-    private readonly brandRepo: Repository<ProductBrand>,
     @InjectRepository(ProductCategory)
     private readonly categoryRepo: Repository<ProductCategory>,
     @InjectRepository(ProductImage)
@@ -75,10 +72,11 @@ export class ProductService implements OnModuleInit {
     private readonly specDisplayRepo: Repository<SpecificationDisplay>,
     @InjectDataSource()
     private dataSource: DataSource,
+    private brandService: BrandService,
   ) {}
 
   async onModuleInit(): Promise<void> {
-    await this.insertBrands()
+    await this.brandService.insertBrands()
     await this.insertCategories()
     await this.insertSpecificationBatteries()
     await this.insertSpecificationConnectivity()
@@ -387,26 +385,6 @@ export class ProductService implements OnModuleInit {
         where: { id: rating.id },
         relations: RATING_RELATIONS,
       })) as ProductRating
-    } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
-  }
-
-  /**
-   * Inserts data into `brand` table from `brand.mock.ts`
-   * Only inserts data upon empty table
-   */
-  async insertBrands(): Promise<any> {
-    try {
-      const brands = await this.brandRepo.find()
-      if (brands.length === 0) {
-        return await this.dataSource
-          .createQueryBuilder()
-          .insert()
-          .into(ProductBrand)
-          .values(brandMock)
-          .execute()
-      }
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
     }

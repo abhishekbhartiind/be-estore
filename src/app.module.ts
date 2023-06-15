@@ -10,6 +10,7 @@ import { UserModule } from '@feature/user/user.module'
 import { MailModule } from '@shared/features/mail/mail.module'
 import { AuthModule } from '@shared/features/auth/auth.module'
 import { OrderModule } from '@feature/order/order.module'
+import { BrandModule } from '@feature/product/features/brand/brand.module'
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { OrderModule } from '@feature/order/order.module'
       useClass: DatabaseConfig,
     }),
     AuthModule,
+    BrandModule,
     MailModule,
     OrderModule,
     ProductModule,
