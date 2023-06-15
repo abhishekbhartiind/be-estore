@@ -225,13 +225,32 @@ export class ProductService implements OnModuleInit {
    */
   async save(_product: CreateProductInput): Promise<Product> {
     try {
-      const { imageArray, ...rest } = _product
+      const {
+        batteryId,
+        brandId,
+        categoryId,
+        connectivityId,
+        cpuId,
+        displayId,
+        imageArray,
+        ...rest
+      } = _product
 
       const product = await this.productRepo.save({
+        ...(brandId && { brand: { id: brandId } }),
+        ...(categoryId && { category: { id: categoryId } }),
+        ...((batteryId || connectivityId || cpuId || displayId) && {
+          specification: {
+            ...(batteryId && { battery: { id: batteryId } }),
+            ...(connectivityId && { connectivity: { id: connectivityId } }),
+            ...(cpuId && { cpu: { id: cpuId } }),
+            ...(displayId && { display: { id: displayId } }),
+          },
+        }),
         ...rest,
       })
 
-      if (Array.isArray(imageArray)) {
+      if (imageArray && Array.isArray(imageArray)) {
         imageArray.map(async (url) => {
           await this.imageRepo.save({ url, product })
         })
@@ -261,7 +280,16 @@ export class ProductService implements OnModuleInit {
       if (!foundProduct)
         throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND)
 
-      const { imageArray, ...rest } = product
+      const {
+        batteryId,
+        brandId,
+        categoryId,
+        connectivityId,
+        cpuId,
+        displayId,
+        imageArray,
+        ...rest
+      } = product
 
       if (Array.isArray(imageArray)) {
         imageArray.map(async (url) => {
@@ -272,6 +300,16 @@ export class ProductService implements OnModuleInit {
       return await this.productRepo.update(
         { id },
         {
+          ...(brandId && { brand: { id: brandId } }),
+          ...(categoryId && { category: { id: categoryId } }),
+          ...((batteryId || connectivityId || cpuId || displayId) && {
+            specification: {
+              ...(batteryId && { battery: { id: batteryId } }),
+              ...(connectivityId && { connectivity: { id: connectivityId } }),
+              ...(cpuId && { cpu: { id: cpuId } }),
+              ...(displayId && { display: { id: displayId } }),
+            },
+          }),
           ...rest,
         },
       )
