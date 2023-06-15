@@ -56,15 +56,14 @@ export class ProductService implements OnModuleInit {
   ) {}
 
   async onModuleInit(): Promise<void> {
-    await this.brandService.insertBrands()
-    await this.categoryService.insertCategories()
-    await this.specificationService.insertSpecificationBatteries()
-    await this.specificationService.insertSpecificationConnectivity()
-    await this.specificationService.insertSpecificationCpu()
-    await this.specificationService.insertSpecificationDisplay()
-    await this.specificationService.insertSpecification()
-    await this.insertProducts()
-    await this.insertRatings()
+    await this.brandService.mockBrands()
+    await this.categoryService.mockCategories()
+    await this.specificationService.mockConnections()
+    await this.specificationService.mockCpus()
+    await this.specificationService.mockDisplays()
+    await this.specificationService.mockSpecifications()
+    await this.mockProducts()
+    await this.mockRatings()
   }
 
   /**
@@ -374,7 +373,7 @@ export class ProductService implements OnModuleInit {
    * Inserts data into `product` table from `product.mock.ts`
    * Only inserts data upon empty table
    */
-  async insertProducts(): Promise<any> {
+  async mockProducts(): Promise<any> {
     try {
       const products = await this.productRepo.find()
       if (products.length === 0) {
@@ -406,7 +405,7 @@ export class ProductService implements OnModuleInit {
    * Inserts data into `rating` table from `rating.mock.ts`
    * Only inserts data upon empty table
    */
-  async insertRatings(): Promise<any> {
+  async mockRatings(): Promise<any> {
     try {
       const ratings = await this.ratingRepo.find()
       if (ratings.length <= 0) {

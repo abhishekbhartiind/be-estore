@@ -14,10 +14,21 @@ export class BrandService {
   ) {}
 
   /**
+   * Fetches all brand records
+   */
+  async fetch(): Promise<any> {
+    try {
+      return this.brandRepo.find()
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
    * Inserts data into `brand` table from `brand.mock.ts`
    * Only inserts data upon empty table
    */
-  async insertBrands(): Promise<any> {
+  async mockBrands(): Promise<any> {
     try {
       const brands = await this.brandRepo.find()
       if (brands.length === 0) {

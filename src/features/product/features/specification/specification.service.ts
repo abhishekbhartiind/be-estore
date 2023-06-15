@@ -33,7 +33,7 @@ export class SpecificationService {
    * Inserts data into `product_specification` table from `mock/specification.mock.ts`
    * Only inserts data upon empty table
    */
-  async insertSpecification(): Promise<any> {
+  async mockSpecifications(): Promise<any> {
     try {
       const spec = await this.specificationRepo.find()
       if (spec.length === 0) {
@@ -53,7 +53,7 @@ export class SpecificationService {
    * Inserts data into `specification_battery` table from `mock/specification/battery.mock.ts`
    * Only inserts data upon empty table
    */
-  async insertSpecificationBatteries(): Promise<any> {
+  async mockBatteries(): Promise<any> {
     try {
       const specBattery = await this.specBatteryRepo.find()
       if (specBattery.length === 0) {
@@ -73,7 +73,7 @@ export class SpecificationService {
    * Inserts data into `specification_connectivity` table from `mock/specification/connectivity.mock.ts`
    * Only inserts data upon empty table
    */
-  async insertSpecificationConnectivity(): Promise<any> {
+  async mockConnections(): Promise<any> {
     try {
       const specConnectivity = await this.specConnRepo.find()
       if (specConnectivity.length === 0) {
@@ -93,7 +93,7 @@ export class SpecificationService {
    * Inserts data into `specification_cpu` table from `mock/specification/cpu.mock.ts`
    * Only inserts data upon empty table
    */
-  async insertSpecificationCpu(): Promise<any> {
+  async mockCpus(): Promise<any> {
     try {
       const specCpu = await this.specCpuRepo.find()
       if (specCpu.length === 0) {
@@ -113,7 +113,7 @@ export class SpecificationService {
    * Inserts data into `specification_display` table from `mock/specification/display.mock.ts`
    * Only inserts data upon empty table
    */
-  async insertSpecificationDisplay(): Promise<any> {
+  async mockDisplays(): Promise<any> {
     try {
       const specDisplay = await this.specDisplayRepo.find()
       if (specDisplay.length === 0) {

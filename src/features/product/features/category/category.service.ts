@@ -14,10 +14,21 @@ export class CategoryService {
   ) {}
 
   /**
+   * Fetches all category records
+   */
+  async fetch(): Promise<any> {
+    try {
+      return this.categoryRepo.find()
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
    * Inserts data into `category` table from `category.mock.ts`
    * Only inserts data upon empty table
    */
-  async insertCategories(): Promise<any> {
+  async mockCategories(): Promise<any> {
     try {
       const categories = await this.categoryRepo.find()
       if (categories.length === 0) {
