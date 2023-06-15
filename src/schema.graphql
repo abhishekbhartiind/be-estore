@@ -239,17 +239,37 @@ input ProductRatingInput {
 }
 
 type ProductSpecification {
+  battery: SpecificationBattery!
+  connectivity: SpecificationConnectivity!
+  cpu: SpecificationCPU!
   created: DateTime
+  dataRam: Int!
+  dataStorage: [Int!]!
   deleted: DateTime
+  dimensionDepth: Float!
+  dimensionLength: Float!
+  dimensionUnit: String
+  dimensionWeight: Float!
+  dimensionWidth: Float!
+  display: SpecificationDisplay!
   id: String
   product: Product
   updated: DateTime
-  weight: Float!
 }
 
 input ProductSpecificationInput {
+  battery: SpecificationBatteryInput!
+  connectivity: SpecificationConnectivityInput!
+  cpu: SpecificationCPUInput!
+  dataRam: Int!
+  dataStorage: [Int!]!
+  dimensionDepth: Float!
+  dimensionLength: Float!
+  dimensionUnit: String
+  dimensionWeight: Float!
+  dimensionWidth: Float!
+  display: SpecificationDisplayInput!
   product: ProductInput
-  weight: Float!
 }
 
 type ProductsFetchResponse {
@@ -294,6 +314,92 @@ enum Role {
 input SortArgsInput {
   sortBy: String!
   sortDir: String!
+}
+
+type SpecificationBattery {
+  capacity: Int!
+  chargingSpeed: Int
+  created: DateTime
+  deleted: DateTime
+  id: String
+  productSpecification: ProductSpecification
+  reverseCharging: Float
+  type: String!
+  updated: DateTime
+  wirelessCharging: Int
+}
+
+input SpecificationBatteryInput {
+  capacity: Int!
+  chargingSpeed: Int
+  productSpecification: ProductSpecificationInput
+  reverseCharging: Float
+  type: String!
+  wirelessCharging: Int
+}
+
+type SpecificationCPU {
+  cores: [Int!]
+  created: DateTime
+  deleted: DateTime
+  frequency: [Float!]
+  id: String
+  name: String!
+  productSpecification: ProductSpecification
+  updated: DateTime
+}
+
+input SpecificationCPUInput {
+  cores: [Int!]
+  frequency: [Float!]
+  name: String!
+  productSpecification: ProductSpecificationInput
+}
+
+type SpecificationConnectivity {
+  audio: String
+  bluetoothVersion: Float
+  connectivity: [String!]
+  created: DateTime
+  deleted: DateTime
+  id: String
+  mobileStandard: String
+  productSpecification: ProductSpecification
+  updated: DateTime
+  wifiStandard: String
+}
+
+input SpecificationConnectivityInput {
+  audio: String
+  bluetoothVersion: Float
+  connectivity: [String!]
+  mobileStandard: String
+  productSpecification: ProductSpecificationInput
+  wifiStandard: String
+}
+
+type SpecificationDisplay {
+  aspectRatio: String
+  created: DateTime
+  deleted: DateTime
+  id: String
+  pixelDensity: Int
+  productSpecification: ProductSpecification
+  refreshRate: Int
+  resolution: String
+  screenToBody: Float
+  size: Float!
+  updated: DateTime
+}
+
+input SpecificationDisplayInput {
+  aspectRatio: String
+  pixelDensity: Int
+  productSpecification: ProductSpecificationInput
+  refreshRate: Int
+  resolution: String
+  screenToBody: Float
+  size: Float!
 }
 
 type TokenVerificationResponse {

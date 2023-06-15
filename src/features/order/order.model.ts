@@ -18,7 +18,9 @@ export class Order extends BaseEntity {
   cancelled?: Date | null
 
   @ManyToOne(() => User, (user) => user.order, { nullable: true })
-  @JoinColumn()
+  @JoinColumn({
+    foreignKeyConstraintName: 'FK_order_user',
+  })
   user?: User | null
 
   @Field(() => [OrderHasProduct])

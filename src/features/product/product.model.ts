@@ -48,14 +48,18 @@ export class Product extends BaseEntity {
     eager: true,
     cascade: true,
   })
-  @JoinColumn()
+  @JoinColumn({
+    foreignKeyConstraintName: 'FK_product_brand',
+  })
   brand: ProductBrand
 
   @ManyToOne(() => ProductCategory, (category) => category.product, {
     eager: true,
     cascade: true,
   })
-  @JoinColumn()
+  @JoinColumn({
+    foreignKeyConstraintName: 'FK_product_category',
+  })
   category: ProductCategory
 
   @OneToMany(() => ProductImage, (image) => image.product, {
@@ -79,7 +83,9 @@ export class Product extends BaseEntity {
     (specification) => specification.product,
     { cascade: true },
   )
-  @JoinColumn()
+  @JoinColumn({
+    foreignKeyConstraintName: 'FK_product_specification',
+  })
   specification: ProductSpecification
 }
 

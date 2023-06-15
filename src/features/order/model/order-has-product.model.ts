@@ -21,10 +21,14 @@ export class OrderHasProduct {
   quantity: number
 
   @ManyToOne(() => Order, (order) => order.products)
-  @JoinColumn()
+  @JoinColumn({
+    foreignKeyConstraintName: 'FK_order-has-product_order',
+  })
   order: Order
 
   @ManyToOne(() => Product, (product) => product.order)
-  @JoinColumn()
+  @JoinColumn({
+    foreignKeyConstraintName: 'FK_order-has-product_product',
+  })
   product: Product
 }

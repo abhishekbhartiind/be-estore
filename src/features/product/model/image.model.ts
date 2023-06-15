@@ -11,7 +11,9 @@ export class ProductImage extends BaseEntity {
   url: string
 
   @ManyToOne(() => Product, (product) => product.image, { onDelete: 'CASCADE' })
-  @JoinColumn()
+  @JoinColumn({
+    foreignKeyConstraintName: 'FK_image_product',
+  })
   product?: Product
 
   @AfterLoad()

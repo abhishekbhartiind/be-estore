@@ -15,6 +15,7 @@ export class DatabaseConfig implements TypeOrmOptionsFactory {
       entities: ['dist/**/*.model.js'],
       synchronize: true,
       namingStrategy: new SnakeNamingStrategy(),
+      logging: ['error'],
     }
   }
 }

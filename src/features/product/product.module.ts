@@ -8,6 +8,10 @@ import { ProductRating } from '@feature/product/model/rating.model'
 import { ProductCategory } from '@feature/product/model/category.model'
 import { ProductBrand } from '@feature/product/model/brand.model'
 import { ProductSpecification } from '@feature/product/model/specification.model'
+import { SpecificationDisplay } from '@feature/product/model/specification/display.model'
+import { SpecificationConnectivity } from '@feature/product/model/specification/connectivity.model'
+import { SpecificationCPU } from '@feature/product/model/specification/cpu.model'
+import { SpecificationBattery } from '@feature/product/model/specification/battery.model'
 
 @Module({
   imports: [
@@ -18,6 +22,10 @@ import { ProductSpecification } from '@feature/product/model/specification.model
       ProductImage,
       ProductRating,
       ProductSpecification,
+      SpecificationBattery,
+      SpecificationConnectivity,
+      SpecificationCPU,
+      SpecificationDisplay,
     ]),
   ],
   providers: [ProductService, ProductResolver],
