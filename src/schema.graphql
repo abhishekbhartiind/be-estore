@@ -255,6 +255,8 @@ input ProductsFetchResponseInput {
 }
 
 type Query {
+  brands: [Brand!]!
+  categories: [Category!]!
   fetchCustomer: User!
   product(id: String!): Product!
   products(filterArgs: FilterArgsInput, paginationArgs: PaginationArgsInput, sortArgs: SortArgsInput): ProductsFetchResponse!
