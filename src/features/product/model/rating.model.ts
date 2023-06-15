@@ -20,10 +20,14 @@ export class ProductRating extends BaseEntity {
     eager: true,
     onDelete: 'CASCADE',
   })
-  @JoinColumn()
+  @JoinColumn({
+    foreignKeyConstraintName: 'FK_rating_product',
+  })
   product: Product
 
   @ManyToOne(() => User, (user) => user.rating, { cascade: true, eager: true })
-  @JoinColumn()
+  @JoinColumn({
+    foreignKeyConstraintName: 'FK_rating_user',
+  })
   user: User
 }
