@@ -6,7 +6,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import { Order } from '@feature/order/order.model'
+import { Order } from '@feature/order/model/order.model'
 import { Product } from '@feature/product/model/product.model'
 
 @ObjectType()
