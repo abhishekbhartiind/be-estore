@@ -15,10 +15,12 @@ import { CategoryModule } from '@feature/product/features/category/category.modu
 import { SpecificationModule } from '@feature/product/features/specification/specification.module'
 import { RatingModule } from '@feature/product/features/rating/rating.module'
 import { AddressModule } from '@feature/address/address.module'
+import { CreditCardModule } from '@feature/credit-card/credit-card.module'
 
 @Module({
   imports: [
     UserModule,
+    CreditCardModule,
     AddressModule,
     AuthModule,
     BrandModule,
@@ -32,10 +34,10 @@ import { AddressModule } from '@feature/address/address.module'
       introspection: true,
     }),
     MailModule,
-    OrderModule,
-    ProductModule,
-    RatingModule,
     SpecificationModule,
+    ProductModule,
+    OrderModule,
+    RatingModule,
     TypeOrmModule.forRootAsync({
       useClass: DatabaseConfig,
     }),

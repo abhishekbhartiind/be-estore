@@ -96,6 +96,13 @@ input CreateAddressInput {
   zipCode: String!
 }
 
+input CreateCreditCardInput {
+  ccv: Int!
+  creditCardNumber: String!
+  expirationDate: DateTime!
+  main: Boolean
+}
+
 input CreateOrderInput {
   billingTo: String
   products: [AddProductToOrderInput!]!
@@ -144,6 +151,30 @@ input CreateUserInput {
   role: Role
   title: String
   username: String
+}
+
+type CreditCard {
+  cardType: String!
+  ccv: Int!
+  created: DateTime
+  creditCardNumber: String!
+  deleted: DateTime
+  expirationDate: DateTime!
+  expirationDateFormatted: String
+  id: String
+  main: Boolean
+  updated: DateTime
+  user: User
+}
+
+input CreditCardInput {
+  cardType: String!
+  ccv: Int!
+  creditCardNumber: String!
+  expirationDate: DateTime!
+  expirationDateFormatted: String
+  main: Boolean
+  user: UserInput
 }
 
 """
@@ -199,12 +230,14 @@ type Mutation {
   createAddress(data: CreateAddressInput!): Address!
   createBrand(name: String!): ProductBrand!
   createCategory(name: String!): ProductCategory!
+  createCreditCard(data: CreateCreditCardInput!): CreditCard!
   createOrder(data: CreateOrderInput!): Order!
   createProduct(data: CreateProductInput!): Product!
   createRating(data: CreateRatingInput!): ProductRating!
   deleteAddress(id: String!): DeleteResult!
   deleteBrand(id: String!): DeleteResult!
   deleteCategory(id: String!): DeleteResult!
+  deleteCreditCard(id: String!): DeleteResult!
   deleteCustomer: DeleteResult!
   deleteProduct(id: String!): DeleteResult!
   deleteUser(id: String!): DeleteResult!
@@ -393,6 +426,7 @@ type Query {
   addresses(filterArgs: AddressFilterArgsInput): [Address!]!
   brands: [ProductBrand!]!
   categories: [ProductCategory!]!
+  creditCards: [CreditCard!]!
   currentOrders: [Order!]!
   fetchCustomer: User!
   order(id: String!): Order!
