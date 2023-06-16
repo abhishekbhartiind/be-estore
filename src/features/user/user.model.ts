@@ -9,6 +9,7 @@ import {
 import { Role } from '@feature/user/enum/role.enum'
 import { ProductRating } from '@feature/product/features/rating/rating.model'
 import { Order } from '@feature/order/model/order.model'
+import { Address } from '@feature/address/model/address.model'
 
 registerEnumType(Role, {
   name: 'Role',
@@ -68,6 +69,9 @@ export class User extends BaseEntity {
 
   @Column({ type: 'timestamptz', nullable: true })
   emailTokenCreated?: Date | null
+
+  @OneToMany(() => Address, (address) => address.user, { eager: true })
+  address?: Address[]
 
   @OneToMany(() => Order, (order) => order.user)
   order?: Order[]

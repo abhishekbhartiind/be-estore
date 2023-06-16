@@ -1,0 +1,184 @@
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  OnModuleInit,
+} from '@nestjs/common'
+import { InjectDataSource, InjectRepository } from '@nestjs/typeorm'
+import { DataSource, Repository } from 'typeorm'
+
+import { RECORD_NOT_FOUND } from '@shared/constant/error.constant'
+import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
+import { Address } from '@feature/address/model/address.model'
+import { AddressFilterArgs } from '@feature/address/dto/filter.args'
+import { ADDRESS_RELATIONS } from '@feature/address/constant/entity-relation.constant'
+import { CreateAddressInput } from '@feature/address/dto/create-address.input'
+import { UpdateAddressInput } from '@feature/address/dto/update-address.input'
+import { addressMock } from '@feature/address/mock/address.mock'
+
+@Injectable()
+export class AddressService implements OnModuleInit {
+  constructor(
+    @InjectRepository(Address)
+    private readonly addressRepo: Repository<Address>,
+    @InjectDataSource()
+    private dataSource: DataSource,
+  ) {}
+
+  async onModuleInit(): Promise<void> {
+    await this.mockAddresses()
+  }
+
+  /**
+   * Fetches all records
+   * @param filter Data can be filtered by type and primary status
+   */
+  async fetch(filter?: AddressFilterArgs): Promise<Address[]> {
+    try {
+      // base query
+      const query = await this.addressRepo.createQueryBuilder('address')
+
+      // relationships
+      query.leftJoinAndSelect('address.user', 'user')
+
+      // filter
+      filter?.primary &&
+        query.andWhere('address.primary = :primary', {
+          primary: filter.primary,
+        })
+      filter?.type &&
+        query.andWhere('address.type = :type', { type: filter.type })
+      filter?.userId &&
+        query.andWhere('user.id = :userId', { userId: filter.userId })
+
+      //const count = await query.getCount()
+      return await query.getMany()
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Fetch record by identifier
+   * @param id Record identifier to be fetched
+   * @param where If included, used sql where statement (javascript object syntax)
+   */
+  async fetchOne(id: string, where?: object): Promise<Address> {
+    try {
+      let address
+      if (id)
+        address = await this.addressRepo.findOne({
+          where: { id },
+          relations: ADDRESS_RELATIONS,
+        })
+      if (where)
+        address = await this.addressRepo.findOne({
+          where: where,
+          relations: ADDRESS_RELATIONS,
+        })
+      if (!address)
+        throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND)
+
+      return address
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  async swapPrimary(addressId: string, userId: string): Promise<UpdateResult> {
+    try {
+      const oldPrimaryAddress = await this.addressRepo.findOne({
+        where: { user: { id: userId }, primary: true },
+        relations: ADDRESS_RELATIONS,
+      })
+      if (oldPrimaryAddress)
+        await this.update(oldPrimaryAddress.id as string, {
+          ...oldPrimaryAddress,
+          primary: false,
+        })
+
+      const newPrimaryAddress = await this.addressRepo.findOne({
+        where: { id: addressId },
+        relations: ADDRESS_RELATIONS,
+      })
+      return await this.update(newPrimaryAddress?.id as string, {
+        ...newPrimaryAddress,
+        primary: true,
+      })
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Saves a record
+   * @param address DTO
+   */
+  async save(address: CreateAddressInput): Promise<Address> {
+    try {
+      return await this.addressRepo.save(address)
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+  /**
+   * Updates record by id
+   * @param id  Record id to be updated
+   * @param address DTO
+   */
+  async update(id: string, address: UpdateAddressInput): Promise<UpdateResult> {
+    try {
+      return await this.addressRepo.update(id, address)
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Deletes a record by id
+   * @param id Record id to be soft deleted
+   */
+  async delete(id: string): Promise<DeleteResult> {
+    try {
+      return await this.addressRepo.softDelete(id)
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Restores a record by id
+   * @param id Record id to be restored
+   */
+  async restore(id: string): Promise<UpdateResult> {
+    try {
+      const addressRestored = await this.addressRepo.restore(id)
+      if (!addressRestored)
+        throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND)
+
+      return addressRestored
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Inserts data into Address table from `address.mock.ts`
+   * Won't insert if data is found in table
+   */
+  async mockAddresses(): Promise<any> {
+    try {
+      const addresses = await this.addressRepo.find()
+      if (addresses.length === 0) {
+        return await this.dataSource
+          .createQueryBuilder()
+          .insert()
+          .into(Address)
+          .values(addressMock)
+          .execute()
+      }
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+}

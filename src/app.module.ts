@@ -14,9 +14,11 @@ import { BrandModule } from '@feature/product/features/brand/brand.module'
 import { CategoryModule } from '@feature/product/features/category/category.module'
 import { SpecificationModule } from '@feature/product/features/specification/specification.module'
 import { RatingModule } from '@feature/product/features/rating/rating.module'
+import { AddressModule } from '@feature/address/address.module'
 
 @Module({
   imports: [
+    AddressModule,
     AuthModule,
     BrandModule,
     CategoryModule,

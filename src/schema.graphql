@@ -7,6 +7,49 @@ input AddProductToOrderInput {
   quantity: Int!
 }
 
+type Address {
+  companyName: String
+  countryCode: Country!
+  created: DateTime
+  deleted: DateTime
+  firstName: String!
+  id: String
+  lastName: String!
+  line1: String!
+  phone: String
+  primary: Boolean
+  state: String!
+  type: AddressType!
+  updated: DateTime
+  user: User!
+  zipCode: String!
+}
+
+input AddressFilterArgsInput {
+  primary: Boolean
+  type: String
+  userId: String
+}
+
+input AddressInput {
+  companyName: String
+  countryCode: Country!
+  firstName: String!
+  lastName: String!
+  line1: String!
+  phone: String
+  primary: Boolean
+  state: String!
+  type: AddressType!
+  user: UserInput!
+  zipCode: String!
+}
+
+enum AddressType {
+  BILLING
+  SHIPPING
+}
+
 input BrandInput {
   name: String!
   product: ProductInput
@@ -25,6 +68,32 @@ input ChangeEmailInput {
 input ChangePasswordInput {
   password: String!
   token: String!
+}
+
+enum Country {
+  AT
+  CH
+  DE
+  ES
+  FR
+  IT
+  NL
+  PL
+  UK
+}
+
+input CreateAddressInput {
+  companyName: String
+  countryCode: Country!
+  firstName: String!
+  lastName: String!
+  line1: String!
+  phone: String
+  primary: Boolean!
+  state: String!
+  type: AddressType!
+  user: UserInput
+  zipCode: String!
 }
 
 input CreateOrderInput {
@@ -58,6 +127,7 @@ input CreateRatingInput {
 input CreateUserInput {
   activated: DateTime
   activationToken: String
+  address: [AddressInput!]
   avatar: String
   email: String!
   emailToken: String
@@ -124,16 +194,19 @@ type Mutation {
   cancelOrder(id: String!): UpdateResult!
   changeEmail(data: ChangeEmailInput!): UpdateResult!
   changePassword(data: ChangePasswordInput!): UpdateResult!
+  createAddress(data: CreateAddressInput!): Address!
   createBrand(name: String!): ProductBrand!
   createCategory(name: String!): ProductCategory!
   createOrder(data: CreateOrderInput!): Order!
   createProduct(data: CreateProductInput!): Product!
   createRating(data: CreateRatingInput!): ProductRating!
+  deleteAddress(id: String!): DeleteResult!
   deleteBrand(id: String!): DeleteResult!
   deleteCategory(id: String!): DeleteResult!
   deleteCustomer: DeleteResult!
   deleteProduct(id: String!): DeleteResult!
   deleteUser(id: String!): DeleteResult!
+  restoreAddress(id: String!): UpdateResult!
   restoreBrand(id: String!): UpdateResult!
   restoreCategory(id: String!): UpdateResult!
   restoreCustomer: UpdateResult!
@@ -141,9 +214,12 @@ type Mutation {
   restoreUser(id: String!): UpdateResult!
   signIn(data: LoginUserInput!): LoginResponse
   signUp(data: CreateUserInput!): RegisterResponse!
+  swapPrimaryAddress(addressId: String!): UpdateResult!
+  updateAddress(data: UpdateAddressInput!, id: String!): UpdateResult!
   updateBrand(id: String!, name: String!): UpdateResult!
   updateCategory(id: String!, name: String!): UpdateResult!
   updateCustomer(data: UpdateUserInput!): User!
+  updateCustomerAddress(data: UpdateAddressInput!, id: String!): UpdateResult!
   updateProduct(data: UpdateProductInput!, id: String!): UpdateResult!
   updateUser(data: UpdateUserInput!, id: String!): User!
 }
@@ -308,6 +384,7 @@ input ProductsFetchResponseInput {
 }
 
 type Query {
+  addresses(filterArgs: AddressFilterArgsInput): [Address!]!
   brands: [ProductBrand!]!
   categories: [ProductCategory!]!
   currentOrders: [Order!]!
@@ -451,6 +528,20 @@ type TokenVerificationResponse {
   valid: Boolean!
 }
 
+input UpdateAddressInput {
+  companyName: String
+  countryCode: Country
+  firstName: String
+  lastName: String
+  line1: String
+  phone: String
+  primary: Boolean
+  state: String
+  type: AddressType
+  user: UserInput
+  zipCode: String
+}
+
 input UpdateProductInput {
   batteryId: String
   brandId: String
@@ -477,6 +568,7 @@ type UpdateResult {
 input UpdateUserInput {
   activated: DateTime
   activationToken: String
+  address: [AddressInput!]
   avatar: String
   created: DateTime
   deleted: DateTime
@@ -500,6 +592,7 @@ input UpdateUserInput {
 type User {
   activated: DateTime
   activationToken: String
+  address: [Address!]
   avatar: String
   created: DateTime
   deleted: DateTime
@@ -523,6 +616,7 @@ type User {
 input UserInput {
   activated: DateTime
   activationToken: String
+  address: [AddressInput!]
   avatar: String
   email: String!
   emailToken: String
