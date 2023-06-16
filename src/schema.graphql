@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AddProductToOrderInput {
+  productId: String!
+  quantity: Int!
+}
+
 input BrandInput {
   name: String!
   product: ProductInput
@@ -20,6 +25,11 @@ input ChangeEmailInput {
 input ChangePasswordInput {
   password: String!
   token: String!
+}
+
+input CreateOrderInput {
+  products: [AddProductToOrderInput!]!
+  total: Float!
 }
 
 input CreateProductInput {
@@ -111,10 +121,12 @@ input LoginUserInput {
 
 type Mutation {
   activateCustomer(token: String!): User!
+  cancelOrder(id: String!): UpdateResult!
   changeEmail(data: ChangeEmailInput!): UpdateResult!
   changePassword(data: ChangePasswordInput!): UpdateResult!
   createBrand(name: String!): ProductBrand!
   createCategory(name: String!): ProductCategory!
+  createOrder(data: CreateOrderInput!): Order!
   createProduct(data: CreateProductInput!): Product!
   createRating(data: CreateRatingInput!): ProductRating!
   deleteBrand(id: String!): DeleteResult!
@@ -298,7 +310,9 @@ input ProductsFetchResponseInput {
 type Query {
   brands: [ProductBrand!]!
   categories: [ProductCategory!]!
+  currentOrders: [Order!]!
   fetchCustomer: User!
+  order(id: String!): Order!
   product(id: String!): Product!
   products(filterArgs: FilterArgsInput, paginationArgs: PaginationArgsInput, sortArgs: SortArgsInput): ProductsFetchResponse!
   ratings(productId: String!): [ProductRating!]!

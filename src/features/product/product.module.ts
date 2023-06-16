@@ -19,5 +19,6 @@ import { ProductAdminResolver } from '@feature/product/product.resolver.admin'
     RatingModule,
   ],
   providers: [ProductService, ProductResolver, ProductAdminResolver],
+  exports: [ProductService],
 })
 export class ProductModule {}

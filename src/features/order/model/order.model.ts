@@ -17,16 +17,16 @@ export class Order extends BaseEntity {
   @Column({ type: 'timestamptz', nullable: true })
   cancelled?: Date | null
 
-  @ManyToOne(() => User, (user) => user.order, { nullable: true })
-  @JoinColumn({
-    foreignKeyConstraintName: 'FK_order_user',
-  })
-  user?: User | null
-
   @Field(() => [OrderHasProduct])
   @OneToMany(
     () => OrderHasProduct,
     (orderHasProducts) => orderHasProducts.order,
   )
   products: OrderHasProduct[]
+
+  @ManyToOne(() => User, (user) => user.order, { nullable: true })
+  @JoinColumn({
+    foreignKeyConstraintName: 'FK_order_user',
+  })
+  user?: User | null
 }
