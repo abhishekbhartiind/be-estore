@@ -1,9 +1,10 @@
-import { NestFactory } from '@nestjs/core'
+import { NestFactory, Reflector } from '@nestjs/core'
 import { AppModule } from '@/src/app.module'
 import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify'
+import { ClassSerializerInterceptor } from '@nestjs/common'
 
 async function bootstrap() {
   const host = String(process.env.EXPRESS_HOST)
@@ -14,6 +15,8 @@ async function bootstrap() {
     new FastifyAdapter(),
   )
   app.enableCors()
+
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)))
 
   await app.listen(port)
 
