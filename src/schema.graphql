@@ -97,7 +97,9 @@ input CreateAddressInput {
 }
 
 input CreateOrderInput {
+  billingTo: String
   products: [AddProductToOrderInput!]!
+  shippingTo: String
   total: Float!
 }
 
@@ -225,12 +227,14 @@ type Mutation {
 }
 
 type Order {
+  billingAddress: Address
   cancelled: DateTime
   created: DateTime
   deleted: DateTime
   id: String
   pending: Boolean!
   products: [OrderHasProduct!]!
+  shippingAddress: Address
   total: Float!
   updated: DateTime
   user: User
@@ -251,9 +255,11 @@ input OrderHasProductInput {
 }
 
 input OrderInput {
+  billingAddress: AddressInput
   cancelled: DateTime
   pending: Boolean!
   products: [OrderHasProductInput!]!
+  shippingAddress: AddressInput
   total: Float!
   user: UserInput
 }

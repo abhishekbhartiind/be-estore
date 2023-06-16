@@ -87,7 +87,7 @@ export const addressMock: any[] = [
     state: 'New Hampshire',
     phone: '+41 76 297 49 17',
     countryCode: Country.FR,
-    primary: 1,
+    primary: 0,
     type: AddressType.SHIPPING,
     user: { id: 'f6eef4f4-d904-4b61-8012-2c7c2792c1bb' },
   },

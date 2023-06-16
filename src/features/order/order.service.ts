@@ -9,6 +9,7 @@ import { DataSource, Repository } from 'typeorm'
 import {
   RECORD_NOT_FOUND,
   RECORD_NOT_SAVED,
+  SPECIFY_SHIPPING_ADDRESS,
 } from '@shared/constant/error.constant'
 import { UpdateResult } from '@shared/dto/typeorm-result.dto'
 import { ProductService } from '../product/product.service'
@@ -19,6 +20,8 @@ import { CreateOrderInput } from '@feature/order/dto/create-order.input'
 import { User } from '@feature/user/user.model'
 import { orderMock } from '@feature/order/mock/order.mock'
 import { orderHasProductsMock } from '@feature/order/mock/order-has-product.mock'
+import { AddressService } from '@feature/address/address.service'
+import { Address } from '@feature/address/model/address.model'
 
 @Injectable()
 export class OrderService implements OnModuleInit {
@@ -27,6 +30,7 @@ export class OrderService implements OnModuleInit {
     private readonly orderRepo: Repository<Order>,
     @InjectRepository(OrderHasProduct)
     private readonly orderHasProductRepo: Repository<OrderHasProduct>,
+    private addressService: AddressService,
     private productService: ProductService,
     @InjectDataSource()
     private dataSource: DataSource,
@@ -86,8 +90,24 @@ export class OrderService implements OnModuleInit {
    */
   async save(order: CreateOrderInput, user: User): Promise<Order> {
     try {
+      const shippingAddress = await this.addressService.fetchOne(
+        order.shippingTo as string,
+      )
+      if (!order.shippingTo)
+        throw new HttpException(
+          SPECIFY_SHIPPING_ADDRESS,
+          HttpStatus.BAD_REQUEST,
+        )
+      delete order.shippingTo
+      const billingAddress = order.billingTo
+        ? await this.addressService.fetchOne(order.billingTo)
+        : null
+      delete order.billingTo
+
       const savedOrder = await this.orderRepo.save({
         ...order,
+        shippingAddress: shippingAddress as Address,
+        billingAddress: billingAddress as Address,
         user,
         products: [],
       })

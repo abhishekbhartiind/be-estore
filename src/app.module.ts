@@ -18,6 +18,7 @@ import { AddressModule } from '@feature/address/address.module'
 
 @Module({
   imports: [
+    UserModule,
     AddressModule,
     AuthModule,
     BrandModule,
@@ -38,7 +39,6 @@ import { AddressModule } from '@feature/address/address.module'
     TypeOrmModule.forRootAsync({
       useClass: DatabaseConfig,
     }),
-    UserModule,
   ],
 })
 export class AppModule {}

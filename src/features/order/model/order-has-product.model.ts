@@ -1,3 +1,8 @@
+/**
+ * This entity could be skipped to implement since TypeORM's "ManyToMany" creates a join table automatically.
+ * Since information is required, on how many times a product was ordered in one single order,
+ * this entity is implemented with the custom column "quantity".
+ */
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql'
 import {
   Column,
