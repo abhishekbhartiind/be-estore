@@ -4,6 +4,8 @@ import { Field, InputType, Int } from '@nestjs/graphql'
 export class CreateOrderInput {
   total: number
   products: AddProductToOrderInput[]
+  shippingTo?: string
+  billingTo?: string
 }
 
 @InputType()
