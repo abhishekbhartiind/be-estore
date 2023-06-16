@@ -49,7 +49,7 @@ export class Product extends BaseEntity {
     cascade: true,
   })
   @JoinColumn({
-    foreignKeyConstraintName: 'FK_product_brand',
+    foreignKeyConstraintName: 'FK__product__brand',
   })
   brand: ProductBrand
 
@@ -58,7 +58,7 @@ export class Product extends BaseEntity {
     cascade: true,
   })
   @JoinColumn({
-    foreignKeyConstraintName: 'FK_product_category',
+    foreignKeyConstraintName: 'FK__product__category',
   })
   category: ProductCategory
 
@@ -86,7 +86,7 @@ export class Product extends BaseEntity {
     },
   )
   @JoinColumn({
-    foreignKeyConstraintName: 'FK_product_specification',
+    foreignKeyConstraintName: 'FK__product__specification',
   })
   specification: ProductSpecification
 }

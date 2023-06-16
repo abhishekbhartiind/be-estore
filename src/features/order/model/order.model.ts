@@ -20,7 +20,7 @@ export class Order extends BaseEntity {
 
   @ManyToOne(() => Address, (address) => address.id, { eager: true })
   @JoinColumn({
-    foreignKeyConstraintName: 'FK_order_address_billing',
+    foreignKeyConstraintName: 'FK__order__billing_address',
   })
   billingAddress?: Address
 
@@ -33,13 +33,13 @@ export class Order extends BaseEntity {
 
   @ManyToOne(() => Address, (address) => address.id, { eager: true })
   @JoinColumn({
-    foreignKeyConstraintName: 'FK_order_address_shipping',
+    foreignKeyConstraintName: 'FK__order__shipping_address',
   })
   shippingAddress?: Address
 
   @ManyToOne(() => User, (user) => user.order, { nullable: true })
   @JoinColumn({
-    foreignKeyConstraintName: 'FK_order_user',
+    foreignKeyConstraintName: 'FK__order__user',
   })
   user?: User | null
 }

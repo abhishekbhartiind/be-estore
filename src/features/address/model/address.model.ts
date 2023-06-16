@@ -60,7 +60,7 @@ export class Address extends BaseEntity {
 
   @ManyToOne(() => User, (user: User) => user.address, { onDelete: 'SET NULL' })
   @JoinColumn({
-    foreignKeyConstraintName: 'FK_address_user',
+    foreignKeyConstraintName: 'FK__address__user',
   })
   user: User
 }

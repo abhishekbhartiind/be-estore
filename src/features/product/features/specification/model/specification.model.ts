@@ -39,7 +39,7 @@ export class ProductSpecification extends BaseEntity {
     (battery) => battery.productSpecification,
   )
   @JoinColumn({
-    foreignKeyConstraintName: 'FK_specification_battery',
+    foreignKeyConstraintName: 'FK__specification__battery',
   })
   battery: SpecificationBattery
 
@@ -48,13 +48,13 @@ export class ProductSpecification extends BaseEntity {
     (conn) => conn.productSpecification,
   )
   @JoinColumn({
-    foreignKeyConstraintName: 'FK_specification_connectivity',
+    foreignKeyConstraintName: 'FK__specification__connectivity',
   })
   connectivity: SpecificationConnectivity
 
   @ManyToOne(() => SpecificationCPU, (cpu) => cpu.productSpecification)
   @JoinColumn({
-    foreignKeyConstraintName: 'FK_specification_cpu',
+    foreignKeyConstraintName: 'FK__specification__cpu',
   })
   cpu: SpecificationCPU
 
@@ -63,7 +63,7 @@ export class ProductSpecification extends BaseEntity {
     (display) => display.productSpecification,
   )
   @JoinColumn({
-    foreignKeyConstraintName: 'FK_specification_display',
+    foreignKeyConstraintName: 'FK__specification__display',
   })
   display: SpecificationDisplay
 

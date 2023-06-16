@@ -27,13 +27,13 @@ export class OrderHasProduct {
 
   @ManyToOne(() => Order, (order) => order.products)
   @JoinColumn({
-    foreignKeyConstraintName: 'FK_order-has-product_order',
+    foreignKeyConstraintName: 'FK__order_has_product__order',
   })
   order: Order
 
   @ManyToOne(() => Product, (product) => product.order)
   @JoinColumn({
-    foreignKeyConstraintName: 'FK_order-has-product_product',
+    foreignKeyConstraintName: 'FK__order_has_product__product',
   })
   product: Product
 }
