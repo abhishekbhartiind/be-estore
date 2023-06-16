@@ -138,6 +138,7 @@ input CreateUserInput {
   activationToken: String
   address: [AddressInput!]
   avatar: String
+  creditCards: [CreditCardInput!]
   email: String!
   emailToken: String
   emailTokenCreated: DateTime
@@ -611,6 +612,7 @@ input UpdateUserInput {
   address: [AddressInput!]
   avatar: String
   created: DateTime
+  creditCards: [CreditCardInput!]
   deleted: DateTime
   email: String
   emailToken: String
@@ -635,6 +637,7 @@ type User {
   address: [Address!]
   avatar: String
   created: DateTime
+  creditCards: [CreditCard!]
   deleted: DateTime
   email: String!
   emailToken: String
@@ -658,6 +661,7 @@ input UserInput {
   activationToken: String
   address: [AddressInput!]
   avatar: String
+  creditCards: [CreditCardInput!]
   email: String!
   emailToken: String
   emailTokenCreated: DateTime
