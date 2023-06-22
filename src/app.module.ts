@@ -5,7 +5,7 @@ import { ConfigModule } from '@nestjs/config'
 import { ProductModule } from '@feature/product/product.module'
 import { join } from 'path'
 import { GraphQLModule } from '@nestjs/graphql'
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
+import { ApolloDriver } from '@nestjs/apollo'
 import { UserModule } from '@feature/user/user.module'
 import { MailModule } from '@shared/features/mail/mail.module'
 import { AuthModule } from '@shared/features/auth/auth.module'
@@ -26,12 +26,16 @@ import { CreditCardModule } from '@feature/credit-card/credit-card.module'
     BrandModule,
     CategoryModule,
     ConfigModule.forRoot(),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRoot({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd() + '/src/schema.graphql'),
       sortSchema: true,
       playground: true,
       introspection: true,
+      cors: {
+        origin: 'http://localhost:4000',
+        credentials: true,
+      },
     }),
     MailModule,
     SpecificationModule,

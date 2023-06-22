@@ -2,7 +2,6 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { AuthService } from '@shared/features/auth/auth.service'
 import { UserService } from '@feature/user/user.service'
 import { RegisterResponse } from '@shared/features/auth/model/register-response.model'
-import { CreateUserInput } from '@feature/user/dto/create-user.input'
 import { UseGuards } from '@nestjs/common'
 import { LocalAuthGuard } from '@shared/features/auth/guard/local-auth.guard'
 import { LoginResponse } from '@shared/features/auth/model/login-response.model'
@@ -18,6 +17,7 @@ import { TokenVerificationResponse } from '@shared/features/auth/model/token-res
 import { ChangePasswordInput } from '@shared/features/auth/dto/change-password.input'
 import { ChangeEmailInput } from '@shared/features/auth/dto/change-email.input'
 import { UpdateResult } from '@shared/dto/typeorm-result.dto'
+import { RegisterUserInput } from '@shared/features/auth/dto/register-user.input'
 
 @Resolver()
 export class AuthResolver {
@@ -28,27 +28,17 @@ export class AuthResolver {
 
   @Mutation(() => RegisterResponse)
   async signUp(
-    @Args('data') registerCredentials: CreateUserInput,
+    @Args('data') registerCredentials: RegisterUserInput,
   ): Promise<RegisterResponse> {
-    const {
-      firstName,
-      lastName,
-      email,
-      avatar,
-      username,
-      title,
-      password,
-      phone,
-    } = registerCredentials
+    const { firstName, lastName, email, avatar, password, phone } =
+      registerCredentials
     const payload = {
+      ...(avatar && { avatar }),
       firstName,
       lastName,
       email,
-      avatar,
-      username,
-      title,
       password,
-      phone,
+      ...(phone && { phone }),
     }
 
     return await this.authService.register(payload)

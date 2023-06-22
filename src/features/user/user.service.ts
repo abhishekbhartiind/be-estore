@@ -15,6 +15,7 @@ import {
   TOKEN_INVALID,
 } from '@shared/constant/error.constant'
 import { userMock } from '@feature/user/user.mock'
+import { RegisterUserInput } from '@shared/features/auth/dto/register-user.input'
 
 @Injectable()
 export class UserService implements OnModuleInit {
@@ -67,7 +68,9 @@ export class UserService implements OnModuleInit {
    * Saves a record
    * @param user DTO
    */
-  async save(user: CreateUserInput): Promise<User | UpdateResult> {
+  async save(
+    user: CreateUserInput | RegisterUserInput,
+  ): Promise<User | UpdateResult> {
     try {
       const { email, password } = user
 

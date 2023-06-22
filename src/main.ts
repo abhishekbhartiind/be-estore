@@ -14,6 +14,7 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   )
+
   app.enableCors()
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)))

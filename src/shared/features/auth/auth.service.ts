@@ -13,12 +13,18 @@ import { User } from '@feature/user/user.model'
 import { TOKEN_TYPES } from '@shared/features/auth/constant/token-type.constant'
 import { LoginResponse } from '@shared/features/auth/model/login-response.model'
 import { LoginUserInput } from '@shared/features/auth/dto/login-user.input'
-import { CreateUserInput } from '@feature/user/dto/create-user.input'
 import { RegisterResponse } from '@shared/features/auth/model/register-response.model'
 import { compare } from 'bcrypt'
 import { randomUUID } from 'crypto'
 import { EmailResponse } from '@shared/features/auth/model/email-response.model'
 import { MailerService } from '@nestjs-modules/mailer'
+import { RegisterUserInput } from '@shared/features/auth/dto/register-user.input'
+import {
+  ACTIVATE_ACCOUNT,
+  CHANGE_EMAIL,
+  PASSWORD_REQUEST,
+  SUBJECT,
+} from '@shared/features/mail/constant/email.constant'
 
 @Injectable()
 export class AuthService {
@@ -31,7 +37,7 @@ export class AuthService {
   /**
    * Validates user input for existing emails in DB and matching password (comparing hash and user password input)
    * @param email
-   * @param pass
+   * @param password
    */
   async validateUser(
     email: string,
@@ -56,7 +62,8 @@ export class AuthService {
     }
     return undefined
   }
-  async register(user: CreateUserInput): Promise<RegisterResponse> {
+  async register(user: RegisterUserInput): Promise<RegisterResponse> {
+    console.log(user)
     const { email } = user
     const userFound = await this.userService.fetchOne(null, { email })
     if (userFound)
@@ -78,6 +85,8 @@ export class AuthService {
         success: false,
         message: error,
       }
+      console.log('status:')
+      console.log(status)
       return status
     }
     if (!status.success) {
@@ -159,7 +168,6 @@ export class AuthService {
       return await this.mailService
         .sendMail({
           to: email,
-          // @ts-ignore
           subject: `${SUBJECT} - ${PASSWORD_REQUEST}`,
           template: 'password-reset.template.hbs',
           context: {
@@ -200,7 +208,6 @@ export class AuthService {
       return await this.mailService
         .sendMail({
           to: email,
-          // @ts-ignore
           subject: `${SUBJECT} - ${ACTIVATE_ACCOUNT}`,
           template: 'account-activation.template.hbs',
           context: {
@@ -247,7 +254,6 @@ export class AuthService {
       return await this.mailService
         .sendMail({
           to: email,
-          // @ts-ignore
           subject: `${SUBJECT} - ${CHANGE_EMAIL}`,
           template: 'email-change.template.hbs',
           context: {
