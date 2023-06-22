@@ -19,6 +19,7 @@ type Address {
   phone: String
   primary: Boolean
   state: String!
+  title: String
   type: AddressType!
   updated: DateTime
   user: User!
@@ -40,6 +41,7 @@ input AddressInput {
   phone: String
   primary: Boolean
   state: String!
+  title: String
   type: AddressType!
   user: UserInput!
   zipCode: String!
@@ -89,10 +91,11 @@ input CreateAddressInput {
   lastName: String!
   line1: String!
   phone: String
-  primary: Boolean!
+  primary: Boolean
   state: String!
+  title: String
   type: AddressType!
-  user: UserInput
+  user: UserInput!
   zipCode: String!
 }
 
@@ -131,27 +134,6 @@ input CreateRatingInput {
   productId: String!
   star: Int!
   text: String!
-}
-
-input CreateUserInput {
-  activated: DateTime
-  activationToken: String
-  address: [AddressInput!]
-  avatar: String
-  creditCards: [CreditCardInput!]
-  email: String!
-  emailToken: String
-  emailTokenCreated: DateTime
-  firstName: String!
-  lastName: String!
-  order: [OrderInput!]
-  passwordToken: String
-  passwordTokenCreated: DateTime
-  phone: String
-  rating: [RatingInput!]
-  role: Role
-  title: String
-  username: String
 }
 
 type CreditCard {
@@ -249,7 +231,7 @@ type Mutation {
   restoreProduct(id: String!): UpdateResult!
   restoreUser(id: String!): UpdateResult!
   signIn(data: LoginUserInput!): LoginResponse
-  signUp(data: CreateUserInput!): RegisterResponse!
+  signUp(data: RegisterUserInput!): RegisterResponse!
   swapPrimaryAddress(addressId: String!): UpdateResult!
   updateAddress(data: UpdateAddressInput!, id: String!): UpdateResult!
   updateBrand(id: String!, name: String!): UpdateResult!
@@ -453,6 +435,24 @@ type RegisterResponse {
   success: Boolean!
 }
 
+input RegisterUserInput {
+  activated: DateTime
+  activationToken: String
+  address: [AddressInput!]
+  avatar: String
+  creditCards: [CreditCardInput!]
+  email: String!
+  emailToken: String
+  firstName: String!
+  lastName: String!
+  order: [OrderInput!]
+  password: String!
+  passwordToken: String
+  phone: String
+  rating: [RatingInput!]
+  role: Role
+}
+
 enum Role {
   ADMIN
   CUSTOMER
@@ -572,13 +572,18 @@ type TokenVerificationResponse {
 input UpdateAddressInput {
   companyName: String
   countryCode: Country
+  created: DateTime
+  deleted: DateTime
   firstName: String
+  id: String
   lastName: String
   line1: String
   phone: String
   primary: Boolean
   state: String
+  title: String
   type: AddressType
+  updated: DateTime
   user: UserInput
   zipCode: String
 }
@@ -616,19 +621,15 @@ input UpdateUserInput {
   deleted: DateTime
   email: String
   emailToken: String
-  emailTokenCreated: DateTime
   firstName: String
   id: String
   lastName: String
   order: [OrderInput!]
   passwordToken: String
-  passwordTokenCreated: DateTime
   phone: String
   rating: [RatingInput!]
   role: Role
-  title: String
   updated: DateTime
-  username: String
 }
 
 type User {
@@ -641,19 +642,15 @@ type User {
   deleted: DateTime
   email: String!
   emailToken: String
-  emailTokenCreated: DateTime
   firstName: String!
   id: String
   lastName: String!
   order: [Order!]
   passwordToken: String
-  passwordTokenCreated: DateTime
   phone: String
   rating: [ProductRating!]
   role: Role
-  title: String
   updated: DateTime
-  username: String
 }
 
 input UserInput {
@@ -664,15 +661,11 @@ input UserInput {
   creditCards: [CreditCardInput!]
   email: String!
   emailToken: String
-  emailTokenCreated: DateTime
   firstName: String!
   lastName: String!
   order: [OrderInput!]
   passwordToken: String
-  passwordTokenCreated: DateTime
   phone: String
   rating: [RatingInput!]
   role: Role
-  title: String
-  username: String
 }

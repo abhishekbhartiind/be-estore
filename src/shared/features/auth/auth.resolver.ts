@@ -18,6 +18,7 @@ import { TokenVerificationResponse } from '@shared/features/auth/model/token-res
 import { ChangePasswordInput } from '@shared/features/auth/dto/change-password.input'
 import { ChangeEmailInput } from '@shared/features/auth/dto/change-email.input'
 import { UpdateResult } from '@shared/dto/typeorm-result.dto'
+import { RegisterUserInput } from '@shared/features/auth/dto/register-user.input'
 
 @Resolver()
 export class AuthResolver {
@@ -28,27 +29,16 @@ export class AuthResolver {
 
   @Mutation(() => RegisterResponse)
   async signUp(
-    @Args('data') registerCredentials: CreateUserInput,
+    @Args('data') registerCredentials: RegisterUserInput,
   ): Promise<RegisterResponse> {
-    const {
-      firstName,
-      lastName,
-      email,
-      avatar,
-      username,
-      title,
-      password,
-      phone,
-    } = registerCredentials
+    const { firstName, lastName, email, avatar, password, phone } =
+      registerCredentials
     const payload = {
       firstName,
       lastName,
       email,
-      avatar,
-      username,
-      title,
       password,
-      phone,
+      ...(phone && { phone }),
     }
 
     return await this.authService.register(payload)
