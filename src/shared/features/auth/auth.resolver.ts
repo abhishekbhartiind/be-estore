@@ -2,7 +2,6 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { AuthService } from '@shared/features/auth/auth.service'
 import { UserService } from '@feature/user/user.service'
 import { RegisterResponse } from '@shared/features/auth/model/register-response.model'
-import { CreateUserInput } from '@feature/user/dto/create-user.input'
 import { UseGuards } from '@nestjs/common'
 import { LocalAuthGuard } from '@shared/features/auth/guard/local-auth.guard'
 import { LoginResponse } from '@shared/features/auth/model/login-response.model'
@@ -34,6 +33,7 @@ export class AuthResolver {
     const { firstName, lastName, email, avatar, password, phone } =
       registerCredentials
     const payload = {
+      ...(avatar && { avatar }),
       firstName,
       lastName,
       email,

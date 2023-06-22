@@ -37,7 +37,7 @@ export class AuthService {
   /**
    * Validates user input for existing emails in DB and matching password (comparing hash and user password input)
    * @param email
-   * @param pass
+   * @param password
    */
   async validateUser(
     email: string,
