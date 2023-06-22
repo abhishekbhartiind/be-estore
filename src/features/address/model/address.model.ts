@@ -17,6 +17,9 @@ registerEnumType(Country, {
 @InputType('AddressInput')
 @Entity()
 export class Address extends BaseEntity {
+  @Column({ type: 'varchar', length: 7 })
+  title?: string
+
   @Column({ type: 'varchar', length: 64 })
   firstName: string
 

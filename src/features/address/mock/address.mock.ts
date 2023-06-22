@@ -4,6 +4,7 @@ import { AddressType } from '@feature/address/enum/address-type.enum'
 export const addressMock: any[] = [
   {
     id: '2a876a60-1a4b-4a3b-b4a2-825670984dbd',
+    title: 'Ms.',
     firstName: 'Eugenia',
     lastName: 'Ratke',
     line1: '869 Lehner Cliff',
@@ -17,6 +18,7 @@ export const addressMock: any[] = [
   },
   {
     id: '2b94f351-5416-425f-847b-c4610ea5aa6c',
+    title: 'Ms.',
     firstName: 'Lia',
     lastName: 'Brown',
     line1: '97628 Roberto Path',
@@ -30,6 +32,7 @@ export const addressMock: any[] = [
   },
   {
     id: '3b77a5da-efe3-44c6-8a00-9a0bf56553cb',
+    title: 'Mrs.',
     firstName: 'Myra',
     lastName: 'Bogisich',
     line1: '2610 Oceane Crossroad',
@@ -42,6 +45,7 @@ export const addressMock: any[] = [
   },
   {
     id: '53ffc4e9-7338-4fd5-b66e-4cd08dbedcb2',
+    title: 'Ms.',
     firstName: 'Margarita',
     lastName: 'Bartoletti',
     line1: '30440 Webster Mountains',
@@ -55,6 +59,7 @@ export const addressMock: any[] = [
   },
   {
     id: '546e442b-92b8-4f78-896a-311407f284f3',
+    title: 'Mr.',
     firstName: 'Emmanuel',
     lastName: 'Wehner',
     line1: '4182 Hammes Course',
@@ -67,6 +72,7 @@ export const addressMock: any[] = [
   },
   {
     id: '593e5d61-99c5-497e-8e5d-5f635481d242',
+    title: 'Ms.',
     firstName: 'Novella',
     lastName: 'Murray',
     line1: '767 Earnestine Pines',
@@ -80,6 +86,7 @@ export const addressMock: any[] = [
   },
   {
     id: '5cfbbc17-836d-48ed-9e9c-56051e463269',
+    title: 'Mrs.',
     firstName: 'Trisha',
     lastName: 'Turner',
     line1: '218 Brendan Avenue',
@@ -93,6 +100,7 @@ export const addressMock: any[] = [
   },
   {
     id: '838410f2-abff-488d-8934-caae78c3b166',
+    title: 'Mr.',
     firstName: 'Hettie',
     lastName: 'Smitham',
     line1: '98691 Zemlak Rapid',
@@ -106,6 +114,7 @@ export const addressMock: any[] = [
   },
   {
     id: '8a13f55b-1a8d-4702-b530-d6ab83407823',
+    title: 'Mr.',
     firstName: 'Addie',
     lastName: 'Zulauf',
     line1: '1493 Bruen Loop',
@@ -118,6 +127,7 @@ export const addressMock: any[] = [
   },
   {
     id: '9568288d-d391-4531-9c92-a18cfc88cb3b',
+    title: 'Ms.',
     firstName: 'Ashleigh',
     lastName: 'Bogan',
     line1: '6073 Rosenbaum Skyway',
@@ -130,6 +140,7 @@ export const addressMock: any[] = [
   },
   {
     id: 'a25f2417-0e60-4589-8acb-17dcf970ef81',
+    title: 'Ms.',
     firstName: 'Sandrine',
     lastName: 'DuBuque',
     line1: '8862 Brandy Dam',
@@ -143,6 +154,7 @@ export const addressMock: any[] = [
   },
   {
     id: 'd78de70f-9748-40a8-aae9-a2a569b8b1af',
+    title: 'Mr.',
     firstName: 'Gage',
     lastName: 'Bergstrom',
     line1: '613 Julia Glens',
@@ -155,6 +167,7 @@ export const addressMock: any[] = [
   },
   {
     id: 'dab2b3b8-97d3-4c8b-a820-ce60d9401481',
+    title: 'Ms.',
     firstName: 'Felicity',
     lastName: "O'Hara",
     line1: '50207 Parisian Islands',
@@ -168,6 +181,7 @@ export const addressMock: any[] = [
   },
   {
     id: 'ecf65695-92a0-4265-b071-a4e95a549a9a',
+    title: 'Ms.',
     firstName: 'Theodora',
     lastName: 'Predovic',
     line1: '424 Gregorio Lakes',
@@ -181,6 +195,7 @@ export const addressMock: any[] = [
   },
   {
     id: 'f95870fe-23f3-4785-b3ec-3742451ccc2c',
+    title: 'Ms.',
     firstName: 'Theodora',
     lastName: 'Predovic',
     line1: 'Via Pestariso 86',
@@ -194,6 +209,7 @@ export const addressMock: any[] = [
   },
   {
     id: 'f7fb967c-84dc-434a-86a2-22ca860affe1',
+    title: 'Mr.',
     firstName: 'Dustin',
     lastName: 'Ebert',
     line1: '84129 Christophe Flats',
@@ -206,6 +222,7 @@ export const addressMock: any[] = [
   },
   {
     id: 'ac9c1081-659c-44f9-a463-afb5004be4a6',
+    title: 'Mr.',
     firstName: 'Jefferson',
     lastName: 'Wellington',
     line1: 'Obere Bahnhofstrasse 14',

@@ -20,7 +20,7 @@ registerEnumType(Role, {
 @InputType('UserInput')
 @Entity()
 export class User extends BaseEntity {
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   avatar?: string
 
   @Column({ type: 'varchar', length: 55 })
@@ -31,12 +31,6 @@ export class User extends BaseEntity {
 
   @Column({ type: 'varchar', length: 512, unique: true })
   email: string
-
-  @Column({ type: 'varchar', length: 55 })
-  username?: string
-
-  @Column({ type: 'varchar', length: 3 })
-  title?: string
 
   @HideField()
   @Column({ type: 'varchar', length: 128 })
@@ -62,12 +56,14 @@ export class User extends BaseEntity {
   @Column({ type: 'text', unique: true, nullable: true })
   passwordToken?: string | null
 
+  @HideField()
   @Column({ type: 'timestamptz', nullable: true })
   passwordTokenCreated?: Date | null
 
   @Column({ type: 'text', unique: true, nullable: true })
   emailToken?: string | null
 
+  @HideField()
   @Column({ type: 'timestamptz', nullable: true })
   emailTokenCreated?: Date | null
 
