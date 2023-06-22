@@ -26,12 +26,16 @@ import { CreditCardModule } from '@feature/credit-card/credit-card.module'
     BrandModule,
     CategoryModule,
     ConfigModule.forRoot(),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRoot({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd() + '/src/schema.graphql'),
       sortSchema: true,
       playground: true,
       introspection: true,
+      cors: {
+        origin: 'http://localhost:4000',
+        credentials: true,
+      },
     }),
     MailModule,
     SpecificationModule,
