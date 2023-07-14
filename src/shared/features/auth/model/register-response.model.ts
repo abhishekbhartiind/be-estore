@@ -1,7 +1,6 @@
 import { ObjectType } from '@nestjs/graphql'
 
 @ObjectType()
-export class RegisterResponse {
+export class IRegisterResponse {
   success: boolean
-  message: string
 }

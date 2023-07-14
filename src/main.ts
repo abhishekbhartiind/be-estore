@@ -16,7 +16,10 @@ async function bootstrap() {
     new FastifyAdapter(),
   )
 
-  app.enableCors()
+  app.enableCors({
+    origin: [String(process.env.FE_HOST), 'https://studio.apollographql.com'],
+    credentials: true,
+  })
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)))
 
