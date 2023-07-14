@@ -1,7 +1,7 @@
 import { InputType } from '@nestjs/graphql'
 
 @InputType()
-export class ChangeEmailInput {
-  email: string
+export class PasswordChangeInput {
+  password: string
   token: string
 }

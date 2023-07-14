@@ -18,7 +18,7 @@ export class UserResolver {
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.CUSTOMER)
   async fetchCustomer(@CurrentUser() user: User) {
-    return await this.userService.fetchOne(user.id as string)
+    return await this.userService.fetchOne({ id: user.id as string })
   }
 
   @Mutation(() => User)

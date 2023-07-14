@@ -2,7 +2,7 @@ import { ObjectType } from '@nestjs/graphql'
 import { User } from '@feature/user/user.model'
 
 @ObjectType()
-export class LoginResponse {
+export class ILoginResponse {
   user: User
-  accessToken: string
+  token: string
 }

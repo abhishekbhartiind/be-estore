@@ -33,7 +33,7 @@ import { CreditCardModule } from '@feature/credit-card/credit-card.module'
       playground: true,
       introspection: true,
       cors: {
-        origin: 'http://localhost:4000',
+        origin: [process.env.FE_HOST, 'https://studio.apollographql.com'],
         credentials: true,
       },
     }),

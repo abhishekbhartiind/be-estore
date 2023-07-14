@@ -1,7 +1,8 @@
 import {
-  HttpException,
-  HttpStatus,
   Injectable,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
   OnModuleInit,
 } from '@nestjs/common'
 import { User } from '@feature/user/user.model'
@@ -10,12 +11,12 @@ import { DataSource, DeleteResult, Repository, UpdateResult } from 'typeorm'
 import { CreateUserInput } from '@feature/user/dto/create-user.input'
 import { genSalt, hash } from 'bcrypt'
 import { UpdateUserInput } from '@feature/user/dto/update-user.input'
-import {
-  RECORD_NOT_FOUND,
-  TOKEN_INVALID,
-} from '@shared/constant/error.constant'
+import { RECORD_NOT_FOUND } from '@shared/constant/error.constant'
 import { userMock } from '@feature/user/user.mock'
-import { RegisterUserInput } from '@shared/features/auth/dto/register-user.input'
+import { RegisterInput } from '@shared/features/auth/dto/register.input'
+import { EmailChangeInput } from '@shared/features/auth/dto/email-change.input'
+import { PasswordChangeInput } from '@shared/features/auth/dto/password-change.input'
+import { TOKEN_INVALID } from '@shared/features/auth/constant/response.constant'
 
 @Injectable()
 export class UserService implements OnModuleInit {
@@ -32,35 +33,31 @@ export class UserService implements OnModuleInit {
 
   /**
    * Fetches all records
-   * @param where If included, used sql where statement (javascript object syntax)
+   * @param condition: If included, used sql where statement (javascript object syntax)
    */
-  async fetch(where?: object): Promise<User[]> {
+  async fetch(condition?: object): Promise<User[]> {
     try {
       return await this.userRepo.find({
-        ...(where && { where }),
+        ...(condition && { where: condition }),
       })
     } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+      Logger.error(error)
+      throw new InternalServerErrorException()
     }
   }
 
   /**
-   * Fetch record by identifier
-   * @param id Record identifier to be fetched
-   * @param where If included, used sql where statement (javascript object syntax)
+   * Fetch one record by condition
+   * @param condition: used as sql where statement (javascript object syntax)
    */
-  async fetchOne(id: string | null, where?: object) {
+  async fetchOne(condition: object) {
     try {
-      if (id)
-        return await this.userRepo.findOne({
-          where: { id },
-        })
-      if (where)
-        return await this.userRepo.findOne({
-          where,
-        })
+      return await this.userRepo.findOne({
+        where: condition,
+      })
     } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+      Logger.error(error)
+      throw new InternalServerErrorException()
     }
   }
 
@@ -69,7 +66,7 @@ export class UserService implements OnModuleInit {
    * @param user DTO
    */
   async save(
-    user: CreateUserInput | RegisterUserInput,
+    user: CreateUserInput | RegisterInput,
   ): Promise<User | UpdateResult> {
     try {
       const { email, password } = user
@@ -83,7 +80,8 @@ export class UserService implements OnModuleInit {
 
       return await this.userRepo.save(user)
     } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+      Logger.error(error)
+      throw new InternalServerErrorException()
     }
   }
 
@@ -100,7 +98,8 @@ export class UserService implements OnModuleInit {
       Object.assign(record as User, user)
       return await this.userRepo.save(record as User)
     } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+      Logger.error(error)
+      throw new InternalServerErrorException()
     }
   }
 
@@ -112,7 +111,8 @@ export class UserService implements OnModuleInit {
     try {
       return await this.userRepo.softDelete(id)
     } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+      Logger.error(error)
+      throw new InternalServerErrorException()
     }
   }
 
@@ -123,56 +123,59 @@ export class UserService implements OnModuleInit {
   async restore(id: string): Promise<UpdateResult> {
     try {
       const userRestored = await this.userRepo.restore(id)
-      if (!userRestored)
-        throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND)
+      if (!userRestored) throw new NotFoundException(RECORD_NOT_FOUND)
 
       return userRestored
     } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+      Logger.error(error)
+      throw new InternalServerErrorException()
     }
   }
 
   /**
    * Changes user password
-   * @param token UUID4 token
-   * @param userPassword New password
+   * @param passwordChangeArgs UUID4 token + new password
    */
   async changePassword(
-    token: string,
-    userPassword: string,
+    passwordChangeArgs: PasswordChangeInput,
   ): Promise<UpdateResult> {
     try {
+      const { token, password } = passwordChangeArgs
+
       const user = await this.userRepo.findOneBy({ passwordToken: token })
-      if (!user) throw new HttpException(TOKEN_INVALID, HttpStatus.NO_CONTENT)
+      if (!user) throw new NotFoundException(TOKEN_INVALID)
 
       const salt = await genSalt()
-      user.password = await hash(userPassword, salt)
+      user.password = await hash(password, salt)
       user.passwordToken = null
       user.passwordTokenCreated = null
 
       return await this.userRepo.update(user.id as string, user)
     } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+      Logger.error(error)
+      throw new InternalServerErrorException()
     }
   }
 
   /**
    * Changes user email
-   * @param token UUID4 token
-   * @param userEmail New email
+   * @param emailChangeArgs UUID4 token + new email address
    */
-  async changeEmail(token: string, userEmail: string): Promise<UpdateResult> {
+  async changeEmail(emailChangeArgs: EmailChangeInput): Promise<UpdateResult> {
     try {
-      const user = await this.userRepo.findOneBy({ emailToken: token })
-      if (!user) throw new HttpException(TOKEN_INVALID, HttpStatus.NO_CONTENT)
+      const { token, email } = emailChangeArgs
 
-      user.email = userEmail
+      const user = await this.userRepo.findOneBy({ emailToken: token })
+      if (!user) throw new NotFoundException(TOKEN_INVALID)
+
+      user.email = email
       user.emailToken = null
       user.emailTokenCreated = null
 
       return await this.userRepo.update(user.id as string, user)
     } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+      Logger.error(error)
+      throw new InternalServerErrorException()
     }
   }
 
@@ -182,15 +185,16 @@ export class UserService implements OnModuleInit {
    */
   async activateAccount(token: string): Promise<User> {
     try {
-      const user = await this.fetchOne(null, { activateAccountToken: token })
-      if (!user) throw new HttpException(TOKEN_INVALID, HttpStatus.UNAUTHORIZED)
+      const user = await this.fetchOne({ activationToken: token })
+      if (!user) throw new NotFoundException(TOKEN_INVALID)
 
       user.activated = new Date()
       user.activationToken = null
 
       return await this.update(user.id as string, user)
     } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+      Logger.error(error)
+      throw new InternalServerErrorException()
     }
   }
 
@@ -210,7 +214,8 @@ export class UserService implements OnModuleInit {
           .execute()
       }
     } catch (error) {
-      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+      Logger.error(error)
+      throw new InternalServerErrorException()
     }
   }
 }
