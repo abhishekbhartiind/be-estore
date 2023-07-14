@@ -16,6 +16,7 @@ import { SpecificationModule } from '@feature/product/features/specification/spe
 import { RatingModule } from '@feature/product/features/rating/rating.module'
 import { AddressModule } from '@feature/address/address.module'
 import { CreditCardModule } from '@feature/credit-card/credit-card.module'
+import { ServeStaticModule } from '@nestjs/serve-static'
 
 @Module({
   imports: [
@@ -38,6 +39,12 @@ import { CreditCardModule } from '@feature/credit-card/credit-card.module'
       },
     }),
     MailModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+      serveStaticOptions: {
+        index: false,
+      },
+    }),
     SpecificationModule,
     ProductModule,
     OrderModule,
