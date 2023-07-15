@@ -8,7 +8,10 @@ import { InjectDataSource, InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
 
 import { RECORD_NOT_FOUND } from '@shared/constant/error.constant'
-import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
+import {
+  IDeleteResponse,
+  IUpdateResponse,
+} from '@shared/dto/typeorm-result.dto'
 import { Address } from '@feature/address/model/address.model'
 import { AddressFilterArgs } from '@feature/address/dto/filter.args'
 import { ADDRESS_RELATIONS } from '@feature/address/constant/entity-relation.constant'
@@ -85,7 +88,10 @@ export class AddressService implements OnModuleInit {
     }
   }
 
-  async swapPrimary(addressId: string, userId: string): Promise<UpdateResult> {
+  async swapPrimary(
+    addressId: string,
+    userId: string,
+  ): Promise<IUpdateResponse> {
     try {
       const oldPrimaryAddress = await this.addressRepo.findOne({
         where: { user: { id: userId }, primary: true },
@@ -126,7 +132,10 @@ export class AddressService implements OnModuleInit {
    * @param id  Record id to be updated
    * @param address DTO
    */
-  async update(id: string, address: UpdateAddressInput): Promise<UpdateResult> {
+  async update(
+    id: string,
+    address: UpdateAddressInput,
+  ): Promise<IUpdateResponse> {
     try {
       return await this.addressRepo.update(id, address)
     } catch (error) {
@@ -138,7 +147,7 @@ export class AddressService implements OnModuleInit {
    * Deletes a record by id
    * @param id Record id to be soft deleted
    */
-  async delete(id: string): Promise<DeleteResult> {
+  async delete(id: string): Promise<IDeleteResponse> {
     try {
       return await this.addressRepo.softDelete(id)
     } catch (error) {
@@ -150,7 +159,7 @@ export class AddressService implements OnModuleInit {
    * Restores a record by id
    * @param id Record id to be restored
    */
-  async restore(id: string): Promise<UpdateResult> {
+  async restore(id: string): Promise<IUpdateResponse> {
     try {
       const addressRestored = await this.addressRepo.restore(id)
       if (!addressRestored)

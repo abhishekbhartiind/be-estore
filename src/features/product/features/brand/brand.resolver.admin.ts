@@ -6,7 +6,10 @@ import { JwtAuthGuard } from '@shared/features/auth/guard/jwt-auth.guard'
 import { RoleGuard } from '@shared/features/auth/guard/role.guard'
 import { HasRoles } from '@shared/decorator/role.decorator'
 import { Role } from '@feature/user/enum/role.enum'
-import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
+import {
+  IDeleteResponse,
+  IUpdateResponse,
+} from '@shared/dto/typeorm-result.dto'
 
 @Resolver(() => ProductBrand)
 export class BrandAdminResolver {
@@ -19,27 +22,27 @@ export class BrandAdminResolver {
     return this.brandService.save(name)
   }
 
-  @Mutation(() => UpdateResult)
+  @Mutation(() => IUpdateResponse)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
   async updateBrand(
     @Args('id') id: string,
     @Args('name') name: string,
-  ): Promise<UpdateResult> {
+  ): Promise<IUpdateResponse> {
     return this.brandService.update(id, name)
   }
 
-  @Mutation(() => DeleteResult)
+  @Mutation(() => IDeleteResponse)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
-  async deleteBrand(@Args('id') id: string): Promise<DeleteResult> {
+  async deleteBrand(@Args('id') id: string): Promise<IDeleteResponse> {
     return await this.brandService.delete(id)
   }
 
-  @Mutation(() => UpdateResult)
+  @Mutation(() => IUpdateResponse)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
-  async restoreBrand(@Args('id') id: string): Promise<UpdateResult> {
+  async restoreBrand(@Args('id') id: string): Promise<IUpdateResponse> {
     return await this.brandService.restore(id)
   }
 }

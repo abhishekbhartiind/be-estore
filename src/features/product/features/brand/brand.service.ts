@@ -3,7 +3,10 @@ import { InjectDataSource, InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
 import { brandMock } from '@feature/product/features/brand/brand.mock'
 import { ProductBrand } from '@feature/product/features/brand/brand.model'
-import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
+import {
+  IDeleteResponse,
+  IUpdateResponse,
+} from '@shared/dto/typeorm-result.dto'
 import { RECORD_NOT_FOUND } from '@shared/constant/error.constant'
 
 @Injectable()
@@ -49,7 +52,7 @@ export class BrandService {
    * @param id  Record identifier to be updated
    * @param name Brand name
    */
-  async update(id: string, name: string): Promise<UpdateResult> {
+  async update(id: string, name: string): Promise<IUpdateResponse> {
     try {
       const foundBrand = await this.brandRepo.findOne({
         where: { id },
@@ -67,7 +70,7 @@ export class BrandService {
    * Deletes a record by identifier
    * @param id Record identifier
    */
-  async delete(id: string): Promise<DeleteResult> {
+  async delete(id: string): Promise<IDeleteResponse> {
     try {
       const brand = await this.brandRepo.findOne({ where: { id } })
       if (!brand)
@@ -83,7 +86,7 @@ export class BrandService {
    * Restores a record by identifier
    * @param id Record identifier to be restored
    */
-  async restore(id: string): Promise<UpdateResult> {
+  async restore(id: string): Promise<IUpdateResponse> {
     try {
       const brand = await this.brandRepo.restore(id)
       if (!brand)

@@ -11,7 +11,7 @@ import {
   RECORD_NOT_SAVED,
   SPECIFY_SHIPPING_ADDRESS,
 } from '@shared/constant/error.constant'
-import { UpdateResult } from '@shared/dto/typeorm-result.dto'
+import { IUpdateResponse } from '@shared/dto/typeorm-result.dto'
 import { ProductService } from '../product/product.service'
 import { Order } from '@feature/order/model/order.model'
 import { ORDER_RELATIONS } from '@feature/order/constant/entity-relation.constant'
@@ -143,7 +143,7 @@ export class OrderService implements OnModuleInit {
   /**
    * Cancel an order
    */
-  async cancel(id: string): Promise<UpdateResult> {
+  async cancel(id: string): Promise<IUpdateResponse> {
     try {
       const order = await this.orderRepo.findOne({ where: { id } })
       if (!order)

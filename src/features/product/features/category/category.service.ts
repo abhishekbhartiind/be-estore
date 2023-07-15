@@ -4,7 +4,10 @@ import { DataSource, Repository } from 'typeorm'
 import { ProductCategory } from '@feature/product/features/category/category.model'
 import { categoryMock } from '@feature/product/features/category/category.mock'
 import { RECORD_NOT_FOUND } from '@shared/constant/error.constant'
-import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
+import {
+  IDeleteResponse,
+  IUpdateResponse,
+} from '@shared/dto/typeorm-result.dto'
 
 @Injectable()
 export class CategoryService {
@@ -49,7 +52,7 @@ export class CategoryService {
    * @param id  Record identifier to be updated
    * @param name Category name
    */
-  async update(id: string, name: string): Promise<UpdateResult> {
+  async update(id: string, name: string): Promise<IUpdateResponse> {
     try {
       const foundCategory = await this.categoryRepo.findOne({
         where: { id },
@@ -67,7 +70,7 @@ export class CategoryService {
    * Deletes a record by identifier
    * @param id Record identifier
    */
-  async delete(id: string): Promise<DeleteResult> {
+  async delete(id: string): Promise<IDeleteResponse> {
     try {
       const category = await this.categoryRepo.findOne({ where: { id } })
       if (!category)
@@ -83,7 +86,7 @@ export class CategoryService {
    * Restores a record by identifier
    * @param id Record identifier to be restored
    */
-  async restore(id: string): Promise<UpdateResult> {
+  async restore(id: string): Promise<IUpdateResponse> {
     try {
       const category = await this.categoryRepo.restore(id)
       if (!category)
