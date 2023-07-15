@@ -90,9 +90,9 @@ export class OrderService implements OnModuleInit {
    */
   async save(order: CreateOrderInput, user: User): Promise<Order> {
     try {
-      const shippingAddress = await this.addressService.fetchOne(
-        order.shippingTo as string,
-      )
+      const shippingAddress = await this.addressService.fetchOne({
+        id: order.shippingTo,
+      })
       if (!order.shippingTo)
         throw new HttpException(
           SPECIFY_SHIPPING_ADDRESS,
@@ -100,7 +100,9 @@ export class OrderService implements OnModuleInit {
         )
       delete order.shippingTo
       const billingAddress = order.billingTo
-        ? await this.addressService.fetchOne(order.billingTo)
+        ? await this.addressService.fetchOne({
+            id: order.billingTo,
+          })
         : null
       delete order.billingTo
 

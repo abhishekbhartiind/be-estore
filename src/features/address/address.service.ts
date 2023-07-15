@@ -63,22 +63,15 @@ export class AddressService implements OnModuleInit {
 
   /**
    * Fetch record by identifier
-   * @param id Record identifier to be fetched
-   * @param where If included, used sql where statement (javascript object syntax)
+   * @param condition If included, used sql where statement (javascript object syntax)
    */
-  async fetchOne(id: string, where?: object): Promise<Address> {
+  async fetchOne(condition?: object): Promise<Address> {
     try {
-      let address
-      if (id)
-        address = await this.addressRepo.findOne({
-          where: { id },
-          relations: ADDRESS_RELATIONS,
-        })
-      if (where)
-        address = await this.addressRepo.findOne({
-          where: where,
-          relations: ADDRESS_RELATIONS,
-        })
+      const address = await this.addressRepo.findOne({
+        where: condition,
+        relations: ADDRESS_RELATIONS,
+      })
+
       if (!address)
         throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND)
 

@@ -40,7 +40,9 @@ export class OrderResolver {
     @CurrentUser() currentUser: User,
     @Args('data') order: CreateOrderInput,
   ): Promise<Order> {
-    const user = await this.userService.fetchOne(currentUser.id as string)
+    const user = await this.userService.fetchOne({
+      id: currentUser.id as string,
+    })
     return await this.orderService.save(order, user as User)
   }
 

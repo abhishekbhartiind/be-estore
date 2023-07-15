@@ -71,17 +71,13 @@ export class AuthResolver {
     else return { valid: false }
   }
 
-  @Mutation(() => UpdateResult)
-  async changePassword(
-    @Args('data') passwordChangeParams: ChangePasswordInput,
-  ) {
-    const { token, password } = passwordChangeParams
-    return await this.userService.changePassword(token, password)
+  @Mutation(() => IUpdateResponse)
+  async changePassword(@Args('input') passwordChangeArgs: PasswordChangeInput) {
+    return await this.userService.changePassword(passwordChangeArgs)
   }
 
-  @Mutation(() => UpdateResult)
-  async changeEmail(@Args('data') emailChangeParams: ChangeEmailInput) {
-    const { token, email } = emailChangeParams
-    return await this.userService.changeEmail(token, email)
+  @Mutation(() => IUpdateResponse)
+  async changeEmail(@Args('input') emailChangeArgs: EmailChangeInput) {
+    return await this.userService.changeEmail(emailChangeArgs)
   }
 }

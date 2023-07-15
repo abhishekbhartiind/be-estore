@@ -34,6 +34,22 @@ export class AddressResolver {
     })
   }
 
+  @Query(() => Address)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @HasRoles(Role.CUSTOMER)
+  async address(
+    @CurrentUser() user: User,
+    @Args('id') addressId: string,
+    @Args('filterArgs', { nullable: true }) filterArgs?: AddressFilterArgs,
+  ): Promise<Address> {
+    return await this.addressService.fetchOne({
+      id: addressId,
+      user: { id: user.id },
+      type: filterArgs?.type && filterArgs?.type,
+      primary: filterArgs?.primary && filterArgs?.primary,
+    })
+  }
+
   @Mutation(() => Address)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.CUSTOMER)
