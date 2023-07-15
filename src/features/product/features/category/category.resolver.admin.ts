@@ -4,7 +4,10 @@ import { JwtAuthGuard } from '@shared/features/auth/guard/jwt-auth.guard'
 import { RoleGuard } from '@shared/features/auth/guard/role.guard'
 import { HasRoles } from '@shared/decorator/role.decorator'
 import { Role } from '@feature/user/enum/role.enum'
-import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
+import {
+  IDeleteResponse,
+  IUpdateResponse,
+} from '@shared/dto/typeorm-result.dto'
 import { ProductCategory } from '@feature/product/features/category/category.model'
 import { CategoryService } from '@feature/product/features/category/category.service'
 
@@ -19,27 +22,27 @@ export class CategoryAdminResolver {
     return this.categoryService.save(name)
   }
 
-  @Mutation(() => UpdateResult)
+  @Mutation(() => IUpdateResponse)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
   async updateCategory(
     @Args('id') id: string,
     @Args('name') name: string,
-  ): Promise<UpdateResult> {
+  ): Promise<IUpdateResponse> {
     return this.categoryService.update(id, name)
   }
 
-  @Mutation(() => DeleteResult)
+  @Mutation(() => IDeleteResponse)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
-  async deleteCategory(@Args('id') id: string): Promise<DeleteResult> {
+  async deleteCategory(@Args('id') id: string): Promise<IDeleteResponse> {
     return await this.categoryService.delete(id)
   }
 
-  @Mutation(() => UpdateResult)
+  @Mutation(() => IUpdateResponse)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
-  async restoreCategory(@Args('id') id: string): Promise<UpdateResult> {
+  async restoreCategory(@Args('id') id: string): Promise<IUpdateResponse> {
     return await this.categoryService.restore(id)
   }
 }

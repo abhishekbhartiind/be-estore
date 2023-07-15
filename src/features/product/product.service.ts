@@ -25,7 +25,10 @@ import {
 import { ProductImage } from '@feature/product/model/image.model'
 import { productMock } from '@feature/product/mock/product.mock'
 import { RECORD_NOT_FOUND } from '@shared/constant/error.constant'
-import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
+import {
+  IDeleteResponse,
+  IUpdateResponse,
+} from '@shared/dto/typeorm-result.dto'
 import { UpdateProductInput } from '@feature/product/dto/update-product.input'
 import { CreateProductInput } from '@feature/product/dto/create-product.input'
 import { PRODUCT_RELATIONS } from '@feature/product/constant/entity-relation.constant'
@@ -243,7 +246,10 @@ export class ProductService implements OnModuleInit {
    * @param id  Record identifier to be updated
    * @param product DTO
    */
-  async update(id: string, product: UpdateProductInput): Promise<UpdateResult> {
+  async update(
+    id: string,
+    product: UpdateProductInput,
+  ): Promise<IUpdateResponse> {
     try {
       const foundProduct = await this.productRepo.findOne({
         where: { id },
@@ -294,7 +300,7 @@ export class ProductService implements OnModuleInit {
    * Deletes a record by identifier
    * @param id Record identifier
    */
-  async delete(id: string): Promise<DeleteResult> {
+  async delete(id: string): Promise<IDeleteResponse> {
     try {
       const product = await this.productRepo.findOne({ where: { id } })
       if (!product)
@@ -310,7 +316,7 @@ export class ProductService implements OnModuleInit {
    * Restores a record by identifier
    * @param id Record identifier to be restored
    */
-  async restore(id: string): Promise<UpdateResult> {
+  async restore(id: string): Promise<IUpdateResponse> {
     try {
       const product = await this.productRepo.restore(id)
       if (!product)

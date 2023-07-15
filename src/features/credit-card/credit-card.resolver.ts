@@ -2,7 +2,7 @@ import { UseGuards } from '@nestjs/common'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CurrentUser } from '@shared/decorator/current-user.decorator'
 import { HasRoles } from '@shared/decorator/role.decorator'
-import { DeleteResult } from '@shared/dto/typeorm-result.dto'
+import { IDeleteResponse } from '@shared/dto/typeorm-result.dto'
 import { JwtAuthGuard } from '@shared/features/auth/guard/jwt-auth.guard'
 import { RoleGuard } from '@shared/features/auth/guard/role.guard'
 import { Role } from '@feature/user/enum/role.enum'
@@ -47,12 +47,12 @@ export class CreditCardResolver {
     )
   }*/
 
-  @Mutation(() => DeleteResult)
+  @Mutation(() => IDeleteResponse)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.CUSTOMER)
   async deleteCreditCard(
     @Args('id', { type: () => String }) id: string,
-  ): Promise<DeleteResult> {
+  ): Promise<IDeleteResponse> {
     return await this.creditCardService.delete(id)
   }
 }

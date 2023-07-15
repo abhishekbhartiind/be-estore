@@ -2,7 +2,7 @@ import { Field, Int, ObjectType } from '@nestjs/graphql'
 import { ObjectLiteral } from 'typeorm'
 
 @ObjectType()
-export class DeleteResult {
+export class IDeleteResponse {
   @Field(() => [String])
   raw: any
 
@@ -11,7 +11,7 @@ export class DeleteResult {
 }
 
 @ObjectType()
-export class UpdateResult {
+export class IUpdateResponse {
   @Field(() => [String])
   raw: any
 

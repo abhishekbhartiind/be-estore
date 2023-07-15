@@ -2,7 +2,7 @@ import { UseGuards } from '@nestjs/common'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CurrentUser } from '@shared/decorator/current-user.decorator'
 import { HasRoles } from '@shared/decorator/role.decorator'
-import { UpdateResult } from '@shared/dto/typeorm-result.dto'
+import { IUpdateResponse } from '@shared/dto/typeorm-result.dto'
 import { Order } from '@feature/order/model/order.model'
 import { RoleGuard } from '@shared/features/auth/guard/role.guard'
 import { JwtAuthGuard } from '@shared/features/auth/guard/jwt-auth.guard'
@@ -40,14 +40,16 @@ export class OrderResolver {
     @CurrentUser() currentUser: User,
     @Args('data') order: CreateOrderInput,
   ): Promise<Order> {
-    const user = await this.userService.fetchOne(currentUser.id as string)
+    const user = await this.userService.fetchOne({
+      id: currentUser.id as string,
+    })
     return await this.orderService.save(order, user as User)
   }
 
-  @Mutation(() => UpdateResult)
+  @Mutation(() => IUpdateResponse)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.CUSTOMER)
-  async cancelOrder(@Args('id') id: string): Promise<UpdateResult> {
+  async cancelOrder(@Args('id') id: string): Promise<IUpdateResponse> {
     return await this.orderService.cancel(id)
   }
 }

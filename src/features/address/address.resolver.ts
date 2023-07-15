@@ -2,7 +2,10 @@ import { UseGuards } from '@nestjs/common'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { CurrentUser } from '@shared/decorator/current-user.decorator'
 import { HasRoles } from '@shared/decorator/role.decorator'
-import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
+import {
+  IDeleteResponse,
+  IUpdateResponse,
+} from '@shared/dto/typeorm-result.dto'
 import { Address } from '@feature/address/model/address.model'
 import { AddressService } from '@feature/address/address.service'
 import { JwtAuthGuard } from '@shared/features/auth/guard/jwt-auth.guard'
@@ -31,6 +34,22 @@ export class AddressResolver {
     })
   }
 
+  @Query(() => Address)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @HasRoles(Role.CUSTOMER)
+  async address(
+    @CurrentUser() user: User,
+    @Args('id') addressId: string,
+    @Args('filterArgs', { nullable: true }) filterArgs?: AddressFilterArgs,
+  ): Promise<Address> {
+    return await this.addressService.fetchOne({
+      id: addressId,
+      user: { id: user.id },
+      type: filterArgs?.type && filterArgs?.type,
+      primary: filterArgs?.primary && filterArgs?.primary,
+    })
+  }
+
   @Mutation(() => Address)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.CUSTOMER)
@@ -41,32 +60,32 @@ export class AddressResolver {
     return await this.addressService.save({ ...address, user })
   }
 
-  @Mutation(() => UpdateResult)
+  @Mutation(() => IUpdateResponse)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.CUSTOMER)
   async swapPrimaryAddress(
     @CurrentUser() user: User,
     @Args('addressId') addressId: string,
-  ): Promise<UpdateResult> {
+  ): Promise<IUpdateResponse> {
     return await this.addressService.swapPrimary(addressId, user.id as string)
   }
 
-  @Mutation(() => UpdateResult)
+  @Mutation(() => IUpdateResponse)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.CUSTOMER)
   async updateCustomerAddress(
     @Args('id', { type: () => String }) id: string,
     @Args('data') address: UpdateAddressInput,
-  ): Promise<UpdateResult> {
+  ): Promise<IUpdateResponse> {
     return await this.addressService.update(id, address)
   }
 
-  @Mutation(() => DeleteResult)
+  @Mutation(() => IDeleteResponse)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.CUSTOMER)
   async deleteAddress(
     @Args('id', { type: () => String }) id: string,
-  ): Promise<DeleteResult> {
+  ): Promise<IDeleteResponse> {
     return await this.addressService.delete(id)
   }
 }

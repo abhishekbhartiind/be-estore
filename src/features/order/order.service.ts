@@ -11,7 +11,7 @@ import {
   RECORD_NOT_SAVED,
   SPECIFY_SHIPPING_ADDRESS,
 } from '@shared/constant/error.constant'
-import { UpdateResult } from '@shared/dto/typeorm-result.dto'
+import { IUpdateResponse } from '@shared/dto/typeorm-result.dto'
 import { ProductService } from '../product/product.service'
 import { Order } from '@feature/order/model/order.model'
 import { ORDER_RELATIONS } from '@feature/order/constant/entity-relation.constant'
@@ -90,9 +90,9 @@ export class OrderService implements OnModuleInit {
    */
   async save(order: CreateOrderInput, user: User): Promise<Order> {
     try {
-      const shippingAddress = await this.addressService.fetchOne(
-        order.shippingTo as string,
-      )
+      const shippingAddress = await this.addressService.fetchOne({
+        id: order.shippingTo,
+      })
       if (!order.shippingTo)
         throw new HttpException(
           SPECIFY_SHIPPING_ADDRESS,
@@ -100,7 +100,9 @@ export class OrderService implements OnModuleInit {
         )
       delete order.shippingTo
       const billingAddress = order.billingTo
-        ? await this.addressService.fetchOne(order.billingTo)
+        ? await this.addressService.fetchOne({
+            id: order.billingTo,
+          })
         : null
       delete order.billingTo
 
@@ -143,7 +145,7 @@ export class OrderService implements OnModuleInit {
   /**
    * Cancel an order
    */
-  async cancel(id: string): Promise<UpdateResult> {
+  async cancel(id: string): Promise<IUpdateResponse> {
     try {
       const order = await this.orderRepo.findOne({ where: { id } })
       if (!order)

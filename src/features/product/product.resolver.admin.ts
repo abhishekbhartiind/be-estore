@@ -6,7 +6,10 @@ import { JwtAuthGuard } from '@shared/features/auth/guard/jwt-auth.guard'
 import { Role } from '@feature/user/enum/role.enum'
 import { HasRoles } from '@shared/decorator/role.decorator'
 import { UseGuards } from '@nestjs/common'
-import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
+import {
+  IDeleteResponse,
+  IUpdateResponse,
+} from '@shared/dto/typeorm-result.dto'
 import { UpdateProductInput } from '@feature/product/dto/update-product.input'
 import { CreateProductInput } from '@feature/product/dto/create-product.input'
 
@@ -23,27 +26,27 @@ export class ProductAdminResolver {
     return this.productService.save(product)
   }
 
-  @Mutation(() => UpdateResult)
+  @Mutation(() => IUpdateResponse)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
   async updateProduct(
     @Args('id') id: string,
     @Args('data') product: UpdateProductInput,
-  ): Promise<UpdateResult> {
+  ): Promise<IUpdateResponse> {
     return this.productService.update(id, product)
   }
 
-  @Mutation(() => DeleteResult)
+  @Mutation(() => IDeleteResponse)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
-  async deleteProduct(@Args('id') id: string): Promise<DeleteResult> {
+  async deleteProduct(@Args('id') id: string): Promise<IDeleteResponse> {
     return await this.productService.delete(id)
   }
 
-  @Mutation(() => UpdateResult)
+  @Mutation(() => IUpdateResponse)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.ADMIN)
-  async restoreProduct(@Args('id') id: string): Promise<UpdateResult> {
+  async restoreProduct(@Args('id') id: string): Promise<IUpdateResponse> {
     return await this.productService.restore(id)
   }
 }

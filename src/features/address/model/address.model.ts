@@ -1,4 +1,4 @@
-import { InputType, ObjectType, registerEnumType } from '@nestjs/graphql'
+import { Field, InputType, ObjectType, registerEnumType } from '@nestjs/graphql'
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
 import { BaseEntity } from '@shared/models/base.model'
 import { Country } from '@feature/address/enum/country-iso3166.enum'
@@ -61,9 +61,10 @@ export class Address extends BaseEntity {
   })
   type: AddressType
 
+  @Field(() => User, { nullable: true })
   @ManyToOne(() => User, (user: User) => user.address, { onDelete: 'SET NULL' })
   @JoinColumn({
     foreignKeyConstraintName: 'FK__address__user',
   })
-  user: User
+  user?: User
 }

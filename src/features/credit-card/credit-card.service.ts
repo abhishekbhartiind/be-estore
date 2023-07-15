@@ -8,7 +8,7 @@ import { InjectDataSource, InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
 import { CreditCard } from '@feature/credit-card/credit-card.model'
 import { creditCardMock } from '@feature/credit-card/credit-card.mock'
-import { DeleteResult } from '@shared/dto/typeorm-result.dto'
+import { IDeleteResponse } from '@shared/dto/typeorm-result.dto'
 import { CreateCreditCardInput } from '@feature/credit-card/dto/create-credit-card.input'
 import { CREDIT_CARD_RELATIONS } from '@feature/credit-card/constant/entity-relation.constant'
 
@@ -63,7 +63,7 @@ export class CreditCardService implements OnModuleInit {
    * Deletes a record by id
    * @param id Record id to be soft deleted
    */
-  async delete(id: string): Promise<DeleteResult> {
+  async delete(id: string): Promise<IDeleteResponse> {
     try {
       return await this.paymentRepo.softDelete(id)
     } catch (error) {
