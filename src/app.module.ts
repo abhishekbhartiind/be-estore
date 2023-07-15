@@ -26,7 +26,7 @@ import { ServeStaticModule } from '@nestjs/serve-static'
     AuthModule,
     BrandModule,
     CategoryModule,
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     GraphQLModule.forRoot({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd() + '/src/schema.graphql'),

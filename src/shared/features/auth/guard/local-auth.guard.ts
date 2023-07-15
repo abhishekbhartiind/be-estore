@@ -10,14 +10,14 @@ import { JwtService } from '@nestjs/jwt'
 import { CookieSerializeOptions } from '@fastify/cookie'
 
 const HTTP_ONLY_COOKIE: CookieSerializeOptions = {
-  maxAge: Number(process.env.TOKEN_EXPIRES_IN),
+  maxAge: Number(process.env.TOKEN_EXPIRES_IN) * 1000,
   httpOnly: true,
   signed: true,
   domain: 'http://localhost:4000',
 }
 
 const USERS_COOKIE: CookieSerializeOptions = {
-  maxAge: Number(process.env.TOKEN_EXPIRES_IN),
+  maxAge: Number(process.env.TOKEN_EXPIRES_IN) * 1000,
   domain: 'http://localhost:4000',
 }
 
@@ -31,6 +31,7 @@ export class LocalAuthGuard extends AuthGuard('local') {
     const ctx = GqlExecutionContext.create(context)
     const graphqlRequest = ctx.getContext().req
 
+    console.log(HTTP_ONLY_COOKIE)
     if (graphqlRequest) {
       const { input } = ctx.getArgs()
       graphqlRequest.body = input
