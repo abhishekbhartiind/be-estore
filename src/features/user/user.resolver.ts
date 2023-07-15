@@ -8,7 +8,10 @@ import { CurrentUser } from '@shared/decorator/current-user.decorator'
 import { RoleGuard } from '@shared/features/auth/guard/role.guard'
 import { Role } from '@feature/user/enum/role.enum'
 import { UpdateUserInput } from '@feature/user/dto/update-user.input'
-import { DeleteResult, UpdateResult } from '@shared/dto/typeorm-result.dto'
+import {
+  IDeleteResponse,
+  IUpdateResponse,
+} from '@shared/dto/typeorm-result.dto'
 
 @Resolver(() => User)
 export class UserResolver {
@@ -31,17 +34,17 @@ export class UserResolver {
     return await this.userService.update(user.id as string, newUserData)
   }
 
-  @Mutation(() => DeleteResult)
+  @Mutation(() => IDeleteResponse)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.CUSTOMER)
-  async deleteCustomer(@CurrentUser() user: User): Promise<DeleteResult> {
+  async deleteCustomer(@CurrentUser() user: User): Promise<IDeleteResponse> {
     return await this.userService.delete(user.id as string)
   }
 
-  @Mutation(() => UpdateResult)
+  @Mutation(() => IUpdateResponse)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.CUSTOMER)
-  async restoreCustomer(@CurrentUser() user: User): Promise<UpdateResult> {
+  async restoreCustomer(@CurrentUser() user: User): Promise<IUpdateResponse> {
     return await this.userService.restore(user.id as string)
   }
 
