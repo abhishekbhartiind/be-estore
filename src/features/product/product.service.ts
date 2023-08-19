@@ -122,7 +122,7 @@ export class ProductService implements OnModuleInit {
         )
       if (filter?.priceMin)
         query.andWhere(
-          `\`p\`.\`price\` BETWEEN ${Number(
+          `\"product\".\"price\" BETWEEN ${Number(
             filter.priceMin ? filter.priceMin : DEFAULT_MIN_PRICE,
           )} AND ${Number(
             filter.priceMax ? filter.priceMax : DEFAULT_MAX_PRICE,
