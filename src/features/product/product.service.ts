@@ -120,7 +120,7 @@ export class ProductService implements OnModuleInit {
           filter.storage && 'storage.capacityGB IN (:...storage)',
           { storage: filter.storage },
         )
-      if (filter?.priceMin)
+      if (filter?.priceMin || filter?.priceMax)
         query.andWhere(
           `\"product\".\"price\" BETWEEN ${Number(
             filter.priceMin ? filter.priceMin : DEFAULT_MIN_PRICE,
