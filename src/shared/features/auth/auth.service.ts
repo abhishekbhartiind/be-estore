@@ -184,8 +184,8 @@ export class AuthService {
           subject: `${SUBJECT} - ${PASSWORD_REQUEST}`,
           template: 'password-reset.template.hbs',
           context: {
-            resetLink: `${process.env.FE_HOST}/${process.env.FRONTEND_PASSWORD_RESET}?token=${token}`,
-            website: `${process.env.FE_HOST}`,
+            resetLink: `${process.env.FRONTEND_HOST}/${process.env.FRONTEND_PASSWORD_RESET}?token=${token}`,
+            website: `${process.env.FRONTEND_HOST}`,
             name: email.slice(0, email.indexOf('@')),
             date: new Date().getFullYear(),
             email,
@@ -226,8 +226,8 @@ export class AuthService {
           subject: `${SUBJECT} - ${ACTIVATE_ACCOUNT}`,
           template: 'account-activation.template.hbs',
           context: {
-            activationLink: `${process.env.FE_HOST}/${process.env.FRONTEND_ACCOUNT_ACTIVATION}?token=${activationToken}`,
-            website: `${process.env.FE_HOST}`,
+            activationLink: `${process.env.FRONTEND_HOST}/${process.env.FRONTEND_ACCOUNT_ACTIVATION}?token=${activationToken}`,
+            website: `${process.env.FRONTEND_HOST}`,
             name: email.slice(0, email.indexOf('@')),
             date: new Date().getFullYear(),
           },
@@ -275,8 +275,8 @@ export class AuthService {
           subject: `${SUBJECT} - ${CHANGE_EMAIL}`,
           template: 'email-change.template.hbs',
           context: {
-            changeLink: `${process.env.FE_HOST}/${process.env.FRONTEND_EMAIL_CHANGE}?token=${emailToken}`,
-            website: `${process.env.FE_HOST}`,
+            changeLink: `${process.env.FRONTEND_HOST}/${process.env.FRONTEND_EMAIL_CHANGE}?token=${emailToken}`,
+            website: `${process.env.FRONTEND_HOST}`,
             name: email.slice(0, email.indexOf('@')),
             date: new Date().getFullYear(),
             email: oldEmail,

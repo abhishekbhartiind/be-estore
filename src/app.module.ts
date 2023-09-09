@@ -34,7 +34,7 @@ import { ServeStaticModule } from '@nestjs/serve-static'
       playground: true,
       introspection: true,
       cors: {
-        origin: [process.env.FE_HOST, 'https://studio.apollographql.com'],
+        origin: [process.env.FRONTEND_HOST, process.env.APOLLO_STUDIO],
         credentials: true,
       },
     }),
