@@ -65,7 +65,7 @@ export class AuthResolver {
   }
 
   @Query(() => TokenVerificationResponse)
-  async verifyToken(@Args('token') tokenVerifyArgs: TokenVerifyInput) {
+  async verifyToken(@Args('input') tokenVerifyArgs: TokenVerifyInput) {
     const response = await this.authService.verifyToken(tokenVerifyArgs)
     if (response) return { valid: true }
     else return { valid: false }

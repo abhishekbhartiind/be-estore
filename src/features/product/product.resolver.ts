@@ -23,13 +23,14 @@ export class ProductResolver {
     @Args('filterArgs', { nullable: true }) filterArgs?: FilterArgs,
   ): Promise<ProductsFetchResponse> {
     return await this.productService.fetch(
-      paginationArgs ? paginationArgs : { page: 1, limit: 10 },
+      paginationArgs ? paginationArgs : { page: 1, limit: 6 },
       sortArgs
         ? sortArgs
         : { sortBy: SORT_OPTION.PRICE, sortDir: SORT_DIR.DESC },
       filterArgs,
     )
   }
+
   @Query(() => Product)
   async product(@Args('id') id: string): Promise<Product> {
     return await this.productService.fetchOne(id)

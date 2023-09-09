@@ -6,3 +6,7 @@ export const filterArrayByString = (array: [], match: string) => {
     return typeof item === 'string' && item.match(reg)
   })
 }
+
+export const removeRedundantFromArray = (arr: any[]) => {
+  return [...new Set(arr)]
+}

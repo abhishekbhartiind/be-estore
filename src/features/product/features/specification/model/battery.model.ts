@@ -11,18 +11,19 @@ export class SpecificationBattery extends BaseEntity {
   @Column()
   capacity: number
 
-  @Field(() => Int)
-  @Column()
+  @Field(() => Int, { nullable: true })
+  @Column({ nullable: true })
   chargingSpeed?: number
 
-  @Column({ type: 'float' })
+  @Field({ nullable: true })
+  @Column({ type: 'float', nullable: true })
   reverseCharging?: number
 
   @Column({ type: 'varchar', length: 12 })
   type: string
 
-  @Field(() => Int)
-  @Column()
+  @Field(() => Int, { nullable: true })
+  @Column({ nullable: true })
   wirelessCharging?: number
 
   @OneToMany(
