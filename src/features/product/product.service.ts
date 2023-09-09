@@ -4,7 +4,12 @@ import {
   Injectable,
   OnModuleInit,
 } from '@nestjs/common'
-import { Product } from '@feature/product/model/product.model'
+import {
+  GroupedBrandResponse,
+  GroupedRamResponse,
+  GroupedStorageResponse,
+  Product,
+} from '@feature/product/model/product.model'
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm'
 import { DataSource, Repository } from 'typeorm'
 import { PaginationArgs } from '@feature/product/dto/pagination.args'
@@ -36,6 +41,7 @@ import { BrandService } from '@feature/product/features/brand/brand.service'
 import { CategoryService } from '@feature/product/features/category/category.service'
 import { SpecificationService } from '@feature/product/features/specification/specification.service'
 import { RatingService } from '@feature/product/features/rating/rating.service'
+import { removeRedundantFromArray } from '@shared/util/array.util'
 
 @Injectable()
 export class ProductService implements OnModuleInit {
@@ -103,31 +109,38 @@ export class ProductService implements OnModuleInit {
         )
 
       // filter
-      if (filter?.brand)
-        query.andWhere(filter.brand && 'brand.name IN (:...brand)', {
-          brand: filter.brand,
-        })
-      if (filter?.category)
-        query.andWhere(filter.category && 'category.name IN (:...category)', {
-          category: filter.category,
-        })
-      if (filter?.ram)
-        query.andWhere(filter.ram && 'ram.capacityGB IN (:...ram)', {
-          ram: filter.ram,
-        })
-      if (filter?.storage)
-        query.andWhere(
-          filter.storage && 'storage.capacityGB IN (:...storage)',
-          { storage: filter.storage },
-        )
-      if (filter?.priceMin || filter?.priceMax)
-        query.andWhere(
-          `\"product\".\"price\" BETWEEN ${Number(
-            filter.priceMin ? filter.priceMin : DEFAULT_MIN_PRICE,
-          )} AND ${Number(
-            filter.priceMax ? filter.priceMax : DEFAULT_MAX_PRICE,
-          )}`,
-        )
+      if (filter) {
+        if (filter?.brand)
+          query.andWhere(filter.brand && 'brand.name IN (:...brand)', {
+            brand: filter.brand,
+          })
+        if (filter?.category)
+          query.andWhere(filter.category && 'category.name IN (:...category)', {
+            category: filter.category,
+          })
+        if (filter?.ram)
+          query.andWhere(filter.ram && 'specification.dataRam IN (:...ram)', {
+            ram: filter.ram,
+          })
+        if (filter?.storage)
+          query.andWhere(
+            filter.storage && 'specification.dataStorage && :storage',
+            { storage: filter.storage },
+          )
+        /*if (filter?.storage)
+          query.andWhere(
+            filter.storage && 'specification.dataStorage IN (:...storage)',
+            { storage: filter.storage },
+          )*/
+        if (filter?.priceMin || filter?.priceMax)
+          query.andWhere(
+            `\"product\".\"price\" BETWEEN ${Number(
+              filter.priceMin ? filter.priceMin : DEFAULT_MIN_PRICE,
+            )} AND ${Number(
+              filter.priceMax ? filter.priceMax : DEFAULT_MAX_PRICE,
+            )}`,
+          )
+      }
 
       // pagination
       query.skip(offset)
@@ -355,6 +368,81 @@ export class ProductService implements OnModuleInit {
         })
         return true
       }
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Returns all ram options (grouped)
+   */
+  async fetchRamOptions(): Promise<GroupedRamResponse[]> {
+    try {
+      const ramList = await this.dataSource
+        .getRepository(Product)
+        .createQueryBuilder('product')
+        .leftJoinAndSelect('product.specification', 'specification')
+        .select('specification.data_ram')
+        .groupBy('specification.data_ram')
+        .getRawMany()
+      return ramList.map((ram) => ({
+        label: ram.data_ram + ' GB',
+        value: ram.data_ram,
+      }))
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Returns all storage options (grouped)
+   */
+  async fetchStorageOptions(): Promise<GroupedStorageResponse[]> {
+    try {
+      const storageSizesSorted: number[] = []
+      const storageList = await this.dataSource
+        .getRepository(Product)
+        .createQueryBuilder('product')
+        .leftJoinAndSelect('product.specification', 'specification')
+        .select('specification.data_storage')
+        .groupBy('specification.data_storage')
+        .getRawMany()
+      storageList.map((storage) => {
+        storage.data_storage.map((storageSize: number) =>
+          storageSizesSorted.push(storageSize),
+        )
+      })
+      return removeRedundantFromArray(storageSizesSorted).map(
+        (storageSize) => ({
+          label: `${storageSize}${
+            storageSize.toString().length === 1 ? 'TB' : ' GB'
+          }`,
+          value: storageSize,
+        }),
+      )
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Returns all brand options (grouped)
+   */
+  async fetchBrandOptions(): Promise<GroupedBrandResponse[]> {
+    try {
+      const brandList = await this.dataSource
+        .getRepository(Product)
+        .createQueryBuilder('product')
+        .leftJoinAndSelect('product.brand', 'brand')
+        .select('brand.name')
+        .groupBy('brand.name')
+        .orderBy('brand.name', 'ASC')
+        .getRawMany()
+      return brandList.map((brand) => {
+        return {
+          label: brand.brand_name,
+        }
+      })
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
     }
