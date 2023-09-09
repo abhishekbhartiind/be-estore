@@ -94,3 +94,22 @@ export class Product extends BaseEntity {
 @ObjectType()
 @InputType('ProductsFetchResponseInput')
 export class ProductsFetchResponse extends FetchResponse(Product) {}
+
+@ObjectType()
+export class GroupedRamResponse {
+  label: string
+  @Field(() => Int)
+  value: number
+}
+
+@ObjectType()
+export class GroupedStorageResponse {
+  label: string
+  @Field(() => Int)
+  value: number
+}
+
+@ObjectType()
+export class GroupedBrandResponse {
+  label: string
+}

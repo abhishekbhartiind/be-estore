@@ -180,6 +180,20 @@ input FilterArgsInput {
   storage: [Int]
 }
 
+type GroupedBrandResponse {
+  label: String!
+}
+
+type GroupedRamResponse {
+  label: String!
+  value: Int!
+}
+
+type GroupedStorageResponse {
+  label: String!
+  value: Int!
+}
+
 type IDeleteResponse {
   affected: Int!
   raw: [String!]!
@@ -423,6 +437,9 @@ type Query {
   creditCards: [CreditCard!]!
   currentOrders: [Order!]!
   fetchCustomer: User!
+  groupedBrand: [GroupedBrandResponse!]!
+  groupedRam: [GroupedRamResponse!]!
+  groupedStorage: [GroupedStorageResponse!]!
   order(id: String!): Order!
   product(id: String!): Product!
   products(filterArgs: FilterArgsInput, paginationArgs: PaginationArgsInput, sortArgs: SortArgsInput): ProductsFetchResponse!
@@ -431,7 +448,7 @@ type Query {
   requestPasswordChange(email: String!): IEmailResponse!
   user(id: String!): User!
   users: [User!]!
-  verifyToken(token: TokenVerifyInput!): TokenVerificationResponse!
+  verifyToken(input: TokenVerifyInput!): TokenVerificationResponse!
 }
 
 input RatingInput {

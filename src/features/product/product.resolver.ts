@@ -1,5 +1,8 @@
 import { Args, Query, Resolver } from '@nestjs/graphql'
 import {
+  GroupedBrandResponse,
+  GroupedRamResponse,
+  GroupedStorageResponse,
   Product,
   ProductsFetchResponse,
 } from '@feature/product/model/product.model'
@@ -33,5 +36,20 @@ export class ProductResolver {
   @Query(() => Product)
   async product(@Args('id') id: string): Promise<Product> {
     return await this.productService.fetchOne(id)
+  }
+
+  @Query(() => [GroupedRamResponse])
+  async groupedRam(): Promise<GroupedRamResponse[]> {
+    return await this.productService.fetchRamOptions()
+  }
+
+  @Query(() => [GroupedStorageResponse])
+  async groupedStorage(): Promise<GroupedStorageResponse[]> {
+    return await this.productService.fetchStorageOptions()
+  }
+
+  @Query(() => [GroupedBrandResponse])
+  async groupedBrand(): Promise<GroupedBrandResponse[]> {
+    return await this.productService.fetchBrandOptions()
   }
 }
