@@ -2,6 +2,7 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common'
 import { UserService } from '@feature/user/user.service'
@@ -36,9 +37,9 @@ import { TokenVerifyInput } from '@shared/features/auth/dto/token-verify.input'
 @Injectable()
 export class AuthService {
   constructor(
-    private userService: UserService,
-    private jwtService: JwtService,
-    private mailService: MailerService,
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+    private readonly mailService: MailerService,
   ) {}
 
   /**
@@ -50,22 +51,25 @@ export class AuthService {
     try {
       const userFound = await this.userService.fetchOne({ email })
       if (!userFound) {
-        throw new UnauthorizedException(ACCOUNT_NOT_FOUND)
+        Logger.debug('ACCOUNT_NOT_FOUND')
+        throw new NotFoundException('ACCOUNT_NOT_FOUND')
       }
 
       const passwordMatches = await compare(password, userFound.password)
       if (!passwordMatches) {
+        Logger.debug('INVALID_CREDENTIALS')
         throw new UnauthorizedException(INVALID_CREDENTIALS)
       }
 
       if (userFound && passwordMatches) {
+        Logger.debug('matches!')
         const { password, ...rest } = userFound
         return rest
       }
       throw new InternalServerErrorException()
     } catch (error) {
       Logger.error(error)
-      throw new InternalServerErrorException()
+      throw new UnauthorizedException()
     }
   }
 

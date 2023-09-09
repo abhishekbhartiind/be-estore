@@ -50,6 +50,9 @@ export class OrderService implements OnModuleInit {
       return await this.orderRepo.find({
         ...(where && { where }),
         relations: ORDER_RELATIONS,
+        order: {
+          created: 'DESC',
+        },
       })
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
