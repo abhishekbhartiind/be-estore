@@ -9,7 +9,7 @@ import { ObjectType } from '@nestjs/graphql'
 @ObjectType()
 export class BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id?: string
+  id?: string | number
 
   @CreateDateColumn()
   created?: Date
