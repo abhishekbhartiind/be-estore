@@ -14,22 +14,15 @@ async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
-    {
-      cors: {
-        origin: [
-          String(process.env.APOLLO_STUDIO),
-          String(process.env.FRONTEND_HOST),
-        ],
-        credentials: true,
-        allowedHeaders: [
-          'Accept',
-          'Access-Control-Allow-Origin',
-          'Referer',
-          'User-Agent',
-        ],
-      },
-    },
   )
+
+  app.enableCors({
+    origin: [
+      String(process.env.APOLLO_STUDIO),
+      String(process.env.FRONTEND_HOST),
+    ],
+    credentials: true,
+  })
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)))
 

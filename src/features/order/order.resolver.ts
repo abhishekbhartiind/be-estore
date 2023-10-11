@@ -29,7 +29,7 @@ export class OrderResolver {
   @Query(() => Order)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.CUSTOMER)
-  async order(@Args('id') id: string): Promise<Order> {
+  async order(@Args('id') id: number): Promise<Order> {
     return await this.orderService.fetchOne(id)
   }
 
@@ -49,7 +49,7 @@ export class OrderResolver {
   @Mutation(() => IUpdateResponse)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @HasRoles(Role.CUSTOMER)
-  async cancelOrder(@Args('id') id: string): Promise<IUpdateResponse> {
+  async cancelOrder(@Args('id') id: number): Promise<IUpdateResponse> {
     return await this.orderService.cancel(id)
   }
 }
