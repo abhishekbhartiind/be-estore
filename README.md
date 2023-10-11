@@ -12,7 +12,7 @@
 
 ---
 
-I've created an E-Commerce application using Nest.js, a well-known Node.js framework renowned for crafting highly scalable and performant server-side applications. This project serves as the sturdy backbone for my frontend, seamlessly bridging the gap between the server and user interface.
+This E-Commerce application is built with Nest.js, a renowned Node.js framework recognized for its ability to create highly scalable and performant server-side applications. This project serves as the sturdy backbone for my frontend, seamlessly bridging the gap between the server and user interface.
 
 ## ✅ Features:
 - Robust Authentication & Authorization with Role-Based Access Control (RBAC)
