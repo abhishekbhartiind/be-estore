@@ -34,7 +34,7 @@ import 'reflect-metadata'
       playground: true,
       introspection: true,
       cors: {
-        origin: [process.env.FRONTEND_HOST, process.env.APOLLO_STUDIO],
+        origin: '*',
         credentials: true,
       },
     }),

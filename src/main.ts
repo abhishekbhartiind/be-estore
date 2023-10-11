@@ -17,10 +17,7 @@ async function bootstrap() {
   )
 
   app.enableCors({
-    origin: [
-      String(process.env.APOLLO_STUDIO),
-      String(process.env.FRONTEND_HOST),
-    ],
+    origin: '*',
     credentials: true,
   })
 
