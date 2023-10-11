@@ -19,4 +19,8 @@ export const brandMock: any[] = [
     id: '2e140bdd-6c04-4469-a0e3-757797c77bbf',
     name: 'Apple',
   },
+  {
+    id: '46dfd046-c714-476e-8a02-89ba35e1dd39',
+    name: 'Google',
+  },
 ]

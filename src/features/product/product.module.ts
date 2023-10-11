@@ -6,16 +6,15 @@ import { ProductResolver } from './product.resolver'
 import { ProductImage } from '@feature/product/model/image.model'
 import { BrandModule } from '@feature/product/features/brand/brand.module'
 import { CategoryModule } from '@feature/product/features/category/category.module'
-import { SpecificationModule } from '@feature/product/features/specification/specification.module'
 import { RatingModule } from '@feature/product/features/rating/rating.module'
 import { ProductAdminResolver } from '@feature/product/product.resolver.admin'
+import { ProductSpecification } from '@feature/product/model/specification.model'
 
 @Module({
   imports: [
     BrandModule,
     CategoryModule,
-    SpecificationModule,
-    TypeOrmModule.forFeature([Product, ProductImage]),
+    TypeOrmModule.forFeature([Product, ProductImage, ProductSpecification]),
     RatingModule,
   ],
   providers: [ProductService, ProductResolver, ProductAdminResolver],

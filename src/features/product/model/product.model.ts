@@ -7,7 +7,7 @@ import { ProductImage } from '@feature/product/model/image.model'
 import { OrderHasProduct } from '@feature/order/model/order-has-product.model'
 import { ProductBrand } from '@feature/product/features/brand/brand.model'
 import { ProductCategory } from '@feature/product/features/category/category.model'
-import { ProductSpecification } from '@feature/product/features/specification/model/specification.model'
+import { ProductSpecification } from '@feature/product/model/specification.model'
 
 @ObjectType()
 @InputType('ProductInput')
@@ -22,15 +22,15 @@ export class Product extends BaseEntity {
   @Column()
   name: string
 
-  @Column({ type: 'float', nullable: true })
-  osUpgradable?: number
+  @Column({ nullable: true })
+  osUpgradable?: string
 
   @Column({ type: 'float' })
   price: number
 
   ratingAverage?: number
 
-  @Column({ type: 'varchar', length: 14 })
+  @Column({ type: 'varchar', length: 32 })
   sku: string
 
   @Column()

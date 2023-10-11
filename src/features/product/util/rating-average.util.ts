@@ -24,7 +24,7 @@ export const withRatingArray = (
   count: number,
   filter?: FilterArgs,
 ): ProductsFetchResponse => {
-  const { page, limit } = paginationArgs
+  const { take } = paginationArgs
   products.map((product: Product, i: number) => {
     if (product.rating && product.rating?.length > 0) {
       const ratingCount =
@@ -38,8 +38,7 @@ export const withRatingArray = (
   })
   return {
     data: products,
-    page,
-    limit,
+    take,
     count,
     ...(filter && filter),
   }
