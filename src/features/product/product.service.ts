@@ -39,9 +39,10 @@ import { CreateProductInput } from '@feature/product/dto/create-product.input'
 import { PRODUCT_RELATIONS } from '@feature/product/constant/entity-relation.constant'
 import { BrandService } from '@feature/product/features/brand/brand.service'
 import { CategoryService } from '@feature/product/features/category/category.service'
-import { SpecificationService } from '@feature/product/features/specification/specification.service'
 import { RatingService } from '@feature/product/features/rating/rating.service'
 import { removeRedundantFromArray } from '@shared/util/array.util'
+import { ProductSpecification } from '@feature/product/model/specification.model'
+import { specificationMock } from '@feature/product/mock/specification.mock'
 
 @Injectable()
 export class ProductService implements OnModuleInit {
@@ -49,7 +50,6 @@ export class ProductService implements OnModuleInit {
     private brandService: BrandService,
     private categoryService: CategoryService,
     private ratingService: RatingService,
-    private specificationService: SpecificationService,
     @InjectRepository(Product)
     private readonly productRepo: Repository<Product>,
     @InjectRepository(ProductImage)
@@ -61,11 +61,7 @@ export class ProductService implements OnModuleInit {
   async onModuleInit(): Promise<void> {
     await this.brandService.mockBrands()
     await this.categoryService.mockCategories()
-    await this.specificationService.mockBatteries()
-    await this.specificationService.mockConnections()
-    await this.specificationService.mockCpus()
-    await this.specificationService.mockDisplays()
-    await this.specificationService.mockSpecifications()
+    await this.mockSpecifications()
     await this.mockProducts()
     await this.ratingService.mockRatings()
   }
@@ -78,26 +74,20 @@ export class ProductService implements OnModuleInit {
    */
   async fetch(pagination: PaginationArgs, sort: SortArgs, filter?: FilterArgs) {
     try {
-      const { page } = pagination
-      const offset = (pagination.page - 1) * pagination.limit
-      const limit = pagination.limit ? pagination.limit : 10
+      const { take } = pagination
 
       if (!sort?.sortDir) sort.sortDir = SORT_DIR.DESC
       if (!sort?.sortBy) sort.sortBy = SORT_OPTION.PRICE
       const { sortBy, sortDir } = sort
 
       // base query
-      const query = await this.productRepo.createQueryBuilder('product')
+      const query = this.productRepo.createQueryBuilder('product')
       // relationships
       query.innerJoinAndSelect('product.brand', 'brand')
       query.innerJoinAndSelect('product.category', 'category')
       query.leftJoinAndSelect('product.image', 'image')
       query.leftJoinAndSelect('product.rating', 'rating')
       query.leftJoinAndSelect('product.specification', 'specification')
-      query.leftJoinAndSelect('specification.battery', 'battery')
-      query.leftJoinAndSelect('specification.connectivity', 'connectivity')
-      query.leftJoinAndSelect('specification.cpu', 'cpu')
-      query.leftJoinAndSelect('specification.display', 'display')
 
       // search
       if (filter?.search)
@@ -143,8 +133,8 @@ export class ProductService implements OnModuleInit {
       }
 
       // pagination
-      query.skip(offset)
-      query.take(limit)
+      query.skip(0)
+      query.take(take)
 
       // sort
       query.orderBy(
@@ -163,8 +153,7 @@ export class ProductService implements OnModuleInit {
         withRatingArray(
           products,
           {
-            page,
-            limit,
+            take,
           },
           count,
           filter,
@@ -213,27 +202,14 @@ export class ProductService implements OnModuleInit {
    */
   async save(_product: CreateProductInput): Promise<Product> {
     try {
-      const {
-        batteryId,
-        brandId,
-        categoryId,
-        connectivityId,
-        cpuId,
-        displayId,
-        imageArray,
-        ...rest
-      } = _product
+      const { brandId, categoryId, imageArray, specificationId, ...rest } =
+        _product
 
       const product = await this.productRepo.save({
         ...(brandId && { brand: { id: brandId } }),
         ...(categoryId && { category: { id: categoryId } }),
-        ...((batteryId || connectivityId || cpuId || displayId) && {
-          specification: {
-            ...(batteryId && { battery: { id: batteryId } }),
-            ...(connectivityId && { connectivity: { id: connectivityId } }),
-            ...(cpuId && { cpu: { id: cpuId } }),
-            ...(displayId && { display: { id: displayId } }),
-          },
+        ...(specificationId && {
+          specification: { id: specificationId },
         }),
         ...rest,
       })
@@ -271,16 +247,8 @@ export class ProductService implements OnModuleInit {
       if (!foundProduct)
         throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND)
 
-      const {
-        batteryId,
-        brandId,
-        categoryId,
-        connectivityId,
-        cpuId,
-        displayId,
-        imageArray,
-        ...rest
-      } = product
+      const { brandId, categoryId, imageArray, specificationId, ...rest } =
+        product
 
       if (Array.isArray(imageArray)) {
         imageArray.map(async (url) => {
@@ -293,13 +261,8 @@ export class ProductService implements OnModuleInit {
         {
           ...(brandId && { brand: { id: brandId } }),
           ...(categoryId && { category: { id: categoryId } }),
-          ...((batteryId || connectivityId || cpuId || displayId) && {
-            specification: {
-              ...(batteryId && { battery: { id: batteryId } }),
-              ...(connectivityId && { connectivity: { id: connectivityId } }),
-              ...(cpuId && { cpu: { id: cpuId } }),
-              ...(displayId && { display: { id: displayId } }),
-            },
+          ...(specificationId && {
+            specification: { id: specificationId },
           }),
           ...rest,
         },
@@ -336,6 +299,26 @@ export class ProductService implements OnModuleInit {
         throw new HttpException(RECORD_NOT_FOUND, HttpStatus.NOT_FOUND)
 
       return product
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  /**
+   * Inserts data into `specification` table from `specification.mock.ts`
+   * Only inserts data upon empty table
+   */
+  async mockSpecifications(): Promise<any> {
+    try {
+      const specs = await this.productRepo.find()
+      if (specs.length === 0) {
+        await this.dataSource
+          .createQueryBuilder()
+          .insert()
+          .into(ProductSpecification)
+          .values(specificationMock)
+          .execute()
+      }
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR)
     }

@@ -1,6 +1,15 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm'
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryColumn,
+  UpdateDateColumn,
+} from 'typeorm'
 import { Field, InputType, ObjectType } from '@nestjs/graphql'
-import { BaseEntity } from '@shared/models/base.model'
 import { User } from '@feature/user/user.model'
 import { OrderHasProduct } from '@feature/order/model/order-has-product.model'
 import { Address } from '@feature/address/model/address.model'
@@ -8,7 +17,10 @@ import { Address } from '@feature/address/model/address.model'
 @ObjectType()
 @InputType('OrderInput')
 @Entity()
-export class Order extends BaseEntity {
+export class Order {
+  @PrimaryColumn()
+  id: number
+
   @Column()
   total: number
 
@@ -17,6 +29,9 @@ export class Order extends BaseEntity {
 
   @Column({ type: 'timestamptz', nullable: true })
   cancelled?: Date | null
+
+  @Column({ type: 'timestamptz', nullable: true })
+  shipped?: Date | null
 
   @ManyToOne(() => Address, (address) => address.id, { eager: true })
   @JoinColumn({
@@ -42,4 +57,13 @@ export class Order extends BaseEntity {
     foreignKeyConstraintName: 'FK__order__user',
   })
   user?: User | null
+
+  @CreateDateColumn()
+  created?: Date
+
+  @UpdateDateColumn({ nullable: true })
+  updated?: Date
+
+  @DeleteDateColumn({ nullable: true })
+  deleted?: Date
 }

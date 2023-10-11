@@ -104,18 +104,15 @@ input CreateOrderInput {
 }
 
 input CreateProductInput {
-  batteryId: String!
   brandId: String!
   categoryId: String!
-  connectivityId: String!
-  cpuId: String!
   description: String
   discount: Float
-  displayId: String!
   imageArray: [String!]
   name: String!
   price: Float!
   ram: Int
+  specificationId: String!
   stock: Int!
   thumbnail: String
 }
@@ -226,7 +223,7 @@ input LoginInput {
 
 type Mutation {
   activateCustomer(token: String!): User!
-  cancelOrder(id: String!): IUpdateResponse!
+  cancelOrder(id: Float!): IUpdateResponse!
   changeEmail(input: EmailChangeInput!): IUpdateResponse!
   changePassword(input: PasswordChangeInput!): IUpdateResponse!
   createAddress(data: CreateAddressInput!): Address!
@@ -266,9 +263,10 @@ type Order {
   cancelled: DateTime
   created: DateTime
   deleted: DateTime
-  id: String
+  id: Float!
   pending: Boolean!
   products: [OrderHasProduct!]!
+  shipped: DateTime
   shippingAddress: Address
   total: Float!
   updated: DateTime
@@ -292,16 +290,20 @@ input OrderHasProductInput {
 input OrderInput {
   billingAddress: AddressInput
   cancelled: DateTime
+  created: DateTime
+  deleted: DateTime
+  id: Float!
   pending: Boolean!
   products: [OrderHasProductInput!]!
+  shipped: DateTime
   shippingAddress: AddressInput
   total: Float!
+  updated: DateTime
   user: UserInput
 }
 
 input PaginationArgsInput {
-  limit: Int!
-  page: Int!
+  take: Int!
 }
 
 input PasswordChangeInput {
@@ -320,7 +322,7 @@ type Product {
   image: [ProductImage!]
   name: String!
   order: [OrderHasProduct!]
-  osUpgradable: Float
+  osUpgradable: String
   price: Float!
   rating: [ProductRating!]
   ratingAverage: Float
@@ -372,7 +374,7 @@ input ProductInput {
   image: [ProductImageInput!]
   name: String!
   order: [OrderHasProductInput!]
-  osUpgradable: Float
+  osUpgradable: String
   price: Float!
   rating: [RatingInput!]
   ratingAverage: Float
@@ -395,19 +397,35 @@ type ProductRating {
 }
 
 type ProductSpecification {
-  battery: SpecificationBattery!
-  connectivity: SpecificationConnectivity!
-  cpu: SpecificationCPU!
+  batteryCapacity: Int
+  batteryChargingSpeed: Int
+  batteryReverseCharging: Float
+  batteryType: String
+  batteryWirelessCharging: Int
+  connectAudio: String
+  connectBluetoothVersion: Float
+  connectConnectivity: [String!]
+  connectMobileStandard: String
+  connectUsb: String
+  connectWifiStandard: String
+  cpuCores: Int
+  cpuFrequency: [Float!]
+  cpuName: String
   created: DateTime
   dataRam: Int!
   dataStorage: [Int!]!
   deleted: DateTime
-  dimensionDepth: Float!
-  dimensionLength: Float!
+  dimensionDepth: Float
+  dimensionLength: Float
   dimensionUnit: String
-  dimensionWeight: Float!
-  dimensionWidth: Float!
-  display: SpecificationDisplay!
+  dimensionWeight: Float
+  dimensionWidth: Float
+  displayAspectRatio: String
+  displayPixelDensity: Int
+  displayRefreshRate: Int
+  displayResolution: String
+  displayScreenToBody: Float
+  displaySize: Float!
   id: String
   product: Product
   updated: DateTime
@@ -417,16 +435,14 @@ type ProductsFetchResponse {
   count: Int!
   data: [Product!]!
   filter: FilterArgs
-  limit: Int!
-  page: Int!
+  take: Int!
 }
 
 input ProductsFetchResponseInput {
   count: Int!
   data: [ProductInput!]!
   filter: FilterArgsInput
-  limit: Int!
-  page: Int!
+  take: Int!
 }
 
 type Query {
@@ -440,7 +456,7 @@ type Query {
   groupedBrand: [GroupedBrandResponse!]!
   groupedRam: [GroupedRamResponse!]!
   groupedStorage: [GroupedStorageResponse!]!
-  order(id: String!): Order!
+  order(id: Float!): Order!
   product(id: String!): Product!
   products(filterArgs: FilterArgsInput, paginationArgs: PaginationArgsInput, sortArgs: SortArgsInput): ProductsFetchResponse!
   ratings(productId: String!): [ProductRating!]!
@@ -487,104 +503,34 @@ input SortArgsInput {
   sortDir: String!
 }
 
-type SpecificationBattery {
-  capacity: Int!
-  chargingSpeed: Int
-  created: DateTime
-  deleted: DateTime
-  id: String
-  productSpecification: ProductSpecification
-  reverseCharging: Float
-  type: String!
-  updated: DateTime
-  wirelessCharging: Int
-}
-
-input SpecificationBatteryInput {
-  capacity: Int!
-  chargingSpeed: Int
-  productSpecification: SpecificationInput
-  reverseCharging: Float
-  type: String!
-  wirelessCharging: Int
-}
-
-type SpecificationCPU {
-  cores: [Int!]
-  created: DateTime
-  deleted: DateTime
-  frequency: [Float!]
-  id: String
-  name: String!
-  productSpecification: ProductSpecification
-  updated: DateTime
-}
-
-input SpecificationCPUInput {
-  cores: [Int!]
-  frequency: [Float!]
-  name: String!
-  productSpecification: SpecificationInput
-}
-
-type SpecificationConnectivity {
-  audio: String
-  bluetoothVersion: Float
-  connectivity: [String!]
-  created: DateTime
-  deleted: DateTime
-  id: String
-  mobileStandard: String
-  productSpecification: ProductSpecification
-  updated: DateTime
-  wifiStandard: String
-}
-
-input SpecificationConnectivityInput {
-  audio: String
-  bluetoothVersion: Float
-  connectivity: [String!]
-  mobileStandard: String
-  productSpecification: SpecificationInput
-  wifiStandard: String
-}
-
-type SpecificationDisplay {
-  aspectRatio: String
-  created: DateTime
-  deleted: DateTime
-  id: String
-  pixelDensity: Int
-  productSpecification: ProductSpecification
-  refreshRate: Int
-  resolution: String
-  screenToBody: Float
-  size: Float!
-  updated: DateTime
-}
-
-input SpecificationDisplayInput {
-  aspectRatio: String
-  pixelDensity: Int
-  productSpecification: SpecificationInput
-  refreshRate: Int
-  resolution: String
-  screenToBody: Float
-  size: Float!
-}
-
 input SpecificationInput {
-  battery: SpecificationBatteryInput!
-  connectivity: SpecificationConnectivityInput!
-  cpu: SpecificationCPUInput!
+  batteryCapacity: Int
+  batteryChargingSpeed: Int
+  batteryReverseCharging: Float
+  batteryType: String
+  batteryWirelessCharging: Int
+  connectAudio: String
+  connectBluetoothVersion: Float
+  connectConnectivity: [String!]
+  connectMobileStandard: String
+  connectUsb: String
+  connectWifiStandard: String
+  cpuCores: Int
+  cpuFrequency: [Float!]
+  cpuName: String
   dataRam: Int!
   dataStorage: [Int!]!
-  dimensionDepth: Float!
-  dimensionLength: Float!
+  dimensionDepth: Float
+  dimensionLength: Float
   dimensionUnit: String
-  dimensionWeight: Float!
-  dimensionWidth: Float!
-  display: SpecificationDisplayInput!
+  dimensionWeight: Float
+  dimensionWidth: Float
+  displayAspectRatio: String
+  displayPixelDensity: Int
+  displayRefreshRate: Int
+  displayResolution: String
+  displayScreenToBody: Float
+  displaySize: Float!
   product: ProductInput
 }
 
@@ -617,18 +563,15 @@ input UpdateAddressInput {
 }
 
 input UpdateProductInput {
-  batteryId: String
   brandId: String
   categoryId: String
-  connectivityId: String
-  cpuId: String
   description: String
   discount: Float
-  displayId: String
   imageArray: [String!]
   name: String
   price: Float
   ram: Int
+  specificationId: String
   stock: Int
   thumbnail: String
 }

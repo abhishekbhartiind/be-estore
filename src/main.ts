@@ -8,7 +8,7 @@ import { ClassSerializerInterceptor, Logger } from '@nestjs/common'
 
 async function bootstrap() {
   const host = String(process.env.EXPRESS_HOST)
-  const port = parseInt(process.env.EXPRESS_PORT as string, 10) || 3000
+  const port = parseInt(process.env.EXPRESS_PORT as string, 10) || 4000
   const graphqlEndpoint = 'graphql'
 
   const app = await NestFactory.create<NestFastifyApplication>(

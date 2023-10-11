@@ -26,7 +26,7 @@ export class ProductResolver {
     @Args('filterArgs', { nullable: true }) filterArgs?: FilterArgs,
   ): Promise<ProductsFetchResponse> {
     return await this.productService.fetch(
-      paginationArgs ? paginationArgs : { page: 1, limit: 6 },
+      paginationArgs ? paginationArgs : { take: 12 },
       sortArgs
         ? sortArgs
         : { sortBy: SORT_OPTION.PRICE, sortDir: SORT_DIR.DESC },

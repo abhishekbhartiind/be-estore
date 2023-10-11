@@ -64,7 +64,7 @@ export class OrderService implements OnModuleInit {
    * @param id Record identifier to be fetched
    * @param where If included, used sql where statement (javascript object syntax)
    */
-  async fetchOne(id: string, where?: object): Promise<Order> {
+  async fetchOne(id: number, where?: object): Promise<Order> {
     try {
       let product
       if (id)
@@ -130,9 +130,9 @@ export class OrderService implements OnModuleInit {
           savedOrder.products.push(foundProduct)
         }),
       )
-      await this.orderRepo.update(savedOrder.id as string, savedOrder)
+      await this.orderRepo.update(savedOrder.id, savedOrder)
 
-      const orderSaved = await this.fetchOne(savedOrder.id as string)
+      const orderSaved = await this.fetchOne(savedOrder.id)
 
       if (!orderSaved)
         throw new HttpException(RECORD_NOT_SAVED, HttpStatus.BAD_REQUEST, {
@@ -148,7 +148,7 @@ export class OrderService implements OnModuleInit {
   /**
    * Cancel an order
    */
-  async cancel(id: string): Promise<IUpdateResponse> {
+  async cancel(id: number): Promise<IUpdateResponse> {
     try {
       const order = await this.orderRepo.findOne({ where: { id } })
       if (!order)

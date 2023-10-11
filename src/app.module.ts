@@ -12,11 +12,11 @@ import { AuthModule } from '@shared/features/auth/auth.module'
 import { OrderModule } from '@feature/order/order.module'
 import { BrandModule } from '@feature/product/features/brand/brand.module'
 import { CategoryModule } from '@feature/product/features/category/category.module'
-import { SpecificationModule } from '@feature/product/features/specification/specification.module'
 import { RatingModule } from '@feature/product/features/rating/rating.module'
 import { AddressModule } from '@feature/address/address.module'
 import { CreditCardModule } from '@feature/credit-card/credit-card.module'
 import { ServeStaticModule } from '@nestjs/serve-static'
+import 'reflect-metadata'
 
 @Module({
   imports: [
@@ -45,7 +45,6 @@ import { ServeStaticModule } from '@nestjs/serve-static'
         index: false,
       },
     }),
-    SpecificationModule,
     ProductModule,
     OrderModule,
     RatingModule,
