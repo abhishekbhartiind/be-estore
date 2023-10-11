@@ -52,22 +52,6 @@ enum AddressType {
   SHIPPING
 }
 
-type BlogPost {
-  content: String!
-  created: DateTime
-  deleted: DateTime
-  id: String
-  subTitle: String
-  title: String!
-  updated: DateTime
-}
-
-input BlogPostInput {
-  content: String!
-  subTitle: String
-  title: String!
-}
-
 input BrandInput {
   name: String!
   product: ProductInput
@@ -464,7 +448,6 @@ input ProductsFetchResponseInput {
 type Query {
   address(filterArgs: AddressFilterArgsInput, id: String!): Address!
   addresses(filterArgs: AddressFilterArgsInput): [Address!]!
-  blogPosts: [BlogPost!]!
   brands: [ProductBrand!]!
   categories: [ProductCategory!]!
   creditCards: [CreditCard!]!
